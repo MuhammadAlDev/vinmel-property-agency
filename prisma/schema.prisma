@@ -1,0 +1,489 @@
+// Skema database Vinmel Agency (PostgreSQL).
+// Nama tabel & kolom di database memakai snake_case (lihat @@map / @map).
+
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ───────────────────────── Enum ─────────────────────────
+
+enum UserRole {
+  BUYER // pembeli / penyewa
+  OWNER // pemilik properti yang menitipkan
+  AGENT // agen Vinmel
+  ADMIN
+
+  @@map("user_role")
+}
+
+enum PropertyType {
+  RUMAH
+  KOS
+  APARTEMEN
+  TANAH
+
+  @@map("property_type")
+}
+
+enum DealType {
+  DIJUAL
+  DISEWA
+
+  @@map("deal_type")
+}
+
+enum ListingStatus {
+  DRAFT
+  PUBLISHED
+  SOLD
+  RENTED
+  ARCHIVED
+
+  @@map("listing_status")
+}
+
+enum Certificate {
+  SHM
+  HGB
+  STRATA
+  GIRIK_AJB
+
+  @@map("certificate")
+}
+
+enum PaymentMethod {
+  KPR
+  CASH
+
+  @@map("payment_method")
+}
+
+enum BuildStatus {
+  READY // ready unit
+  INDEN
+
+  @@map("build_status")
+}
+
+enum IplMode {
+  BAYAR
+  GRATIS
+
+  @@map("ipl_mode")
+}
+
+enum LegalVerification {
+  VERIFIED
+  PROSES
+
+  @@map("legal_verification")
+}
+
+enum SubmitterRole {
+  PEMILIK
+  KUASA
+
+  @@map("submitter_role")
+}
+
+// Tahap pengajuan titip properti (sesuai alur di desain)
+enum SubmissionStage {
+  REVIEW // 0: sedang direview
+  REVISION // 1: perlu perbaikan
+  SURVEY // 2: lolos review, menunggu survei
+  APPROVAL // 3: menunggu approval
+  APPROVED // 4: disetujui
+  LIVE // 5: listing tayang
+
+  @@map("submission_stage")
+}
+
+enum StepState {
+  DONE
+  CURRENT
+  NEXT
+
+  @@map("step_state")
+}
+
+enum LeadSource {
+  WHATSAPP
+  CHATBOT
+  KPR
+  COMPARE
+  SURVEY
+  OTHER
+
+  @@map("lead_source")
+}
+
+enum LeadStatus {
+  NEW
+  CONTACTED
+  QUALIFIED
+  CLOSED_WON
+  CLOSED_LOST
+
+  @@map("lead_status")
+}
+
+enum ChatSender {
+  USER
+  BOT
+  AGENT
+
+  @@map("chat_sender")
+}
+
+// ───────────────────────── Pengguna ─────────────────────────
+
+model User {
+  id           Int      @id @default(autoincrement())
+  name         String
+  email        String   @unique
+  phone        String?
+  passwordHash String?  @map("password_hash")
+  role         UserRole @default(BUYER)
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  agentListings  Property[]         @relation("ListingAgent")
+  ownedListings  Property[]         @relation("ListingOwner")
+  submissions    TitipSubmission[]
+  ownerships     Ownership[]
+  leads          Lead[]             @relation("LeadAgent")
+  chatSessions   ChatSession[]
+
+  @@map("users")
+}
+
+// ───────────────────────── Listing properti ─────────────────────────
+
+model Property {
+  id          Int           @id @default(autoincrement())
+  slug        String        @unique // dipakai di link /#properti-<slug>
+  title       String
+  type        PropertyType
+  deal        DealType
+  status      ListingStatus @default(PUBLISHED)
+  isFeatured  Boolean       @default(false) @map("is_featured") // tampil di "Properti pilihan minggu ini"
+
+  // Lokasi
+  location String // contoh: "Bintaro, Tangerang Selatan"
+  city     String
+  address  String?
+  lat      Float?
+  lng      Float?
+
+  // Harga (dalam rupiah). priceUnit: "", "/bulan", "/m²"
+  price     BigInt
+  wasPrice  BigInt? @map("was_price") // harga coret (diskon)
+  priceUnit String  @default("") @map("price_unit")
+
+  // Ukuran & ruang
+  landArea       Int?    @map("land_area") // luas tanah m²
+  buildingArea   Int?    @map("building_area") // luas bangunan m² (per kamar untuk kos)
+  bedrooms       Int?
+  bathrooms      Int?
+  bedroomsLabel  String? @map("bedrooms_label") // contoh: "Studio"
+  bathroomsLabel String? @map("bathrooms_label") // contoh: "1 (dalam)"
+  floors         Int?
+  unitType       String? @map("unit_type") // apartemen: Studio / 1 BR / 2 BR / Suite
+  outsideBathrooms Int?  @map("outside_bathrooms") // kos: kamar mandi luar
+  facing         String? // arah hadap: Utara, Timur Laut, dst.
+  roadside       Boolean? // tanah: pinggir jalan raya
+
+  description String[] // per paragraf
+  highlights  String[] // label fasilitas singkat di kartu, contoh "Carport"
+
+  // Spesifikasi tambahan
+  certificate   Certificate?
+  paymentMethod PaymentMethod? @map("payment_method")
+  buildStatus   BuildStatus?   @map("build_status")
+  renovated     Boolean        @default(false)
+
+  // IPL (apartemen)
+  iplMode      IplMode? @map("ipl_mode")
+  iplAmount    String?  @map("ipl_amount") // contoh "Rp 25.000 / m² / bulan"
+  iplFreeYears Int?     @map("ipl_free_years")
+
+  // Ketersediaan ruang, keamanan & fasilitas lingkungan (kode ikon dari desain)
+  spaces     String[] // taman, garasi, balkon, gudang
+  security   String[] // onegate, cctv, security
+  facilities String[] // ibadah, playground, minimarket, jogging, parkir, gym, pool, clubhouse
+
+  // Jarak ke fasum (teks, contoh "3 km")
+  distanceToll    String? @map("distance_toll")
+  distanceCity    String? @map("distance_city")
+  distanceHealth  String? @map("distance_health")
+  distanceAirport String? @map("distance_airport")
+  walkability     Int?    // 1–3
+
+  // Legalitas
+  legalVerification LegalVerification? @map("legal_verification")
+  pbbStatus         String?            @map("pbb_status")
+  imbStatus         String?            @map("imb_status")
+  isNewProject      Boolean            @default(false) @map("is_new_project")
+  developerNote     String?            @map("developer_note")
+
+  agentId Int?  @map("agent_id")
+  agent   User? @relation("ListingAgent", fields: [agentId], references: [id], onDelete: SetNull)
+  ownerId Int?  @map("owner_id")
+  owner   User? @relation("ListingOwner", fields: [ownerId], references: [id], onDelete: SetNull)
+
+  photos      PropertyPhoto[]
+  submission  TitipSubmission?
+  ownerships  Ownership[]
+  leads       Lead[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([type, deal, status])
+  @@index([city])
+  @@index([price])
+  @@map("properties")
+}
+
+model PropertyPhoto {
+  id         Int      @id @default(autoincrement())
+  propertyId Int      @map("property_id")
+  property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  url        String
+  alt        String?
+  sortOrder  Int      @default(0) @map("sort_order")
+
+  @@index([propertyId, sortOrder])
+  @@map("property_photos")
+}
+
+// ───────────────────────── Titip properti ─────────────────────────
+
+model TitipSubmission {
+  id       Int             @id @default(autoincrement())
+  refCode  String          @unique @map("ref_code") // contoh VMA-TP-123456
+  stage    SubmissionStage @default(REVIEW)
+  reviewNote String?       @map("review_note") // catatan reviewer saat perlu revisi
+
+  // Langkah 1: data pemilik
+  userId        Int?          @map("user_id")
+  user          User?         @relation(fields: [userId], references: [id], onDelete: SetNull)
+  contactName   String        @map("contact_name")
+  contactPhone  String        @map("contact_phone")
+  contactEmail  String?       @map("contact_email")
+  submitterRole SubmitterRole @default(PEMILIK) @map("submitter_role")
+  powerOfAttorneyFile String? @map("power_of_attorney_file") // surat kuasa
+
+  // Langkah 2: detail properti
+  type      PropertyType
+  deal      DealType
+  title     String
+  address   String
+  city      String
+  price     BigInt
+  wasPrice  BigInt? @map("was_price")
+  landArea     Int?  @map("land_area")
+  buildingArea Int?  @map("building_area")
+  bedrooms     Int?
+  bathrooms    Int?
+  outsideBathrooms Int? @map("outside_bathrooms")
+  unitType  String?  @map("unit_type")
+  roadside  Boolean?
+  floors    Int?
+  facing    String?
+  buildStatus   BuildStatus?   @map("build_status")
+  renovated     Boolean?
+  renovatedParts String[]      @map("renovated_parts")
+  renovationNote String?       @map("renovation_note")
+  paymentMethod PaymentMethod? @map("payment_method")
+  iplMode      IplMode? @map("ipl_mode")
+  iplAmount    String?  @map("ipl_amount")
+  iplFreeYears Int?     @map("ipl_free_years")
+  certificate  Certificate?
+  description  String?
+
+  // Langkah 3: fasilitas & lingkungan
+  spaces     String[]
+  security   String[]
+  facilities String[]
+  distanceToll    String? @map("distance_toll")
+  distanceCity    String? @map("distance_city")
+  distanceHealth  String? @map("distance_health")
+  distanceAirport String? @map("distance_airport")
+  walkability     Int?
+
+  // Langkah 4: legalitas & foto
+  pbbStatus     String?  @map("pbb_status")
+  imbStatus     String?  @map("imb_status")
+  isNewProject  Boolean? @map("is_new_project")
+  developerNote String?  @map("developer_note")
+  photos        String[] // URL foto yang diunggah
+  documents     Json     @default("{}") // { sertifikat, pbg, pbb, ktp }: "ada" | "nanti"
+
+  // Langkah 5: kerja sama & kirim
+  plan     String    @default("open") // jenis kerja sama
+  agreedAt DateTime? @map("agreed_at")
+
+  propertyId Int?      @unique @map("property_id") // terisi saat listing tayang
+  property   Property? @relation(fields: [propertyId], references: [id], onDelete: SetNull)
+
+  history SubmissionStageLog[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([stage])
+  @@map("titip_submissions")
+}
+
+model SubmissionStageLog {
+  id           Int             @id @default(autoincrement())
+  submissionId Int             @map("submission_id")
+  submission   TitipSubmission @relation(fields: [submissionId], references: [id], onDelete: Cascade)
+  stage        SubmissionStage
+  note         String?
+  actor        String? // contoh "Tim Review Vinmel"
+  createdAt    DateTime        @default(now()) @map("created_at")
+
+  @@index([submissionId, createdAt])
+  @@map("submission_stage_logs")
+}
+
+// ───────────────────────── Pantau properti saya ─────────────────────────
+
+model Notary {
+  id      Int     @id @default(autoincrement())
+  name    String
+  address String
+  phone   String?
+  hours   String?
+  mapUrl  String? @map("map_url")
+
+  ownerships Ownership[]
+
+  @@map("notaries")
+}
+
+// Properti yang sudah dibeli pengguna (sedang dibangun / proses legal)
+model Ownership {
+  id         Int       @id @default(autoincrement())
+  userId     Int       @map("user_id")
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  propertyId Int?      @map("property_id")
+  property   Property? @relation(fields: [propertyId], references: [id], onDelete: SetNull)
+  notaryId   Int?      @map("notary_id")
+  notary     Notary?   @relation(fields: [notaryId], references: [id], onDelete: SetNull)
+
+  title       String
+  unitCode    String  @map("unit_code") // contoh "Unit B-12"
+  location    String
+  coverUrl    String? @map("cover_url")
+  progress    Int     @default(0) // persen pembangunan
+  statusText  String? @map("status_text")
+  purchasedAt DateTime? @map("purchased_at") @db.Date
+  handoverEstimate String? @map("handover_estimate") // contoh "Mar 2027"
+
+  constructionSteps ConstructionStep[]
+  legalSteps        LegalStep[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([userId])
+  @@map("ownerships")
+}
+
+model ConstructionStep {
+  id          Int       @id @default(autoincrement())
+  ownershipId Int       @map("ownership_id")
+  ownership   Ownership @relation(fields: [ownershipId], references: [id], onDelete: Cascade)
+  sortOrder   Int       @map("sort_order")
+  title       String
+  dateLabel   String    @map("date_label") // contoh "Mar – Apr 2026"
+  state       StepState @default(NEXT)
+  percent     Int?
+  note        String?
+
+  photos ConstructionPhoto[]
+
+  @@index([ownershipId, sortOrder])
+  @@map("construction_steps")
+}
+
+model ConstructionPhoto {
+  id        Int              @id @default(autoincrement())
+  stepId    Int              @map("step_id")
+  step      ConstructionStep @relation(fields: [stepId], references: [id], onDelete: Cascade)
+  url       String
+  caption   String?
+  takenAt   DateTime?        @map("taken_at") @db.Date
+  sortOrder Int              @default(0) @map("sort_order")
+
+  @@map("construction_photos")
+}
+
+model LegalStep {
+  id          Int       @id @default(autoincrement())
+  ownershipId Int       @map("ownership_id")
+  ownership   Ownership @relation(fields: [ownershipId], references: [id], onDelete: Cascade)
+  sortOrder   Int       @map("sort_order")
+  title       String
+  dateLabel   String    @map("date_label")
+  state       StepState @default(NEXT)
+  percent     Int?
+  note        String?
+  documentRef String?   @map("document_ref") // contoh "No. PBG: ..."
+
+  @@index([ownershipId, sortOrder])
+  @@map("legal_steps")
+}
+
+// ───────────────────────── Prospek & chat ─────────────────────────
+
+// Calon pembeli/penyewa yang menghubungi (WhatsApp, chatbot, KPR, dll.)
+model Lead {
+  id         Int        @id @default(autoincrement())
+  name       String?
+  phone      String?
+  email      String?
+  message    String?
+  source     LeadSource @default(OTHER)
+  status     LeadStatus @default(NEW)
+  propertyId Int?       @map("property_id")
+  property   Property?  @relation(fields: [propertyId], references: [id], onDelete: SetNull)
+  agentId    Int?       @map("agent_id")
+  agent      User?      @relation("LeadAgent", fields: [agentId], references: [id], onDelete: SetNull)
+  meta       Json? // contoh: hasil simulasi KPR
+  createdAt  DateTime   @default(now()) @map("created_at")
+  updatedAt  DateTime   @updatedAt @map("updated_at")
+
+  @@index([status, createdAt])
+  @@map("leads")
+}
+
+model ChatSession {
+  id        String   @id @default(uuid())
+  userId    Int?     @map("user_id")
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  messages  ChatMessage[]
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("chat_sessions")
+}
+
+model ChatMessage {
+  id        Int         @id @default(autoincrement())
+  sessionId String      @map("session_id")
+  session   ChatSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  sender    ChatSender
+  text      String
+  createdAt DateTime    @default(now()) @map("created_at")
+
+  @@index([sessionId, createdAt])
+  @@map("chat_messages")
+}

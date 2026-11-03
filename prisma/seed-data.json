@@ -1,0 +1,1465 @@
+{
+ "properties": [
+  {
+   "id": 1,
+   "ext": {
+    "was": "Rp 1,95 M",
+    "pay": "kpr",
+    "build": "ready",
+    "reno": false,
+    "facing": "Utara",
+    "floors": 2,
+    "ipl": null,
+    "avail": [
+     "taman",
+     "garasi",
+     "balkon"
+    ],
+    "sec": [
+     "onegate",
+     "cctv",
+     "security"
+    ],
+    "fac": [
+     "ibadah",
+     "playground",
+     "minimarket",
+     "jogging",
+     "parkir"
+    ],
+    "near": [
+     "3 km",
+     "15 km",
+     "2 km",
+     "30 km"
+    ],
+    "walk": 2,
+    "lv": "verified",
+    "pbb": "Lunas 2026",
+    "imb": "Ada (PBG)",
+    "isNew": false,
+    "dev": ""
+   },
+   "lat": -6.272,
+   "lng": 106.728,
+   "city": "Tangerang Selatan",
+   "cert": "SHM",
+   "priceNum": 1850000000,
+   "ltNum": 120,
+   "lbNum": 150,
+   "ktNum": 3,
+   "photos": [
+    "/assets/a3d3de7f4f80512034b449f86313effd.jpg",
+    "/assets/0015fe3ee9f7d9fae5966c1354805c8c.jpg",
+    "/assets/83c967883699f4f4515045d52e7d9128.jpg"
+   ],
+   "desc": [
+    "Rumah dua lantai bergaya minimalis modern di kawasan cluster yang tenang dan asri. Fasad bersih dengan aksen kayu, jendela besar, dan pencahayaan alami yang melimpah di setiap ruangan.",
+    "Lantai bawah terdiri dari ruang tamu, ruang keluarga yang menyatu dengan dapur, serta satu kamar mandi. Lantai atas berisi tiga kamar tidur dengan balkon menghadap taman depan. Akses mudah ke tol, sekolah, dan pusat perbelanjaan."
+   ],
+   "type": "rumah",
+   "title": "Rumah Minimalis 2 Lantai",
+   "location": "Bintaro, Tangerang Selatan",
+   "price": "Rp 1,85 M",
+   "unit": "",
+   "deal": "Dijual",
+   "lt": "120 m²",
+   "lb": "150 m²",
+   "kt": "3",
+   "km": "2",
+   "fasilitas": [
+    "Carport",
+    "Taman",
+    "PLN 2200 VA"
+   ]
+  },
+  {
+   "id": 2,
+   "ext": {
+    "kmOut": 0,
+    "pay": "",
+    "build": "ready",
+    "reno": false,
+    "facing": "Timur",
+    "floors": 0,
+    "ipl": null,
+    "avail": [],
+    "sec": [
+     "cctv"
+    ],
+    "fac": [
+     "ibadah",
+     "minimarket"
+    ],
+    "near": [
+     "5 km",
+     "20 km",
+     "1,5 km",
+     "45 km"
+    ],
+    "walk": 3,
+    "lv": "verified",
+    "pbb": "Lunas 2026",
+    "imb": "Ada (IMB)",
+    "isNew": false,
+    "dev": ""
+   },
+   "lat": -6.372,
+   "lng": 106.818,
+   "city": "Depok",
+   "cert": "SHM",
+   "priceNum": 1600000,
+   "ltNum": 0,
+   "lbNum": 12,
+   "ktNum": 1,
+   "photos": [
+    "/assets/b9ac1f72724b3b478d6fb25cb7a837e4.jpg",
+    "/assets/faa0a2718e3177e736a593984b61bcad.jpg",
+    "/assets/8d7a27adf3d9572d000675c6d2b4113e.jpg"
+   ],
+   "desc": [
+    "Kos khusus putri dengan kamar luas, bersih, dan sudah full furnished: kasur, lemari, meja kerja, dan AC. Cocok untuk mahasiswi maupun karyawati yang menginginkan hunian nyaman dan aman.",
+    "Lokasi strategis, hanya beberapa menit ke kampus dan stasiun. Tersedia Wi-Fi cepat, layanan laundry, CCTV 24 jam, dan penjaga kos. Harga sewa sudah termasuk listrik dan air."
+   ],
+   "type": "kos",
+   "title": "Kos Putri Eksklusif dekat Kampus",
+   "location": "Beji, Depok",
+   "price": "Rp 1,6 jt",
+   "unit": "/bulan",
+   "deal": "Disewa",
+   "lt": "—",
+   "lb": "12 m² / kamar",
+   "kt": "1",
+   "km": "1 (dalam)",
+   "fasilitas": [
+    "AC",
+    "Wi-Fi",
+    "Laundry"
+   ]
+  },
+  {
+   "id": 3,
+   "ext": {
+    "unitType": "2 BR",
+    "pay": "kpr",
+    "build": "ready",
+    "reno": false,
+    "facing": "Barat",
+    "floors": 0,
+    "ipl": [
+     "bayar",
+     "Rp 25.000 / m² / bulan",
+     ""
+    ],
+    "avail": [
+     "balkon"
+    ],
+    "sec": [
+     "onegate",
+     "cctv",
+     "security"
+    ],
+    "fac": [
+     "gym",
+     "pool",
+     "clubhouse",
+     "jogging",
+     "ibadah",
+     "playground",
+     "minimarket",
+     "parkir"
+    ],
+    "near": [
+     "1 km",
+     "2 km",
+     "1,5 km",
+     "25 km"
+    ],
+    "walk": 3,
+    "lv": "verified",
+    "pbb": "Lunas 2026",
+    "imb": "Ada (PBG)",
+    "isNew": false,
+    "dev": ""
+   },
+   "lat": -6.229,
+   "lng": 106.83,
+   "city": "Jakarta Selatan",
+   "cert": "Strata",
+   "priceNum": 1200000000,
+   "ltNum": 0,
+   "lbNum": 56,
+   "ktNum": 2,
+   "photos": [
+    "/assets/48a0c6593a8eb95a0e54c71d29f7ac5b.jpg",
+    "/assets/a797bc56b381b796263a2b0f1fa0f874.jpg",
+    "/assets/1e906c61051aeefbecc56d6a933ff29d.jpg"
+   ],
+   "desc": [
+    "Unit apartemen dua kamar tidur di menara premium dengan pemandangan kota yang luas. Tata ruang efisien dengan ruang tamu terbuka dan dapur bersih yang siap pakai.",
+    "Penghuni menikmati fasilitas kolam renang, gym, taman bermain, dan keamanan 24 jam. Lokasi di pusat bisnis, dekat perkantoran, pusat belanja, dan transportasi umum."
+   ],
+   "type": "apartemen",
+   "title": "Apartemen 2BR View Kota",
+   "location": "Kuningan, Jakarta Selatan",
+   "price": "Rp 1,2 M",
+   "unit": "",
+   "deal": "Dijual",
+   "lt": "—",
+   "lb": "56 m²",
+   "kt": "2",
+   "km": "1",
+   "fasilitas": [
+    "Kolam renang",
+    "Gym",
+    "Keamanan 24 jam"
+   ]
+  },
+  {
+   "id": 4,
+   "ext": {
+    "road": false,
+    "pay": "cash",
+    "build": "",
+    "reno": false,
+    "facing": "Selatan",
+    "floors": 0,
+    "ipl": null,
+    "avail": [],
+    "sec": [
+     "onegate",
+     "cctv",
+     "security"
+    ],
+    "fac": [
+     "jogging",
+     "ibadah",
+     "minimarket"
+    ],
+    "near": [
+     "2 km",
+     "8 km",
+     "4 km",
+     "50 km"
+    ],
+    "walk": 1,
+    "lv": "proses",
+    "pbb": "Lunas 2026",
+    "imb": "Tidak diperlukan (tanah kosong)",
+    "isNew": true,
+    "dev": "Terverifikasi agen Vinmel"
+   },
+   "lat": -6.56,
+   "lng": 106.857,
+   "city": "Bogor",
+   "cert": "SHM",
+   "priceNum": 1050000000,
+   "ltNum": 300,
+   "lbNum": 0,
+   "ktNum": 0,
+   "photos": [
+    "/assets/f2d1559edcb7df1b8ac62392ce2fb5b8.jpg",
+    "/assets/cb60516055ec3117e187d22c75161758.jpg",
+    "/assets/c8508652e2a1649eaab830823a42a563.jpg"
+   ],
+   "desc": [
+    "Tanah kavling siap bangun di kawasan perumahan yang berkembang pesat. Kontur rata, bentuk tanah ideal, dan sudah bersertifikat SHM sehingga aman untuk investasi maupun hunian.",
+    "Akses jalan lebar muat dua mobil, listrik dan air sudah tersedia di depan lokasi. Lingkungan hijau dengan udara sejuk, dekat gerbang tol dan fasilitas umum."
+   ],
+   "type": "tanah",
+   "title": "Tanah Kavling Siap Bangun",
+   "location": "Sentul, Bogor",
+   "price": "Rp 3,5 jt",
+   "unit": "/m²",
+   "deal": "Dijual",
+   "lt": "300 m²",
+   "lb": "—",
+   "kt": "—",
+   "km": "—",
+   "fasilitas": [
+    "SHM",
+    "Akses 2 mobil",
+    "Listrik siap"
+   ]
+  },
+  {
+   "id": 5,
+   "ext": {
+    "pay": "kpr",
+    "build": "ready",
+    "reno": true,
+    "facing": "Timur",
+    "floors": 1,
+    "ipl": null,
+    "avail": [
+     "taman",
+     "garasi"
+    ],
+    "sec": [
+     "cctv"
+    ],
+    "fac": [
+     "ibadah",
+     "minimarket"
+    ],
+    "near": [
+     "8 km",
+     "25 km",
+     "3 km",
+     "50 km"
+    ],
+    "walk": 3,
+    "lv": "verified",
+    "pbb": "Lunas 2026",
+    "imb": "Ada (IMB)",
+    "isNew": false,
+    "dev": ""
+   },
+   "lat": -6.448,
+   "lng": 106.802,
+   "city": "Depok",
+   "cert": "SHM",
+   "priceNum": 890000000,
+   "ltNum": 90,
+   "lbNum": 70,
+   "ktNum": 2,
+   "photos": [
+    "/assets/0015fe3ee9f7d9fae5966c1354805c8c.jpg",
+    "/assets/83c967883699f4f4515045d52e7d9128.jpg",
+    "/assets/a3d3de7f4f80512034b449f86313effd.jpg"
+   ],
+   "desc": [
+    "Rumah asri dengan desain modern di lingkungan yang nyaman untuk keluarga muda. Hanya beberapa menit berjalan kaki ke stasiun sehingga sangat praktis untuk aktivitas harian.",
+    "Terdiri dari dua kamar tidur, satu kamar mandi, ruang keluarga, dapur, dan carport. Bangunan terawat dan siap huni, cocok sebagai rumah pertama."
+   ],
+   "type": "rumah",
+   "title": "Rumah Asri Dekat Stasiun",
+   "location": "Citayam, Depok",
+   "price": "Rp 890 jt",
+   "unit": "",
+   "deal": "Dijual",
+   "lt": "90 m²",
+   "lb": "70 m²",
+   "kt": "2",
+   "km": "1",
+   "fasilitas": [
+    "Carport",
+    "Dekat stasiun"
+   ]
+  },
+  {
+   "id": 6,
+   "ext": {
+    "kmOut": 0,
+    "pay": "",
+    "build": "ready",
+    "reno": false,
+    "facing": "Selatan",
+    "floors": 0,
+    "ipl": null,
+    "avail": [],
+    "sec": [
+     "onegate",
+     "cctv",
+     "security"
+    ],
+    "fac": [
+     "ibadah",
+     "minimarket",
+     "parkir"
+    ],
+    "near": [
+     "1 km",
+     "1 km",
+     "1 km",
+     "30 km"
+    ],
+    "walk": 3,
+    "lv": "verified",
+    "pbb": "Lunas 2026",
+    "imb": "Ada (PBG)",
+    "isNew": false,
+    "dev": ""
+   },
+   "lat": -6.212,
+   "lng": 106.832,
+   "city": "Jakarta Selatan",
+   "cert": "SHM",
+   "priceNum": 2400000,
+   "ltNum": 0,
+   "lbNum": 15,
+   "ktNum": 1,
+   "photos": [
+    "/assets/faa0a2718e3177e736a593984b61bcad.jpg",
+    "/assets/8d7a27adf3d9572d000675c6d2b4113e.jpg",
+    "/assets/b9ac1f72724b3b478d6fb25cb7a837e4.jpg"
+   ],
+   "desc": [
+    "Kos campur dengan kamar yang lega dan sudah furnished di lokasi super strategis tengah kota. Setiap kamar dilengkapi kamar mandi dalam, AC, kasur, lemari, dan meja.",
+    "Tersedia dapur bersama, area santai, parkir motor, dan akses kartu untuk keamanan. Dekat perkantoran, kuliner, dan transportasi umum."
+   ],
+   "type": "kos",
+   "title": "Kos Campur Strategis",
+   "location": "Setiabudi, Jakarta Selatan",
+   "price": "Rp 2,4 jt",
+   "unit": "/bulan",
+   "deal": "Disewa",
+   "lt": "—",
+   "lb": "15 m² / kamar",
+   "kt": "1",
+   "km": "1 (dalam)",
+   "fasilitas": [
+    "Furnished",
+    "Dapur bersama",
+    "Parkir motor"
+   ]
+  },
+  {
+   "id": 7,
+   "ext": {
+    "unitType": "Studio",
+    "pay": "",
+    "build": "ready",
+    "reno": false,
+    "facing": "Timur",
+    "floors": 0,
+    "ipl": [
+     "bayar",
+     "Rp 750.000 / bulan",
+     ""
+    ],
+    "avail": [
+     "balkon"
+    ],
+    "sec": [
+     "onegate",
+     "cctv",
+     "security"
+    ],
+    "fac": [
+     "gym",
+     "pool",
+     "minimarket",
+     "parkir"
+    ],
+    "near": [
+     "2 km",
+     "5 km",
+     "2 km",
+     "35 km"
+    ],
+    "walk": 3,
+    "lv": "verified",
+    "pbb": "Lunas 2026",
+    "imb": "Ada (PBG)",
+    "isNew": false,
+    "dev": ""
+   },
+   "lat": -6.301,
+   "lng": 106.652,
+   "city": "Tangerang",
+   "cert": "Strata",
+   "priceNum": 4500000,
+   "ltNum": 0,
+   "lbNum": 24,
+   "ktNum": 1,
+   "photos": [
+    "/assets/a797bc56b381b796263a2b0f1fa0f874.jpg",
+    "/assets/1e906c61051aeefbecc56d6a933ff29d.jpg",
+    "/assets/48a0c6593a8eb95a0e54c71d29f7ac5b.jpg"
+   ],
+   "desc": [
+    "Unit studio furnished yang praktis dan siap huni, ideal untuk profesional muda. Interior modern lengkap dengan tempat tidur, sofa, pantry, dan perabot penting lainnya.",
+    "Apartemen terhubung langsung dengan pusat perbelanjaan dan dekat area perkantoran. Fasilitas kolam renang, gym, dan keamanan 24 jam."
+   ],
+   "type": "apartemen",
+   "title": "Studio Furnished dekat Mal",
+   "location": "BSD, Tangerang",
+   "price": "Rp 4,5 jt",
+   "unit": "/bulan",
+   "deal": "Disewa",
+   "lt": "—",
+   "lb": "24 m²",
+   "kt": "Studio",
+   "km": "1",
+   "fasilitas": [
+    "Furnished",
+    "Kolam renang",
+    "Akses mal"
+   ]
+  },
+  {
+   "id": 8,
+   "ext": {
+    "road": true,
+    "pay": "cash",
+    "build": "",
+    "reno": false,
+    "facing": "Utara",
+    "floors": 0,
+    "ipl": null,
+    "avail": [],
+    "sec": [],
+    "fac": [
+     "ibadah",
+     "minimarket"
+    ],
+    "near": [
+     "2 km",
+     "10 km",
+     "3 km",
+     "40 km"
+    ],
+    "walk": 2,
+    "lv": "verified",
+    "pbb": "Lunas 2026",
+    "imb": "Tidak diperlukan (tanah kosong)",
+    "isNew": false,
+    "dev": ""
+   },
+   "lat": -6.37,
+   "lng": 106.893,
+   "city": "Jakarta Timur",
+   "cert": "SHM",
+   "priceNum": 2100000000,
+   "ltNum": 500,
+   "lbNum": 0,
+   "ktNum": 0,
+   "photos": [
+    "/assets/c8508652e2a1649eaab830823a42a563.jpg",
+    "/assets/f2d1559edcb7df1b8ac62392ce2fb5b8.jpg",
+    "/assets/cb60516055ec3117e187d22c75161758.jpg"
+   ],
+   "desc": [
+    "Tanah seluas 500 m² di pinggir jalan raya dengan lalu lintas ramai, sangat cocok untuk usaha seperti ruko, kafe, atau gudang. Sertifikat SHM dan siap balik nama.",
+    "Lingkungan sudah berkembang dengan permukiman di sekitarnya. Akses mudah dari berbagai arah dan potensi kenaikan nilai yang tinggi."
+   ],
+   "type": "tanah",
+   "title": "Tanah Pinggir Jalan Raya",
+   "location": "Cibubur, Jakarta Timur",
+   "price": "Rp 2,1 M",
+   "unit": "",
+   "deal": "Dijual",
+   "lt": "500 m²",
+   "lb": "—",
+   "kt": "—",
+   "km": "—",
+   "fasilitas": [
+    "SHM",
+    "Pinggir jalan raya",
+    "Cocok usaha"
+   ]
+  },
+  {
+   "id": 9,
+   "ext": {
+    "pay": "kpr",
+    "build": "inden",
+    "reno": false,
+    "facing": "Timur Laut",
+    "floors": 2,
+    "ipl": null,
+    "avail": [
+     "taman",
+     "garasi",
+     "balkon",
+     "gudang"
+    ],
+    "sec": [
+     "onegate",
+     "cctv",
+     "security"
+    ],
+    "fac": [
+     "gym",
+     "pool",
+     "clubhouse",
+     "jogging",
+     "ibadah",
+     "playground",
+     "minimarket",
+     "parkir"
+    ],
+    "near": [
+     "2 km",
+     "18 km",
+     "3 km",
+     "45 km"
+    ],
+    "walk": 2,
+    "lv": "proses",
+    "pbb": "Dalam pemecahan",
+    "imb": "Ada (PBG)",
+    "isNew": true,
+    "dev": "Terverifikasi agen Vinmel"
+   },
+   "lat": -6.362,
+   "lng": 106.884,
+   "city": "Jakarta Timur",
+   "cert": "HGB",
+   "priceNum": 2400000000,
+   "ltNum": 160,
+   "lbNum": 180,
+   "ktNum": 4,
+   "photos": [
+    "/assets/83c967883699f4f4515045d52e7d9128.jpg",
+    "/assets/a3d3de7f4f80512034b449f86313effd.jpg",
+    "/assets/0015fe3ee9f7d9fae5966c1354805c8c.jpg"
+   ],
+   "type": "rumah",
+   "title": "Rumah Hook Taman Luas",
+   "location": "Cibubur, Jakarta Timur",
+   "price": "Rp 2,4 M",
+   "unit": "",
+   "deal": "Dijual",
+   "lt": "160 m²",
+   "lb": "180 m²",
+   "kt": "4",
+   "km": "3",
+   "fasilitas": [
+    "Taman luas",
+    "Carport 2 mobil",
+    "Posisi hook"
+   ],
+   "desc": [
+    "Rumah posisi hook dengan taman samping yang luas, cocok untuk keluarga besar. Desain modern tropis dengan plafon tinggi dan sirkulasi udara yang baik.",
+    "Empat kamar tidur, tiga kamar mandi, ruang kerja, dan carport untuk dua mobil. Dekat sekolah internasional dan akses tol."
+   ]
+  },
+  {
+   "id": 10,
+   "ext": {
+    "was": "Rp 1,2 M",
+    "pay": "kpr",
+    "build": "ready",
+    "reno": false,
+    "facing": "Barat",
+    "floors": 1,
+    "ipl": null,
+    "avail": [
+     "taman",
+     "garasi"
+    ],
+    "sec": [
+     "onegate",
+     "cctv",
+     "security"
+    ],
+    "fac": [
+     "playground",
+     "jogging",
+     "ibadah",
+     "minimarket",
+     "parkir"
+    ],
+    "near": [
+     "3 km",
+     "10 km",
+     "2 km",
+     "40 km"
+    ],
+    "walk": 2,
+    "lv": "verified",
+    "pbb": "Lunas 2026",
+    "imb": "Ada (PBG)",
+    "isNew": true,
+    "dev": "Terverifikasi agen Vinmel"
+   },
+   "lat": -6.262,
+   "lng": 107.004,
+   "city": "Bekasi",
+   "cert": "SHM",
+   "priceNum": 1100000000,
+   "ltNum": 105,
+   "lbNum": 90,
+   "ktNum": 3,
+   "photos": [
+    "/assets/0015fe3ee9f7d9fae5966c1354805c8c.jpg",
+    "/assets/83c967883699f4f4515045d52e7d9128.jpg",
+    "/assets/a3d3de7f4f80512034b449f86313effd.jpg"
+   ],
+   "type": "rumah",
+   "title": "Rumah Siap Huni dalam Cluster",
+   "location": "Bekasi Selatan, Bekasi",
+   "price": "Rp 1,1 M",
+   "unit": "",
+   "deal": "Dijual",
+   "lt": "105 m²",
+   "lb": "90 m²",
+   "kt": "3",
+   "km": "2",
+   "fasilitas": [
+    "One gate system",
+    "Carport",
+    "Taman bermain"
+   ],
+   "desc": [
+    "Rumah siap huni di cluster one gate system yang aman dan nyaman. Lingkungan bersih dengan taman bermain anak.",
+    "Tiga kamar tidur dan dua kamar mandi, dekat stasiun LRT dan pusat perbelanjaan."
+   ]
+  },
+  {
+   "id": 11,
+   "ext": {
+    "unitType": "Suite",
+    "pay": "kpr",
+    "build": "inden",
+    "reno": false,
+    "facing": "Utara",
+    "floors": 0,
+    "ipl": [
+     "gratis",
+     "",
+     "2"
+    ],
+    "avail": [
+     "balkon",
+     "gudang"
+    ],
+    "sec": [
+     "onegate",
+     "cctv",
+     "security"
+    ],
+    "fac": [
+     "gym",
+     "pool",
+     "clubhouse",
+     "jogging",
+     "ibadah",
+     "playground",
+     "minimarket",
+     "parkir"
+    ],
+    "near": [
+     "1 km",
+     "4 km",
+     "2 km",
+     "20 km"
+    ],
+    "walk": 3,
+    "lv": "proses",
+    "pbb": "Belum terbit (unit inden)",
+    "imb": "Ada (PBG)",
+    "isNew": true,
+    "dev": "Dalam pengecekan agen Vinmel"
+   },
+   "lat": -6.161,
+   "lng": 106.85,
+   "city": "Jakarta Pusat",
+   "cert": "Strata",
+   "priceNum": 2800000000,
+   "ltNum": 0,
+   "lbNum": 98,
+   "ktNum": 3,
+   "photos": [
+    "/assets/1e906c61051aeefbecc56d6a933ff29d.jpg",
+    "/assets/48a0c6593a8eb95a0e54c71d29f7ac5b.jpg",
+    "/assets/a797bc56b381b796263a2b0f1fa0f874.jpg"
+   ],
+   "type": "apartemen",
+   "title": "Apartemen 3BR untuk Keluarga",
+   "location": "Kemayoran, Jakarta Pusat",
+   "price": "Rp 2,8 M",
+   "unit": "",
+   "deal": "Dijual",
+   "lt": "—",
+   "lb": "98 m²",
+   "kt": "3",
+   "km": "2",
+   "fasilitas": [
+    "Kolam renang",
+    "Taman bermain",
+    "Parkir basement"
+   ],
+   "desc": [
+    "Unit tiga kamar tidur yang lapang untuk keluarga, dengan balkon dan pemandangan taman kota.",
+    "Kompleks apartemen dengan kolam renang, taman bermain, dan parkir basement. Dekat area bisnis dan rumah sakit."
+   ]
+  },
+  {
+   "id": 12,
+   "ext": {
+    "unitType": "1 BR",
+    "pay": "",
+    "build": "ready",
+    "reno": false,
+    "facing": "Selatan",
+    "floors": 0,
+    "ipl": [
+     "bayar",
+     "Rp 600.000 / bulan",
+     ""
+    ],
+    "avail": [
+     "balkon"
+    ],
+    "sec": [
+     "onegate",
+     "cctv",
+     "security"
+    ],
+    "fac": [
+     "gym",
+     "pool",
+     "minimarket",
+     "parkir"
+    ],
+    "near": [
+     "1 km",
+     "12 km",
+     "2 km",
+     "30 km"
+    ],
+    "walk": 3,
+    "lv": "verified",
+    "pbb": "Lunas 2026",
+    "imb": "Ada (PBG)",
+    "isNew": false,
+    "dev": ""
+   },
+   "lat": -6.289,
+   "lng": 106.775,
+   "city": "Jakarta Selatan",
+   "cert": "Strata",
+   "priceNum": 6500000,
+   "ltNum": 0,
+   "lbNum": 36,
+   "ktNum": 1,
+   "photos": [
+    "/assets/a797bc56b381b796263a2b0f1fa0f874.jpg",
+    "/assets/1e906c61051aeefbecc56d6a933ff29d.jpg",
+    "/assets/48a0c6593a8eb95a0e54c71d29f7ac5b.jpg"
+   ],
+   "type": "apartemen",
+   "title": "Apartemen 1BR dekat MRT",
+   "location": "Lebak Bulus, Jakarta Selatan",
+   "price": "Rp 6,5 jt",
+   "unit": "/bulan",
+   "deal": "Disewa",
+   "lt": "—",
+   "lb": "36 m²",
+   "kt": "1",
+   "km": "1",
+   "fasilitas": [
+    "Furnished",
+    "Dekat MRT",
+    "Gym"
+   ],
+   "desc": [
+    "Unit satu kamar tidur furnished, hanya beberapa menit berjalan ke stasiun MRT.",
+    "Cocok untuk profesional muda. Fasilitas gym, kolam renang, dan keamanan 24 jam."
+   ]
+  },
+  {
+   "id": 13,
+   "ext": {
+    "kmOut": 0,
+    "pay": "",
+    "build": "ready",
+    "reno": false,
+    "facing": "Barat",
+    "floors": 0,
+    "ipl": null,
+    "avail": [],
+    "sec": [
+     "onegate",
+     "cctv",
+     "security"
+    ],
+    "fac": [
+     "gym",
+     "ibadah",
+     "minimarket",
+     "parkir"
+    ],
+    "near": [
+     "1 km",
+     "2 km",
+     "1 km",
+     "28 km"
+    ],
+    "walk": 3,
+    "lv": "verified",
+    "pbb": "Lunas 2026",
+    "imb": "Ada (PBG)",
+    "isNew": false,
+    "dev": ""
+   },
+   "lat": -6.226,
+   "lng": 106.829,
+   "city": "Jakarta Selatan",
+   "cert": "SHM",
+   "priceNum": 3200000,
+   "ltNum": 0,
+   "lbNum": 18,
+   "ktNum": 1,
+   "photos": [
+    "/assets/8d7a27adf3d9572d000675c6d2b4113e.jpg",
+    "/assets/b9ac1f72724b3b478d6fb25cb7a837e4.jpg",
+    "/assets/faa0a2718e3177e736a593984b61bcad.jpg"
+   ],
+   "type": "kos",
+   "title": "Kos Eksklusif Karyawan",
+   "location": "Kuningan, Jakarta Selatan",
+   "price": "Rp 3,2 jt",
+   "unit": "/bulan",
+   "deal": "Disewa",
+   "lt": "—",
+   "lb": "18 m² / kamar",
+   "kt": "1",
+   "km": "1 (dalam)",
+   "fasilitas": [
+    "AC",
+    "Wi-Fi",
+    "Cleaning service"
+   ],
+   "desc": [
+    "Kos eksklusif untuk karyawan di jantung kawasan perkantoran. Kamar luas, furnished, dan dibersihkan berkala.",
+    "Termasuk listrik, air, Wi-Fi, dan cleaning service mingguan. Akses kartu dan CCTV 24 jam."
+   ]
+  },
+  {
+   "id": 14,
+   "ext": {
+    "kmOut": 0,
+    "pay": "",
+    "build": "ready",
+    "reno": true,
+    "facing": "Timur",
+    "floors": 0,
+    "ipl": null,
+    "avail": [],
+    "sec": [
+     "cctv"
+    ],
+    "fac": [
+     "ibadah",
+     "minimarket"
+    ],
+    "near": [
+     "4 km",
+     "22 km",
+     "1 km",
+     "45 km"
+    ],
+    "walk": 3,
+    "lv": "verified",
+    "pbb": "Lunas 2026",
+    "imb": "Ada (IMB)",
+    "isNew": false,
+    "dev": ""
+   },
+   "lat": -6.369,
+   "lng": 106.832,
+   "city": "Depok",
+   "cert": "SHM",
+   "priceNum": 1100000,
+   "ltNum": 0,
+   "lbNum": 9,
+   "ktNum": 1,
+   "photos": [
+    "/assets/faa0a2718e3177e736a593984b61bcad.jpg",
+    "/assets/8d7a27adf3d9572d000675c6d2b4113e.jpg",
+    "/assets/b9ac1f72724b3b478d6fb25cb7a837e4.jpg"
+   ],
+   "type": "kos",
+   "title": "Kos Hemat dekat Kampus",
+   "location": "Margonda, Depok",
+   "price": "Rp 1,1 jt",
+   "unit": "/bulan",
+   "deal": "Disewa",
+   "lt": "—",
+   "lb": "9 m² / kamar",
+   "kt": "1",
+   "km": "1 (luar)",
+   "fasilitas": [
+    "Wi-Fi",
+    "Dapur bersama",
+    "Parkir motor"
+   ],
+   "desc": [
+    "Kos hemat untuk mahasiswa, beberapa langkah dari kampus dan jalur angkutan umum.",
+    "Kamar bersih dengan kasur dan lemari, Wi-Fi, dapur bersama, serta parkir motor."
+   ]
+  },
+  {
+   "id": 15,
+   "ext": {
+    "road": false,
+    "pay": "cash",
+    "build": "",
+    "reno": false,
+    "facing": "Timur",
+    "floors": 0,
+    "ipl": null,
+    "avail": [],
+    "sec": [],
+    "fac": [
+     "ibadah"
+    ],
+    "near": [
+     "15 km",
+     "30 km",
+     "8 km",
+     "80 km"
+    ],
+    "walk": 1,
+    "lv": "proses",
+    "pbb": "Belum lunas 2026",
+    "imb": "Tidak diperlukan (tanah kosong)",
+    "isNew": false,
+    "dev": ""
+   },
+   "lat": -6.703,
+   "lng": 106.976,
+   "city": "Bogor",
+   "cert": "Girik/AJB",
+   "priceNum": 750000000,
+   "ltNum": 1000,
+   "lbNum": 0,
+   "ktNum": 0,
+   "photos": [
+    "/assets/cb60516055ec3117e187d22c75161758.jpg",
+    "/assets/c8508652e2a1649eaab830823a42a563.jpg",
+    "/assets/f2d1559edcb7df1b8ac62392ce2fb5b8.jpg"
+   ],
+   "type": "tanah",
+   "title": "Tanah Kebun View Pegunungan",
+   "location": "Puncak, Bogor",
+   "price": "Rp 750 jt",
+   "unit": "",
+   "deal": "Dijual",
+   "lt": "1.000 m²",
+   "lb": "—",
+   "kt": "—",
+   "km": "—",
+   "fasilitas": [
+    "View pegunungan",
+    "Udara sejuk",
+    "Akses mobil"
+   ],
+   "desc": [
+    "Lahan kebun dengan pemandangan pegunungan dan udara sejuk, cocok untuk villa atau agrowisata.",
+    "Akses mobil sampai lokasi. Dokumen Girik/AJB, bisa dibantu proses peningkatan sertifikat."
+   ]
+  },
+  {
+   "id": 16,
+   "ext": {
+    "road": true,
+    "was": "Rp 4,5 M",
+    "pay": "kpr",
+    "build": "",
+    "reno": false,
+    "facing": "Utara",
+    "floors": 0,
+    "ipl": null,
+    "avail": [],
+    "sec": [
+     "cctv"
+    ],
+    "fac": [
+     "minimarket",
+     "parkir"
+    ],
+    "near": [
+     "1 km",
+     "3 km",
+     "2 km",
+     "30 km"
+    ],
+    "walk": 3,
+    "lv": "verified",
+    "pbb": "Lunas 2026",
+    "imb": "Tidak diperlukan (tanah kosong)",
+    "isNew": false,
+    "dev": ""
+   },
+   "lat": -6.312,
+   "lng": 106.667,
+   "city": "Tangerang Selatan",
+   "cert": "HGB",
+   "priceNum": 4200000000,
+   "ltNum": 600,
+   "lbNum": 0,
+   "ktNum": 0,
+   "photos": [
+    "/assets/f2d1559edcb7df1b8ac62392ce2fb5b8.jpg",
+    "/assets/cb60516055ec3117e187d22c75161758.jpg",
+    "/assets/c8508652e2a1649eaab830823a42a563.jpg"
+   ],
+   "type": "tanah",
+   "title": "Kavling Komersial Tepi Jalan",
+   "location": "Serpong, Tangerang Selatan",
+   "price": "Rp 4,2 M",
+   "unit": "",
+   "deal": "Dijual",
+   "lt": "600 m²",
+   "lb": "—",
+   "kt": "—",
+   "km": "—",
+   "fasilitas": [
+    "Tepi jalan utama",
+    "Zona komersial",
+    "HGB"
+   ],
+   "desc": [
+    "Kavling komersial di tepi jalan utama kawasan Serpong yang ramai, ideal untuk ruko, showroom, atau restoran.",
+    "Zona komersial dengan sertifikat HGB, lingkungan berkembang dan dekat pusat bisnis."
+   ]
+  }
+ ],
+ "owned": [
+  {
+   "key": "a",
+   "title": "Rumah Minimalis 2 Lantai",
+   "unit": "Unit B-12",
+   "location": "Bintaro, Tangerang Selatan",
+   "cover": "/assets/a3d3de7f4f80512034b449f86313effd.jpg",
+   "progress": 68,
+   "statusText": "Tahap dinding & atap",
+   "purchased": "12 Jan 2026",
+   "handover": "Mar 2027",
+   "updated": "28 Okt 2026",
+   "legal": [
+    {
+     "title": "Cek sertifikat induk di BPN",
+     "date": "05 Feb 2026",
+     "state": "done",
+     "note": "Sertifikat induk developer dinyatakan asli dan bebas sengketa.",
+     "doc": "Hasil pengecekan BPN"
+    },
+    {
+     "title": "IMB / PBG",
+     "date": "10 Feb 2026",
+     "state": "done",
+     "note": "Persetujuan Bangunan Gedung untuk unit B-12 sudah terbit.",
+     "doc": "No. PBG: [NOMOR PBG]"
+    },
+    {
+     "title": "PPJB",
+     "date": "20 Feb 2026",
+     "state": "done",
+     "note": "Perjanjian Pengikatan Jual Beli ditandatangani di hadapan notaris.",
+     "doc": "No. akta PPJB: [NOMOR AKTA]"
+    },
+    {
+     "title": "Pemecahan & pembuatan SHM",
+     "date": "Est. Des 2026",
+     "state": "current",
+     "pct": 60,
+     "note": "Sertifikat induk sedang dipecah per kavling. Pengukuran BPN selesai, menunggu penerbitan SHM unit.",
+     "doc": ""
+    },
+    {
+     "title": "AJB (Akta Jual Beli)",
+     "date": "Est. Mar 2027",
+     "state": "next",
+     "note": "Ditandatangani di hadapan PPAT setelah SHM unit terbit dan pelunasan / akad KPR final.",
+     "doc": ""
+    },
+    {
+     "title": "Balik nama SHM",
+     "date": "Est. Apr – Mei 2027",
+     "state": "next",
+     "note": "SHM diproses balik nama dari developer ke nama Anda di BPN.",
+     "doc": ""
+    },
+    {
+     "title": "PBB atas nama pembeli",
+     "date": "Est. Mei 2027",
+     "state": "next",
+     "note": "Pemecahan SPPT PBB dan perubahan nama wajib pajak ke nama Anda.",
+     "doc": ""
+    }
+   ],
+   "notary": {
+    "name": "[NAMA NOTARIS], S.H., M.Kn.",
+    "address": "[ALAMAT KANTOR NOTARIS, KECAMATAN, KOTA]",
+    "phone": "[NOMOR TELEPON KANTOR]",
+    "hours": "Senin – Jumat, 08.30 – 16.30"
+   },
+   "steps": [
+    {
+     "title": "Booking & uang muka",
+     "date": "12 Jan 2026",
+     "state": "done",
+     "note": "Booking fee dan uang muka diterima. Unit B-12 resmi tercatat atas nama Anda.",
+     "photos": [
+      [
+       "RA1",
+       "Bukti bayar booking fee",
+       "12 Jan 2026"
+      ],
+      [
+       "RA2",
+       "Bukti bayar uang muka",
+       "19 Jan 2026"
+      ]
+     ]
+    },
+    {
+     "title": "PPJB & akad kredit",
+     "date": "20 Feb 2026",
+     "state": "done",
+     "note": "Penandatanganan PPJB dan akad KPR bersama bank dan notaris.",
+     "photos": [
+      [
+       "K1",
+       "Dokumen PPJB & akad KPR",
+       "20 Feb 2026"
+      ],
+      [
+       "K2",
+       "Penandatanganan akad",
+       "20 Feb 2026"
+      ]
+     ]
+    },
+    {
+     "title": "Pekerjaan pondasi",
+     "date": "Mar – Apr 2026",
+     "state": "done",
+     "note": "Galian tanah, pemasangan besi, dan pengecoran pondasi selesai sesuai gambar kerja.",
+     "photos": [
+      [
+       "P0",
+       "Pondasi",
+       "18 Apr 2026"
+      ]
+     ]
+    },
+    {
+     "title": "Struktur kolom & balok",
+     "date": "Mei – Jul 2026",
+     "state": "done",
+     "note": "Kolom, balok, dan plat lantai 2 selesai dicor. Uji kekuatan beton lolos.",
+     "photos": [
+      [
+       "P1",
+       "Struktur lantai 1",
+       "06 Jun 2026"
+      ],
+      [
+       "P2",
+       "Struktur lantai 2",
+       "24 Jul 2026"
+      ]
+     ]
+    },
+    {
+     "title": "Dinding & rangka atap",
+     "date": "Agu – Nov 2026",
+     "state": "current",
+     "pct": 70,
+     "note": "Pemasangan bata dan rangka atap baja ringan selesai. Plester dinding lantai 1 sedang berjalan.",
+     "photos": [
+      [
+       "P3",
+       "Dinding & rangka atap",
+       "28 Okt 2026"
+      ],
+      [
+       "P2",
+       "Tampak samping",
+       "15 Sep 2026"
+      ]
+     ]
+    },
+    {
+     "title": "Finishing",
+     "date": "Des 2026 – Feb 2027",
+     "state": "next",
+     "note": "Plester aci, keramik, kusen, pengecatan, serta instalasi listrik dan air.",
+     "photos": []
+    },
+    {
+     "title": "Serah terima kunci",
+     "date": "Mar 2027",
+     "state": "next",
+     "note": "Inspeksi bersama, pengecekan kualitas, lalu serah terima kunci.",
+     "photos": []
+    }
+   ]
+  },
+  {
+   "key": "b",
+   "title": "Rumah Hook Taman Luas",
+   "unit": "Kav. C-03",
+   "location": "Cibubur, Jakarta Timur",
+   "cover": "/assets/83c967883699f4f4515045d52e7d9128.jpg",
+   "progress": 91,
+   "statusText": "Tahap finishing",
+   "purchased": "03 Agu 2025",
+   "handover": "Des 2026",
+   "updated": "30 Okt 2026",
+   "legal": [
+    {
+     "title": "Cek sertifikat induk di BPN",
+     "date": "20 Agu 2025",
+     "state": "done",
+     "note": "Sertifikat induk dinyatakan asli dan bebas sengketa.",
+     "doc": "Hasil pengecekan BPN"
+    },
+    {
+     "title": "IMB / PBG",
+     "date": "28 Agu 2025",
+     "state": "done",
+     "note": "Persetujuan Bangunan Gedung untuk kavling C-03 sudah terbit.",
+     "doc": "No. PBG: [NOMOR PBG]"
+    },
+    {
+     "title": "PPJB",
+     "date": "15 Sep 2025",
+     "state": "done",
+     "note": "Perjanjian Pengikatan Jual Beli ditandatangani di hadapan notaris.",
+     "doc": "No. akta PPJB: [NOMOR AKTA]"
+    },
+    {
+     "title": "Pemecahan & pembuatan SHM",
+     "date": "22 Sep 2026",
+     "state": "done",
+     "note": "SHM unit sudah terbit atas nama developer, siap untuk AJB.",
+     "doc": "No. SHM: [NOMOR SHM]"
+    },
+    {
+     "title": "AJB (Akta Jual Beli)",
+     "date": "Dijadwalkan Des 2026",
+     "state": "current",
+     "pct": 50,
+     "note": "Draf akta sedang disiapkan PPAT. Penandatanganan bersamaan dengan serah terima kunci.",
+     "doc": ""
+    },
+    {
+     "title": "Balik nama SHM",
+     "date": "Est. Jan – Feb 2027",
+     "state": "next",
+     "note": "SHM diproses balik nama ke nama Anda di BPN setelah AJB.",
+     "doc": ""
+    },
+    {
+     "title": "PBB atas nama pembeli",
+     "date": "Est. Feb 2027",
+     "state": "next",
+     "note": "Pemecahan SPPT PBB dan perubahan nama wajib pajak ke nama Anda.",
+     "doc": ""
+    }
+   ],
+   "notary": {
+    "name": "[NAMA NOTARIS], S.H., M.Kn.",
+    "address": "[ALAMAT KANTOR NOTARIS, KECAMATAN, KOTA]",
+    "phone": "[NOMOR TELEPON KANTOR]",
+    "hours": "Senin – Jumat, 08.30 – 16.30"
+   },
+   "steps": [
+    {
+     "title": "Booking & uang muka",
+     "date": "03 Agu 2025",
+     "state": "done",
+     "note": "Booking fee dan uang muka diterima.",
+     "photos": [
+      [
+       "RB1",
+       "Bukti bayar booking fee",
+       "03 Agu 2025"
+      ],
+      [
+       "RB2",
+       "Bukti bayar uang muka",
+       "10 Agu 2025"
+      ]
+     ]
+    },
+    {
+     "title": "PPJB & akad kredit",
+     "date": "15 Sep 2025",
+     "state": "done",
+     "note": "Penandatanganan PPJB dan akad KPR selesai.",
+     "photos": [
+      [
+       "K2",
+       "Penandatanganan akad",
+       "15 Sep 2025"
+      ],
+      [
+       "K1",
+       "Dokumen PPJB & akad KPR",
+       "15 Sep 2025"
+      ]
+     ]
+    },
+    {
+     "title": "Pondasi & struktur",
+     "date": "Okt 2025 – Feb 2026",
+     "state": "done",
+     "note": "Pondasi, kolom, balok, dan plat lantai selesai.",
+     "photos": [
+      [
+       "P0",
+       "Pondasi",
+       "20 Nov 2025"
+      ],
+      [
+       "P2",
+       "Struktur",
+       "14 Feb 2026"
+      ]
+     ]
+    },
+    {
+     "title": "Dinding & atap",
+     "date": "Mar – Jun 2026",
+     "state": "done",
+     "note": "Dinding, rangka atap, dan genteng terpasang.",
+     "photos": [
+      [
+       "P3",
+       "Dinding & atap",
+       "22 Jun 2026"
+      ]
+     ]
+    },
+    {
+     "title": "Finishing",
+     "date": "Jul – Nov 2026",
+     "state": "current",
+     "pct": 75,
+     "note": "Pengecatan eksterior selesai. Pemasangan keramik dan kitchen set sedang berjalan.",
+     "photos": [
+      [
+       "P4",
+       "Finishing eksterior",
+       "30 Okt 2026"
+      ],
+      [
+       "P3",
+       "Sebelum pengecatan",
+       "02 Sep 2026"
+      ]
+     ]
+    },
+    {
+     "title": "Serah terima kunci",
+     "date": "Des 2026",
+     "state": "next",
+     "note": "Inspeksi bersama, pengecekan kualitas, lalu serah terima kunci.",
+     "photos": []
+    }
+   ]
+  }
+ ],
+ "progressPhotos": {
+  "P0": "/assets/ad4fd05c01ef016e2fc6395e9a360932.jpg",
+  "P1": "/assets/e56f41226deedb35a71d10b08d4b7266.jpg",
+  "P2": "/assets/0a73a0af27e4f7c725e8f4a5a6b0b73f.jpg",
+  "P3": "/assets/d7924205f9723c698295161e07497a41.jpg",
+  "P4": "/assets/bedb707ddf04e896a8d0b508d2d68c31.jpg",
+  "RA1": "/assets/6283d63c43db1630ef2b6e96681875a4.jpg",
+  "RA2": "/assets/9b199195ca42d65468bc1f2104e617ca.jpg",
+  "RB1": "/assets/56fe6290a1df85611ac497195ff7757a.jpg",
+  "RB2": "/assets/f95c05add858054409fe49dd226162ed.jpg",
+  "K1": "/assets/e4583a6dbed1b24ba167bbe0e28edc9c.jpg",
+  "K2": "/assets/7ecd4f1864afd1ecadfad22f4b79f55d.jpg"
+ }
+}
