@@ -11,6 +11,7 @@ Website Vinmel Agency dengan Next.js + Tailwind CSS. Tampilan dan perilakunya me
 - Titip properti (formulir 5 langkah)
 - Pantau properti saya (timeline pembangunan dan legalitas)
 - Chatbot "Cimel"
+- Masuk (OTP WhatsApp / Google), favorit, jadwal survei (WhatsApp + Google Calendar/.ics), peta OpenStreetMap, bagikan, "Kabari saya", booking/tanda jadi manual
 
 ## Menjalankan
 ```bash
@@ -23,6 +24,7 @@ Buka http://localhost:3000.
 Salin `.env.example` menjadi `.env.local`, lalu isi:
 - `NEXT_PUBLIC_WA_NUMBER`: nomor WhatsApp agen (contoh `6281234567890`)
 - `NEXT_PUBLIC_SITE_URL`: URL website, dipakai untuk link properti di pesan WhatsApp
+- `NEXT_PUBLIC_AUTH_API`: URL backend login (endpoint `POST /auth/otp/send`, `POST /auth/otp/verify`, `GET /auth/google`). **Selama kosong, login berjalan sebagai mode pratinjau: kode 6 digit apa pun diterima dan data akun hanya disimpan di perangkat.** Jangan tayangkan ke publik sebelum backend login siap.
 
 ## Struktur
 - `components/DesignComponent.jsx`: komponen hasil konversi otomatis dari desain (jangan diedit manual kalau masih ingin sinkron dengan desain)
