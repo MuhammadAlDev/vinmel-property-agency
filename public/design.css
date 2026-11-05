@@ -183,4 +183,33 @@ input:focus,select:focus,button:focus-visible,a:focus-visible{outline:3px solid 
 .vm-sheet,.vm-sheet.wide{width:100%;max-height:92vh;border-radius:24px 24px 0 0;animation:sheetUp .3s ease both;padding:22px 18px 28px}
 .hide-sm{display:none}
 }
+/* ===== Revisi Amel 2026-11-05: Cimel AI, owner, CMS, pembeli, P3 ===== */
+.cm-card{display:flex;gap:10px;align-items:center;width:100%;padding:8px;border-radius:14px;border:1px solid #E3E7E1;background:#FFFFFF;font:inherit;text-align:left;cursor:pointer;color:#1B2420;min-height:44px}
+.cm-card:hover{border-color:#1F4D3A;background:#F3F8F4}
+.cm-act{font:inherit;font-size:13px;font-weight:700;min-height:40px;padding:0 12px;border-radius:999px;border:1.5px solid #1F4D3A;background:#FFFFFF;color:#1F4D3A;cursor:pointer}
+.cm-act:hover{background:#E3EFE6}
+.typing{display:inline-flex;gap:4px}.typing i{width:7px;height:7px;border-radius:999px;background:#7C8B81;animation:blink 1.2s infinite both}.typing i:nth-child(2){animation-delay:.2s}.typing i:nth-child(3){animation-delay:.4s}
+@keyframes blink{0%,80%,100%{opacity:.3}40%{opacity:1}}
+.tabbar{display:flex;gap:4px;padding:4px;border-radius:999px;background:#FFFFFF;border:1px solid #E3E7E1;align-self:flex-start;max-width:100%;overflow-x:auto;scrollbar-width:none}
+.tabbar button{font:inherit;font-size:14px;font-weight:700;min-height:42px;padding:0 16px;border-radius:999px;border:0;cursor:pointer;white-space:nowrap;flex:0 0 auto}
+.card-w > .vm-label,.vm-sheet > .vm-label{flex:0 0 auto}
+.card-w{background:#FFFFFF;border:1px solid #E3E7E1;border-radius:24px;padding:22px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.kpi{display:flex;flex-direction:column;gap:4px;padding:16px;border-radius:18px;background:#FFFFFF;border:1px solid #E3E7E1;min-width:0}
+.kpi b{font-size:28px;font-weight:800;letter-spacing:-0.02em;color:#1F4D3A}
+button.kpi:hover{border-color:#1F4D3A}
+.badge{align-self:flex-start;display:inline-flex;align-items:center;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:800;white-space:nowrap}
+.mini{font:inherit;font-size:13px;font-weight:700;min-height:44px;padding:0 14px;border-radius:999px;border:1.5px solid #1F4D3A;background:#FFFFFF;color:#1F4D3A;cursor:pointer;white-space:nowrap;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.mini:hover{background:#E3EFE6;color:#1F4D3A}
+.mini.pri{background:#1F4D3A;color:#FFFFFF}.mini.pri:hover{background:#163828;color:#FFFFFF}
+.mini.warn{border-color:#B4361A;color:#B4361A}.mini.warn:hover{background:#FBE6D4;color:#B4361A}
+.cms-wrap{display:flex;min-height:100%}
+.cms-side{flex:0 0 248px;background:#1F4D3A;color:#FFFFFF;padding:20px 14px;display:flex;flex-direction:column;gap:4px;position:sticky;top:0;height:100vh;overflow-y:auto}
+.cms-side button{font:inherit;font-size:15px;font-weight:600;text-align:left;min-height:46px;padding:0 14px;border-radius:12px;border:0;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.cms-side button[aria-current="false"]:hover{background:rgba(255,255,255,.12) !important}
+.cms-main{flex:1 1 auto;min-width:0;padding:28px 28px 120px;display:flex;flex-direction:column;gap:20px;max-width:1180px}
+.cms-table{width:100%;border-collapse:collapse;font-size:14px;min-width:720px}
+.cms-table th{text-align:left;font-weight:700;color:#4A5751;padding:10px 12px;border-bottom:1px solid #E3E7E1;white-space:nowrap}
+.cms-table td{padding:10px 12px;border-bottom:1px solid #EEF1EC;vertical-align:middle}
+select.vm-input{appearance:auto;padding-right:8px}
+@media (max-width: 960px){.cms-wrap{flex-direction:column}.cms-side{z-index:4;flex:0 0 auto;height:auto;flex-direction:row;overflow-x:auto;padding:10px;gap:6px}.cms-brand,.cms-foot{display:none !important}.cms-side button{flex:0 0 auto;min-height:44px}.cms-main{padding:20px 16px 120px}}
 @media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important;scroll-behavior:auto !important}}
