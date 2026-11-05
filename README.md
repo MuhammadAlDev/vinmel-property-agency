@@ -4,13 +4,16 @@ Website Vinmel Agency dengan Next.js 16 + Tailwind CSS + **Supabase** (database,
 
 ## Halaman
 - `/` website publik: beranda, listing + filter, detail, bandingkan, KPR, **titip properti** (terkirim ke backend), **pantau properti saya** (data pembeli yang login), login OTP WhatsApp / Google, favorit, jadwal survei, peta OpenStreetMap
-- `/owner` dashboard owner (CMS): ringkasan, kelola listing, tinjau pengajuan titip (ubah tahap, catatan, jadikan draft listing), kelola progres pembangunan & legalitas pembeli
+- `/#owner` (atau `/owner`, dialihkan ke sini) **CMS owner** dari desain Amel: ringkasan, listing (judul, harga, harga coret, status Tayang/Booked/Terjual/Draft, link video & tur 360°), pengajuan titip, jadwal survei, UTJ & pembayaran, pembeli & progres (update + foto), konten & kontak. Login owner lewat WhatsApp OTP / Google; peran owner ditentukan `owner_allowlist`.
+- **Halaman pembeli** (Pantau properti saya): progres + kabar terbaru dari CMS, pembayaran, dokumen, legalitas. Akun: status jadwal survei dari owner, properti titipan saya.
+- `/owner/lanjutan` alat lanjutan owner (dashboard lama): tambah listing lengkap + foto + koordinat, jadikan pengajuan titip draft listing, tahap pembangunan & legalitas pembeli, hapus listing
 - Chatbot "Cimel" dan "Rekomendasi AI" masih versi lokal dari desain (ditunda, belum memakai LLM)
 
 ## Mode kerja
 | Kondisi | Perilaku |
 | --- | --- |
-| Env Supabase kosong (mode demo) | Data dari `data/dummy/*.json`. Perubahan (listing, titip, pantau) disimpan di memori server dan hilang saat restart. Login = pratinjau desain. `/owner` hanya bisa dibuka saat `npm run dev`. |
+| Env Supabase kosong (mode demo) | Data dari `data/dummy/*.json`. CMS di situs = pratinjau desain (localStorage + data contoh). Alat lanjutan `/owner/lanjutan` hanya bisa dibuka saat `npm run dev` (memori server, hilang saat restart). |
+| Mode demo + `VINMEL_DEMO_AS=owner` atau `buyer` (hanya `npm run dev`) | Menyimulasikan sesi owner/pembeli supaya alur CMS → API → halaman pembeli bisa dicoba tanpa Supabase (data di memori server). Tidak berlaku di production. |
 | Env Supabase terisi | Data dari database, login OTP WA + Google sungguhan, akses diatur Row Level Security. |
 
 Jangan tayangkan ke publik dalam mode demo.
@@ -24,7 +27,7 @@ npm run dev
 
 ## Menyiapkan Supabase
 1. Buat project di supabase.com, isi `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY` di `.env.local` / env hosting.
-2. Jalankan `supabase/migrations/20261104120000_init.sql` lalu `supabase/seed.sql` (SQL editor, atau `npx supabase db push` + seed).
+2. Jalankan `supabase/migrations/20261104120000_init.sql`, `supabase/seed.sql`, lalu `supabase/migrations/20261105120000_cms_owner_pembeli.sql` (SQL editor, atau `npx supabase db push` + seed). Migrasi kedua hanya menambah kolom/tabel/policy; langkah rollback ada di akhir file.
 3. Daftarkan akun owner: `insert into owner_allowlist (email) values ('<email google owner>');` atau `(phone) values ('62xxxxxxxxxx')`. Akun yang login dengan email/nomor itu otomatis menjadi owner. Akun yang sudah terlanjur ada: `update profiles set role = 'owner' where email = '...';`
 4. **Google OAuth**: buat OAuth Client (Web) di Google Cloud Console, redirect URI `https://<project>.supabase.co/auth/v1/callback`, lalu isi Client ID/Secret di Supabase > Authentication > Providers > Google. Tambahkan `https://<domain>/api/auth/callback` ke Authentication > URL Configuration > Redirect URLs.
 5. **OTP WhatsApp**: Supabase > Authentication > Providers > Phone, pilih Twilio (atau Twilio Verify) dengan nomor pengirim WhatsApp yang sudah disetujui. Server memanggil `signInWithOtp({ channel: 'whatsapp' })`.
@@ -46,6 +49,15 @@ Untuk lokal dengan Supabase CLI: `npx supabase start` (memakai `supabase/config.
 | `GET /api/pantau?scope=owner`, `POST`, `PATCH/DELETE /api/pantau/:id` | owner | progres pembeli |
 | `GET /api/wilayah/provinsi`, `GET /api/wilayah/kota?provinsi=31` | publik | API wilayah terbuka (emsifa), di-cache 1 hari |
 | `POST /api/upload` (multipart `photos`) | owner | foto listing ke bucket publik `listing` |
+| `GET /api/cms` | owner | semua data CMS dalam bentuk state desain (konten, listing, titip, survei, UTJ, pembeli, update) |
+| `PATCH /api/cms/listing/:id` `{title, price, was, status, video, tour}` | owner | edit listing dari CMS desain |
+| `GET /api/cms/konten`, `PUT /api/cms/konten` `{about, stats, testi}` | publik / owner | Tentang Vinmel, angka kepercayaan, testimoni |
+| `POST /api/survei`, `GET /api/survei` | publik / user login | jadwal survei dari situs (uid, nomor WA, catatan); daftar milik user |
+| `PATCH /api/survei/:uid` `{status: baru\|ok\|selesai\|batal}` | owner | konfirmasi survei |
+| `POST /api/utj` `{propId}` | user login | permintaan invoice UTJ (rumah & apartemen dijual) |
+| `PATCH /api/utj/:inv` `{status: baru\|invoice\|bukti\|ok\|batal}` | owner | alur UTJ; `ok` → listing Booked |
+| `POST /api/pantau/:id/updates` (multipart `step, pct, note, photos`), `DELETE /api/pantau/:id/updates/:uid` | owner | update progres + foto ke bucket privat `progres` (pembeli melihat lewat signed URL) |
+| `GET /api/auth/whatsapp?role=owner&next=` | publik | kembali ke halaman dengan `?masuk=wa` untuk membuka form OTP |
 
 Pembeli melihat "Pantau properti" miliknya bila owner mengisi nomor WA / email pembeli di dashboard; data tertaut otomatis saat pembeli login.
 
@@ -55,8 +67,8 @@ Pembeli melihat "Pantau properti" miliknya bila owner mengisi nomor WA / email p
 
 ## Struktur
 - `design/Main.dc.html`: sumber desain dari Amel. `npm run convert-design` mengonversinya ke `components/DesignComponent.jsx` lalu `scripts/integrate-backend.mjs` memasang titik sambung backend (props `listings`, `owned`, `sessionUser`, `onSubmitTitip`, dst.). Bila desain baru membuat titik sambung hilang, skrip berhenti dengan pesan error.
-- `components/VinmelApp.jsx`: pembungkus klien (sesi, pantau, kirim titip)
-- `components/owner/*`: dashboard owner (tampilan sementara sampai desain CMS dari Amel siap)
-- `lib/`: akses data (`listings`, `titip`, `pantau`, `auth`, `wilayah`), klien Supabase
+- `components/VinmelApp.jsx`: pembungkus klien (sesi, data CMS sesuai peran, menyimpan setiap aksi CMS ke API)
+- `components/owner/*`: alat lanjutan owner (`/owner/lanjutan`)
+- `lib/`: akses data (`listings`, `titip`, `pantau`, `cms`, `auth`, `wilayah`), klien Supabase
 - `supabase/`: migrasi skema + RLS + storage, seed, config CLI
 - `data/dummy/`: data dummy (diambil dari desain). `npm run data:export` membuat ulang JSON dan `supabase/seed.sql`

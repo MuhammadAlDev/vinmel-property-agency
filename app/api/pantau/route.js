@@ -1,10 +1,12 @@
 import { listPurchases, savePurchase, toDesignOwned } from '@/lib/pantau';
+import { listUpdates } from '@/lib/cms';
 import { getSessionUser, requireOwner, ownerErrorMessage } from '@/lib/auth';
 import { ok, fail, readJson } from '@/lib/http';
 
 export const dynamic = 'force-dynamic';
 
-// GET /api/pantau -> pembeli: properti miliknya (format desain). ?scope=owner -> owner: semua (format CMS).
+// GET /api/pantau -> pembeli: properti miliknya (format desain) + update progres dari owner.
+// ?scope=owner -> owner: semua (format CMS lama / alat lanjutan).
 export async function GET(req) {
   if (new URL(req.url).searchParams.get('scope') === 'owner') {
     const a = await requireOwner();
@@ -13,8 +15,9 @@ export async function GET(req) {
   }
   const user = await getSessionUser();
   if (!user) return fail(401, 'Silakan masuk untuk memantau properti.');
-  const items = await listPurchases({ user });
-  return ok({ items: items.map(toDesignOwned) });
+  const items = (await listPurchases({ user })).map(toDesignOwned);
+  const updates = await listUpdates(items.map((o) => o.key)).catch((e) => { console.error('[pantau updates]', e); return {}; });
+  return ok({ items, updates });
 }
 
 // POST /api/pantau (owner) -> catat pembelian baru + tahap progres

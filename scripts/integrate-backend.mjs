@@ -11,6 +11,14 @@
 //   sessionUser   : user dari sesi backend; null = pasti belum login, undefined = pakai localStorage (mode pratinjau)
 //   onLogin(u) / onLogout() : dipanggil setelah login / keluar
 //   onSubmitTitip(tp) : Promise<{ ref }> untuk mengirim pengajuan titip ke backend
+// Tambahan untuk desain Amel 2026-11-05 (CMS owner & halaman pembeli):
+//   live          : true = data dari backend (contoh/dummy di CMS disembunyikan, link /owner/lanjutan aktif)
+//   cms           : state `cms` dari backend (about/stats/testi, svSt, utj, updates, progress, listing override sesi ini)
+//   onCms(patch)  : dipanggil sebagai ganti simpan ke localStorage; VinmelApp yang menyimpan ke Supabase
+//   surveys       : daftar jadwal survei (pembeli: miliknya; owner: semua)
+//   onSurvey(rec) : jadwal survei baru dari situs
+//   onUtjRequest(d): tombol "Minta invoice UTJ"
+//   titipItems    : pengajuan titip dari backend (owner: semua; penitip: miliknya)
 import fs from 'node:fs';
 
 const file = process.argv[2] || 'components/DesignComponent.jsx';
@@ -60,6 +68,64 @@ const patches = [
     "tpNextLabel: tp.step < 5 ? 'Lanjut' : tp.sending ? 'Mengirim…' : 'Kirim untuk direview'"],
   ['komisi open listing', "'Komisi [X]% saat transaksi'", "'Komisi 5–10% saat transaksi'"],
   ['komisi eksklusif', "'Komisi [Y]% saat transaksi'", "'Komisi 5–10% saat transaksi'"],
+  // ===== CMS owner & halaman pembeli (desain 2026-11-05) =====
+  ['login WA owner dari /api/auth/whatsapp (?masuk=wa)',
+    "    try { if (window.location.hash === '#owner') this.setState({ showCms: true });",
+    "    try { if (/[?&]masuk=wa(&|$)/.test(window.location.search)) { this.setState({ auth: { step: 'wa' } }); window.history.replaceState(null, '', window.location.pathname + window.location.hash); } } catch (e) {}\n    try { if (window.location.hash === '#owner') this.setState({ showCms: true });"],
+  ['override listing dari props.cms',
+    'var CMSL = (s.cms || {}).listing || {};',
+    'var CMSL = (this.props.cms || s.cms || {}).listing || {};'],
+  ['status/video/tour listing dari backend',
+    "if (!o) return Object.assign({}, d, { status: 'tayang', video: '', tour: '' });",
+    "if (!o) return Object.assign({}, d, { status: d.status || 'tayang', video: d.video || '', tour: d.tour || '' });"],
+  ['status/video/tour override di atas data backend',
+    "status: o.status || 'tayang', video: o.video || '', tour: o.tour || '' });",
+    "status: o.status || d.status || 'tayang', video: o.video !== undefined ? o.video : (d.video || ''), tour: o.tour !== undefined ? o.tour : (d.tour || '') });"],
+  ['state cms dari backend + simpan lewat onCms',
+    "    var CM = s.cms || {};\n    var cmSet = function (patch) { var n",
+    "    var CM = this.props.cms || s.cms || {};\n    var cmSet = function (patch) { if (self.props.onCms) { self.props.onCms(patch); return; } var n"],
+  ['daftar survei akun dari backend',
+    '    var surveys = s.surveys || [];',
+    '    var surveys = this.props.surveys || s.surveys || [];'],
+  ['kirim survei ke backend',
+    "      self.setState({ surveys: list, sv: Object.assign({}, sv, { done: true, rec: rec }) });\n      self.store('survei', list);",
+    "      self.setState({ surveys: list, sv: Object.assign({}, sv, { done: true, rec: rec }) });\n      self.store('survei', list);\n      if (self.props.onSurvey) self.props.onSurvey(Object.assign({}, rec, { date: sv.date, slot: sv.slot }));"],
+  ['survei CMS dari backend',
+    'var SVI = (s.surveys || []).map(',
+    'var SVI = (this.props.surveys || s.surveys || []).map('],
+  ['tanpa contoh survei di mode live',
+    ".concat([\n      { uid: 'demo-sv-1'",
+    ".concat(this.props.live ? [] : [\n      { uid: 'demo-sv-1'"],
+  ['permintaan UTJ ke backend',
+    "if (!isU) return;\n          var list = (self.state.cms && self.state.cms.utj || []).slice();",
+    "if (!isU) return;\n          if (self.props.onUtjRequest) { self.props.onUtjRequest(bkD2); return; }\n          var list = (self.state.cms && self.state.cms.utj || []).slice();"],
+  ['tanpa contoh UTJ di mode live',
+    'var UTI = (CM.utj || []).concat([',
+    'var UTI = (CM.utj || []).concat(this.props.live ? [] : ['],
+  ['pengajuan titip dari backend',
+    'var TPI = (tp.submitted ? [',
+    'var TPI = (this.props.titipItems ? this.props.titipItems : tp.submitted ? ['],
+  ['tanpa contoh titip di mode live',
+    ": []).concat([\n      { ref: 'VMA-TP-118204'",
+    ": []).concat(this.props.live ? [] : [\n      { ref: 'VMA-TP-118204'"],
+  ['tahap titip backend lewat tpSt',
+    'var setStage = function (it, n) { if (it.real) setTp({ stage: n });',
+    'var setStage = function (it, n) { if (it.real && !it.db) setTp({ stage: n });'],
+  ['owner dari sesi backend',
+    '    var owner = s.owner || null;',
+    "    var SU = this.props.sessionUser;\n    var owner = SU !== undefined ? (SU && SU.role === 'owner' ? { name: SU.name || 'Owner Vinmel', via: SU.via, contact: SU.via === 'google' ? (SU.email || '') : (SU.phone || '') } : null) : (s.owner || null);"],
+  ['tolak login owner bila akun lain sedang masuk',
+    "      if (api) { window.location.href = api + '/auth/' + (via === 'google'",
+    "      if (api && self.props.sessionUser) { self.toast('Akun yang sedang masuk bukan akun owner. Keluar dulu lewat menu Akun, lalu masuk dengan WhatsApp/Google owner.'); return; }\n      if (api) { window.location.href = api + '/auth/' + (via === 'google'"],
+  ['keluar CMS = keluar sesi backend',
+    "logout: function () { self.setState({ owner: null }); self.store('owner', null);",
+    "logout: function () { if (self.props.live) { if (self.props.onLogout) self.props.onLogout(); self.setState({ user: null, showCms: false }); self.store('user', null); self.toast('Keluar dari CMS owner.'); return; } self.setState({ owner: null }); self.store('owner', null);"],
+  ['tambah listing lewat alat lanjutan',
+    'addListing: function () { self.setState({ showCms: false, showTitip: true });',
+    "addListing: function () { if (self.props.live) { window.location.href = '/owner/lanjutan?tab=listing'; return; } self.setState({ showCms: false, showTitip: true });"],
+  ['teks reset listing di mode live',
+    "self.toast('Listing dikembalikan ke data awal.');",
+    "self.toast(self.props.live ? 'Kembali ke data yang tersimpan.' : 'Listing dikembalikan ke data awal.');"],
   ['opsi kota titip (nilai)',
     '      cityOpts: ',
     "      tpCityGroups: (this.props.cityGroups && this.props.cityGroups.length) ? this.props.cityGroups : [{ label: 'Kota', opts: cities }],\n      cityOpts: "],

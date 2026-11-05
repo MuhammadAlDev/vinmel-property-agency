@@ -9,6 +9,11 @@ const TABS = [['ringkasan', 'Ringkasan'], ['listing', 'Listing'], ['titip', 'Tit
 
 export default function OwnerDashboard({ user, demo }) {
   const [tab, setTab] = useState('ringkasan');
+  // ?tab=listing|titip|pantau (dipakai tautan dari CMS desain)
+  useEffect(() => {
+    const t = new URLSearchParams(window.location.search).get('tab');
+    if (TABS.some(([k]) => k === t)) setTab(t);
+  }, []);
   const [toast, setToast] = useState('');
   const [stats, setStats] = useState(null);
   const notify = useCallback((t) => { setToast(t); setTimeout(() => setToast(''), 4000); }, []);
@@ -32,7 +37,7 @@ export default function OwnerDashboard({ user, demo }) {
   return (
     <div className="ow">
       <header className="ow-top">
-        <a className="ow-brand" href="/">Vinmel · Owner</a>
+        <a className="ow-brand" href="/#owner">Vinmel · Alat lanjutan owner</a>
         <nav className="ow-tabs" aria-label="Menu dashboard">
           {TABS.map(([k, l]) => <button key={k} className="ow-tab" aria-pressed={tab === k} onClick={() => setTab(k)}>{l}</button>)}
         </nav>

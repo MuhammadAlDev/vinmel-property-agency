@@ -1,4 +1,4 @@
-import { getListing, validateListing, updateListing, deleteListing } from '@/lib/listings';
+import { getListing, validateListing, updateListing, deleteListing, PUBLIC_STATUSES } from '@/lib/listings';
 import { requireOwner, ownerErrorMessage } from '@/lib/auth';
 import { ok, fail, readJson } from '@/lib/http';
 
@@ -9,7 +9,7 @@ export async function GET(req, { params }) {
   const { id } = await params;
   if (badId(id)) return fail(400, 'ID tidak valid.');
   const item = await getListing(id);
-  if (!item || (item.status !== 'tayang' && item.status !== 'terjual' && item.status !== 'tersewa')) {
+  if (!item || !PUBLIC_STATUSES.includes(item.dbStatus || item.status)) {
     const a = item ? await requireOwner() : { error: 404 };
     if (!item || a.error) return fail(404, 'Listing tidak ditemukan.');
   }

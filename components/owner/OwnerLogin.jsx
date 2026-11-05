@@ -29,7 +29,7 @@ export default function OwnerLogin({ notOwner }) {
           <div className="ow-banner">Akun yang sedang login bukan akun owner. Keluar lalu masuk dengan akun owner.
             <div style={{ marginTop: 8 }}><button className="ow-btn ghost" onClick={logout}>Keluar</button></div></div>
         ) : null}
-        <a className="ow-btn" href="/api/auth/google?next=/owner" style={{ justifyContent: 'center' }}>Masuk dengan Google</a>
+        <a className="ow-btn" href="/api/auth/google?next=/owner/lanjutan" style={{ justifyContent: 'center' }}>Masuk dengan Google</a>
         <div className="ow-muted" style={{ textAlign: 'center' }}>atau lewat OTP WhatsApp</div>
         {step === 'phone' ? (
           <form onSubmit={send} className="ow-field">Nomor WhatsApp
