@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "convert-design": "node scripts/convert-design.mjs design/Main.dc.html public/assets components/DesignComponent.jsx public/design.css && node scripts/integrate-backend.mjs components/DesignComponent.jsx",
-    "data:export": "node scripts/export-dummy-data.mjs && node scripts/generate-seed.mjs"
+    "data:export": "node scripts/export-dummy-data.mjs && node scripts/generate-seed.mjs",
+    "db:accounts": "node --env-file=.env.local scripts/create-accounts.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.7",

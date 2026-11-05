@@ -1,6 +1,6 @@
 import VinmelApp from '../components/VinmelApp';
 import { listListings, PUBLIC_STATUSES } from '@/lib/listings';
-import { getContent } from '@/lib/cms';
+import { getContent, getMarket } from '@/lib/cms';
 import { getCityGroups } from '@/lib/wilayah';
 import { demoSessionAs } from '@/lib/auth';
 import { backendReady } from '@/lib/config';
@@ -21,13 +21,17 @@ export default async function Home() {
   // Listing tanpa koordinat tidak ditampilkan (peta & jarak di desain membutuhkannya).
   listings = listings.filter((d) => d.lat != null && d.lng != null);
   const cities = [...new Set(listings.map((d) => d.city).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'id'));
-  const [cityGroups, cmsContent] = await Promise.all([
+  const [cityGroups, cmsContent, market] = await Promise.all([
     getCityGroups(),
     live ? getContent().catch((e) => { console.error('[home] konten', e); return {}; }) : {},
+    getMarket().catch((e) => { console.error('[home] data pasar', e); return null; }),
   ]);
   return (
     <VinmelApp
       backend={live}
+      // Production tanpa Supabase: login tetap lewat /api (menolak), bukan login pratinjau yang menerima OTP apa pun.
+      authLocked={process.env.NODE_ENV === 'production'}
+      market={market}
       // Tanpa Supabase di production, pengajuan titip tidak dikirim ke server (tidak ada tempat menyimpan).
       titipApi={backendReady() || process.env.NODE_ENV !== 'production'}
       listings={listings}

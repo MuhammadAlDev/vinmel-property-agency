@@ -9,6 +9,13 @@ export default function OwnerLogin({ notOwner }) {
   const [step, setStep] = useState('phone');
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState('');
+  const [email, setEmail] = useState('');
+  const [pass, setPass] = useState('');
+
+  const loginPass = async (e) => {
+    e.preventDefault(); setBusy(true); setErr('');
+    try { await api('/api/auth/password', { method: 'POST', body: { email, password: pass } }); window.location.reload(); } catch (x) { setErr(x.message); setBusy(false); }
+  };
 
   const send = async (e) => {
     e.preventDefault(); setBusy(true); setErr('');
@@ -29,6 +36,13 @@ export default function OwnerLogin({ notOwner }) {
           <div className="ow-banner">Akun yang sedang login bukan akun owner. Keluar lalu masuk dengan akun owner.
             <div style={{ marginTop: 8 }}><button className="ow-btn ghost" onClick={logout}>Keluar</button></div></div>
         ) : null}
+        <form onSubmit={loginPass} className="ow-field">Email
+          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="username" required />
+          Password
+          <input type="password" value={pass} onChange={(e) => setPass(e.target.value)} autoComplete="current-password" required />
+          <button className="ow-btn" disabled={busy}>{busy ? 'Memeriksa…' : 'Masuk dengan email'}</button>
+        </form>
+        <div className="ow-muted" style={{ textAlign: 'center' }}>atau</div>
         <a className="ow-btn" href="/api/auth/google?next=/owner/lanjutan" style={{ justifyContent: 'center' }}>Masuk dengan Google</a>
         <div className="ow-muted" style={{ textAlign: 'center' }}>atau lewat OTP WhatsApp</div>
         {step === 'phone' ? (

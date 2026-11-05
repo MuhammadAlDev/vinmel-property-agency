@@ -19,6 +19,12 @@
 //   onSurvey(rec) : jadwal survei baru dari situs
 //   onUtjRequest(d): tombol "Minta invoice UTJ"
 //   titipItems    : pengajuan titip dari backend (owner: semua; penitip: miliknya)
+// Tambahan untuk desain Amel 2026-11-06 (penjual, review titip, profil owner, data pasar):
+//   pemilik       : data pemilik akun penjual dari backend (tanpa `name` = belum lengkap); undefined = localStorage
+//   onPemilik(rec): simpan data pemilik ke backend (ganti localStorage `pemilik`)
+//   onUpload(file, kind, index): unggah foto profil owner (kind 'owner') / testimoni (kind 'testimoni', index baris) ke storage
+//   market        : { HP, YL, hp0, yl0 } data pasar per kota dari tabel market_area_stats
+// Owner TIDAK dideteksi dari daftar email/nomor di browser: hanya dari user.role === 'owner' yang dikirim server.
 import fs from 'node:fs';
 
 const file = process.argv[2] || 'components/DesignComponent.jsx';
@@ -46,9 +52,72 @@ const patches = [
   ['hook logout',
     'NX.logout = function () { ',
     'NX.logout = function () { if (self.props.onLogout) self.props.onLogout(); '],
-  ['hook login',
-    'var doLogin = function (u) { ',
-    'var doLogin = function (u) { if (self.props.onLogin) self.props.onLogin(u); '],
+  ['hook login + peran dari server',
+    'var doLogin = function (u) {\n',
+    "var doLogin = function (u) {\n      if (u.role === 'seller') u.role = 'penjual'; else if (u.role === 'buyer') u.role = 'pembeli';\n      if (self.props.onLogin) self.props.onLogin(u);\n"],
+  ['owner hanya dari peran server (tanpa daftar email/WA di browser)',
+    "    var OWNER_IDS = ['083182311993', 'miracle.studio.ina@gmail.com'];\n    var isOwnerId = function (u) { return OWNER_IDS.indexOf(normPhone(u.phone || '')) > -1 || OWNER_IDS.indexOf(String(u.email || '').toLowerCase()) > -1; };",
+    "    // Owner ditentukan server (profiles.role dari owner_allowlist), bukan dari daftar kontak di browser.\n    var isOwnerId = function (u) { return u.role === 'owner'; };"],
+  ['kontak owner dari akun yang login',
+    "contact: u.via === 'google' ? (u.email || 'miracle.studio.ina@gmail.com') : '0831-8231-1993' };",
+    "contact: u.via === 'google' ? (u.email || '') : (u.phone || '') };"],
+  ['verifikasi OTP membawa peran',
+    "post('/auth/otp/verify', { phone: '62' + normPhone(a.phone).slice(1), code: a.code, name: u.name })",
+    "post('/auth/otp/verify', { phone: '62' + normPhone(a.phone).slice(1), code: a.code, name: u.name, role: u.role })"],
+  ['data pemilik saat login dari backend',
+    "var pmSaved = self.load('pemilik', null);",
+    "var pmSaved = u.pemilik !== undefined ? u.pemilik : self.props.pemilik !== undefined ? self.props.pemilik : self.load('pemilik', null);"],
+  ['data pemilik dari props',
+    'var pmStored = s.pmStored || null;',
+    'var pmStored = this.props.pemilik !== undefined ? this.props.pemilik : (s.pmStored || null);'],
+  ['simpan data pemilik ke backend',
+    "self.store('pemilik', rec);",
+    "if (self.props.onPemilik) self.props.onPemilik(rec); else self.store('pemilik', rec);"],
+  ['foto profil owner ke storage',
+    "try { put('photo', URL.createObjectURL(f)); } catch (x) {}",
+    "if (self.props.onUpload) { self.props.onUpload(f, 'owner'); return; } try { put('photo', URL.createObjectURL(f)); } catch (x) {}"],
+  ['foto testimoni ke storage',
+    "var u = ''; try { u = URL.createObjectURL(f); } catch (x2) {} if (u) setTesti(i, 'photo', u);",
+    "if (self.props.onUpload) { self.props.onUpload(f, 'testimoni', i); return; } var u = ''; try { u = URL.createObjectURL(f); } catch (x2) {} if (u) setTesti(i, 'photo', u);"],
+  ['testimoni persona ditandai contoh',
+    'NX.TESTI0 = TESTI0;',
+    'TESTI0.forEach(function (x) { x.sample = true; });\n    NX.TESTI0 = TESTI0;'],
+  ['label Contoh selama ada testimoni contoh',
+    'isSample: !AB.name || !testiCm.length ||',
+    'isSample: testiCm.some(function (x) { return x.sample; }) || !AB.name || !testiCm.length ||'],
+  ['data pasar (kenaikan harga) dari tabel',
+    '      var HP = {\n',
+    '      var MK = self.props.market || null;\n      var HP = (MK && MK.HP && Object.keys(MK.HP).length ? MK.HP : null) || {\n'],
+  ['data pasar (yield) dari tabel',
+    '      var YL = {\n',
+    '      var YL = (MK && MK.YL && Object.keys(MK.YL).length ? MK.YL : null) || {\n'],
+  ['data pasar nasional (kenaikan) dari tabel',
+    'var hp = HP[dd.city] || [',
+    'var hp = HP[dd.city] || (MK && MK.hp0) || ['],
+  ['data pasar nasional (yield) dari tabel',
+    'var yl = YL[dd.city] || [',
+    'var yl = YL[dd.city] || (MK && MK.yl0) || ['],
+  ['detail review pengajuan backend tidak ditimpa formulir lokal',
+    'TPI.forEach(function (it) {\n      if (it.real) {',
+    'TPI.forEach(function (it) {\n      if (it.db) return;\n      if (it.real) {'],
+  ['aksi review pengajuan backend lewat onCms',
+    'if (it.real) { cmSet(patch); setTp({ stage: stage }); } else {',
+    'if (it.real && !it.db) { cmSet(patch); setTp({ stage: stage }); } else {'],
+  ['catatan owner untuk penjual dari backend',
+    "tpRevisionNotes: ((s.cms || {}).tpMsg || {})[tp.ref] ? [((s.cms || {}).tpMsg || {})[tp.ref]] : [",
+    "tpRevisionNotes: ((this.props.cms || s.cms || {}).tpMsg || {})[tp.ref] ? [((this.props.cms || s.cms || {}).tpMsg || {})[tp.ref]] : this.props.live ? ['Owner belum menulis catatan. Tanyakan rinciannya lewat WhatsApp.'] : ["],
+  ['status titipan backend di halaman status',
+    "status: function () { self.setState({ showOd: false, showTitip: true }); },",
+    "status: function () { if (it.db) setTp({ submitted: true, stage: it.stage, ref: it.ref, title: it.title, city: it.city || '', address: it.address || '', price: it.priceDots || '', deal: it.deal || 'Dijual', step: 1 }); self.setState({ showOd: false, showTitip: true }); },"],
+  ['sembunyikan simulasi status di mode live (nilai)',
+    'tpDemoNext: function () {',
+    'tpDemoHide: !!this.props.live, tpDemoNext: function () {'],
+  ['sembunyikan simulasi status di mode live (buka)',
+    '<div style={{ border: "1.5px dashed #C9D1C6", borderRadius: "18px", padding: "14px", display: "flex", flexDirection: "column", gap: "8px" }}>{" "}<span style={{ fontSize: "12px", fontWeight: "800", color: "#4A5751", letterSpacing: ".06em" }}>{v.L?.m108}</span>',
+    '{v.tpDemoHide ? null : (<div style={{ border: "1.5px dashed #C9D1C6", borderRadius: "18px", padding: "14px", display: "flex", flexDirection: "column", gap: "8px" }}>{" "}<span style={{ fontSize: "12px", fontWeight: "800", color: "#4A5751", letterSpacing: ".06em" }}>{v.L?.m108}</span>'],
+  ['sembunyikan simulasi status di mode live (tutup)',
+    '{v.tpDemoLabel}</button>{" "}</div>',
+    '{v.tpDemoLabel}</button>{" "}</div>)}'],
   ['kirim titip ke backend',
     "      var ref = 'VMA-TP-' + String(Date.now()).slice(-6);\n      setTp({ submitted: true, stage: 0, ref: ref, tried: false });",
     "      if (tp.sending) return;\n" +
@@ -131,15 +200,17 @@ const patches = [
     "      tpCityGroups: (this.props.cityGroups && this.props.cityGroups.length) ? this.props.cityGroups : [{ label: 'Kota', opts: cities }],\n      cityOpts: "],
 ];
 
+const broken = [];
 for (const [name, from, to] of patches) {
   if (src.includes(to) && (to.includes(from) || !src.includes(from))) continue; // sudah terpasang
   const n = src.split(from).length - 1;
-  if (n !== 1) throw new Error(`[integrate] titik sambung "${name}" ditemukan ${n}x (harus 1). Periksa desain baru.`);
+  if (n !== 1) { broken.push(`"${name}" ditemukan ${n}x`); continue; }
   src = src.replace(from, () => to);
 }
+if (broken.length) throw new Error('[integrate] titik sambung harus ada tepat 1x. Periksa desain baru:\n  ' + broken.join('\n  '));
 
 // Opsi kota di formulir titip: ganti <option> statis dengan daftar kab/kota dari API wilayah.
-const OPT_RE = /(<option value=\{""\}>\{"Pilih kota"\}<\/option>)((?:<option value=\{"[^"]*"\}>\{"[^"]*"\}<\/option>)+)(<\/select>)/;
+const OPT_RE = /(<option value=\{""\}>\{(?:"Pilih kota"|v\.L\?\.m44)\}<\/option>)((?:<option value=\{"[^"]*"\}>\{"[^"]*"\}<\/option>)+)(<\/select>)/;
 if (!src.includes('v.tpCityGroups')) {
   if (!OPT_RE.test(src)) throw new Error('[integrate] select kota formulir titip tidak ditemukan.');
   src = src.replace(OPT_RE, (_, first, __, close) =>

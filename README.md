@@ -27,8 +27,15 @@ npm run dev
 
 ## Menyiapkan Supabase
 1. Buat project di supabase.com, isi `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY` di `.env.local` / env hosting.
-2. Jalankan `supabase/migrations/20261104120000_init.sql`, `supabase/seed.sql`, lalu `supabase/migrations/20261105120000_cms_owner_pembeli.sql` (SQL editor, atau `npx supabase db push` + seed). Migrasi kedua hanya menambah kolom/tabel/policy; langkah rollback ada di akhir file.
-3. Daftarkan akun owner: `insert into owner_allowlist (email) values ('<email google owner>');` atau `(phone) values ('62xxxxxxxxxx')`. Akun yang login dengan email/nomor itu otomatis menjadi owner. Akun yang sudah terlanjur ada: `update profiles set role = 'owner' where email = '...';`
+2. Jalankan migrasi berurutan lalu seed. Cara CLI (project Vinmel: `vpizftkeoemvkzllcbik`):
+   `npx supabase login` → `npx supabase link --project-ref vpizftkeoemvkzllcbik` → `npx supabase db push` → jalankan isi `supabase/seed.sql` di SQL editor (atau `npx supabase db push --include-seed`).
+   Cara SQL editor: tempel berurutan `20261104120000_init.sql`, `20261105120000_cms_owner_pembeli.sql`, `20261105130000_superadmin_penjual.sql`, `20261106120000_penjual_review_profil.sql`, lalu `seed.sql`. Migrasi setelah init hanya menambah; rollback ada di akhir file.
+   Migrasi 2026-11-06: `seller_profiles` (data pemilik penjual), `titip_reviews` + `titip_checklist` (review & approval, tahap 6 = Ditolak, approval ditolak database bila checklist belum lengkap), `market_area_stats` (data pasar per kota, perbarui tiap kuartal lewat SQL editor), bucket publik `konten` (foto profil owner & testimoni).
+3. Buat akun awal (superadmin owner, pembeli testing, penjual testing). Password hanya lewat env, jangan ditulis ke file:
+   `OWNER_PASSWORD='<password>' npm run db:accounts`
+   Email default: superadmin owner `alfiyandzulfikri@gmail.com`, pembeli testing `alfiyandzulfikri+test1@gmail.com`, penjual testing `alfiyandzulfikri+test2@gmail.com` (bisa diganti lewat `OWNER_EMAIL`, `TEST_BUYER_EMAIL`, `TEST_SELLER_EMAIL`).
+   Skrip aman diulang (akun yang sudah ada diperbarui). Owner otomatis masuk `owner_allowlist`, jadi login Google/WA dengan email/nomor yang sama juga menjadi owner. Pembeli testing ditautkan ke contoh pembelian pertama di seed, penjual testing mendapat 1 contoh pengajuan titip. Password akun testing diacak dan dicetak sekali bila `TEST_BUYER_PASSWORD` / `TEST_SELLER_PASSWORD` kosong.
+   Peran: `owner` (CMS; `is_superadmin` = owner utama, hanya bisa diubah lewat service role), `buyer`, `seller` (otomatis bila akun mengajukan titip, mengisi data pemilik, atau login/daftar sebagai penjual). Owner selalu dicek di server dari tabel `profiles` (diisi lewat `owner_allowlist`); browser tidak punya daftar email/nomor owner. Profil owner di situs hanya bisa diubah superadmin. Login email + password: `POST /api/auth/password` (juga ada di form /owner/lanjutan).
 4. **Google OAuth**: buat OAuth Client (Web) di Google Cloud Console, redirect URI `https://<project>.supabase.co/auth/v1/callback`, lalu isi Client ID/Secret di Supabase > Authentication > Providers > Google. Tambahkan `https://<domain>/api/auth/callback` ke Authentication > URL Configuration > Redirect URLs.
 5. **OTP WhatsApp**: Supabase > Authentication > Providers > Phone, pilih Twilio (atau Twilio Verify) dengan nomor pengirim WhatsApp yang sudah disetujui. Server memanggil `signInWithOtp({ channel: 'whatsapp' })`.
 
@@ -37,6 +44,12 @@ Untuk lokal dengan Supabase CLI: `npx supabase start` (memakai `supabase/config.
 ## API (route handler Next.js, `app/api`)
 | Endpoint | Akses | Keterangan |
 | --- | --- | --- |
+| `POST /api/auth/password` `{email,password}` | publik | login email + password (owner/akun testing) |
+| `POST /api/auth/register` `{phone,code,name,email,city,status}` | publik | daftar akun penjual (OTP WA diverifikasi Supabase) |
+| `GET/PUT /api/penjual/profil` | user login | data pemilik akun penjual |
+| `POST /api/titip/:id/review` `{stage,action,note}` | owner | aksi review + riwayat (revisi/tolak wajib catatan ≥10 huruf, setujui wajib checklist lengkap) |
+| `PUT /api/titip/:id/checklist` `{checks}` | owner | checklist verifikasi titip |
+| `POST /api/cms/foto` (multipart `photo`, `kind`) | owner (`kind=owner`: superadmin) | foto profil owner / testimoni ke bucket `konten` |
 | `POST /api/auth/otp/send` `{phone}` | publik | kirim OTP WhatsApp |
 | `POST /api/auth/otp/verify` `{phone, code, name}` | publik | verifikasi, buat sesi (cookie) |
 | `GET /api/auth/google?next=` / `GET /api/auth/callback` | publik | login Google (PKCE) |

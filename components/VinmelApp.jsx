@@ -15,23 +15,41 @@ async function api(path, opts = {}) {
 }
 const send = (path, method, body) => api(path, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
 
-// Pengajuan titip dari backend -> bentuk item TPI di desain.
-const titipToDesign = (t) => ({
-  id: t.id, db: true, real: true, ref: t.ref, title: t.title || 'Properti tanpa judul', who: t.name || '—', phone: to08(t.phone),
-  where: [t.address, t.city].filter(Boolean).join(', '),
-  price: t.priceNum ? 'Rp ' + dots(t.priceNum) + (t.deal === 'Disewa' ? ' / bulan' : '') : '—',
-  plan: t.plan === 'eksklusif' ? 'Eksklusif' : 'Open listing', stage: t.stage, cover: (t.photoUrls || [])[0] || '', listingId: t.propertyId || null,
+// Peran di server (owner/buyer/seller) -> peran di desain (owner/pembeli/penjual).
+const designRole = (r) => (r === 'seller' ? 'penjual' : r === 'owner' ? 'owner' : 'pembeli');
+
+// Pengajuan titip dari backend -> bentuk item TPI di desain (termasuk detail untuk halaman review owner).
+const titipToDesign = (t) => {
+  const p = t.payload || {};
+  const num = (v) => Number(String(v ?? '').replace(/[^0-9.]/g, '')) || 0;
+  return {
+    id: t.id, db: true, real: true, ref: t.ref, title: t.title || 'Properti tanpa judul', who: t.name || '—', phone: to08(t.phone),
+    where: [t.address, t.city].filter(Boolean).join(', '), address: t.address || '', city: t.city || '',
+    price: t.priceNum ? 'Rp ' + dots(t.priceNum) + (t.deal === 'Disewa' ? ' / bulan' : '') : '—', priceDots: t.priceNum ? dots(t.priceNum) : '',
+    plan: t.plan === 'eksklusif' ? 'Eksklusif' : 'Open listing', stage: t.stage, cover: (t.photoUrls || [])[0] || '', listingId: t.propertyId || null,
+    type: t.type, deal: t.deal, kuasa: t.role === 'kuasa', cert: p.cert || '—',
+    specs: [p.lt ? 'LT ' + p.lt + ' m²' : '', p.lb ? 'LB ' + p.lb + ' m²' : '', p.kt ? p.kt + ' KT' : '', p.km ? p.km + ' KM' : ''].filter(Boolean).join(' · ') || '—',
+    photos: t.photoUrls || [], desc: p.desc || '', priceNum: t.priceNum || 0, area: num(t.type === 'tanah' ? p.lt : p.lb), docs: p.docs || {},
+    reviewNote: t.reviewNote || '', checklist: t.checklist || {}, log: t.log || [],
+  };
+};
+// Checklist, riwayat, dan catatan review per ref (state cms.tpChk / tpLog / tpMsg di desain).
+const reviewMaps = (items) => ({
+  tpChk: Object.fromEntries(items.map((t) => [t.ref, t.checklist || {}])),
+  tpLog: Object.fromEntries(items.map((t) => [t.ref, t.log || []])),
+  tpMsg: Object.fromEntries(items.filter((t) => t.reviewNote && (t.stage === 1 || t.stage === 6)).map((t) => [t.ref, t.reviewNote])),
 });
 
 // Pembungkus DesignComponent: sesi login, data CMS owner & halaman pembeli dari backend (Supabase),
 // dan penyimpanan semua aksi CMS (state `cms` di desain) ke API.
-export default function VinmelApp({ backend, titipApi, listings: listings0, cmsContent, ...props }) {
+export default function VinmelApp({ backend, authLocked, titipApi, listings: listings0, cmsContent, market, ...props }) {
   const [user, setUser] = useState(undefined);
   const [owned, setOwned] = useState(null);
   const [listings, setListings] = useState(listings0);
   const [cms, setCmsState] = useState(() => ({ ...(cmsContent || {}) }));
   const [surveys, setSurveys] = useState(undefined);
   const [titip, setTitip] = useState(undefined);
+  const [pemilik, setPemilik] = useState(null);
   const [note, setNote] = useState('');
   const cmsRef = useRef(cms);
   const userRef = useRef(user);
@@ -52,8 +70,12 @@ export default function VinmelApp({ backend, titipApi, listings: listings0, cmsC
 
   const loadTitip = useCallback(async (owner) => {
     const j = await api('/api/titip' + (owner ? '?scope=owner' : '')).catch(() => null);
-    if (j) setTitip(j.items.map(titipToDesign));
-  }, []);
+    if (!j) return;
+    const items = j.items.map(titipToDesign);
+    setTitip(items);
+    const m = reviewMaps(items);
+    setCms((c) => ({ ...c, tpMsg: m.tpMsg, ...(owner ? { tpChk: m.tpChk, tpLog: m.tpLog } : {}) }));
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const refresh = useCallback(async () => {
     if (!backend) return;
@@ -61,23 +83,25 @@ export default function VinmelApp({ backend, titipApi, listings: listings0, cmsC
     const u = me?.user || null;
     if (!u) {
       try { window.localStorage.removeItem('vinmel_user'); } catch {}
-      setUser(null); setOwned(null); setSurveys(undefined); setTitip(undefined);
+      setUser(null); setOwned(null); setSurveys(undefined); setTitip(undefined); setPemilik(null);
       setCms((c) => Object.fromEntries(CONTENT_KEYS.filter((k) => k in c).map((k) => [k, c[k]])));
       return;
     }
-    setUser({ name: u.name, phone: to08(u.phone), email: u.email, via: u.via, role: u.role });
+    setUser({ name: u.name, phone: to08(u.phone), email: u.email, via: u.via === 'email' ? 'google' : u.via, role: designRole(u.role), isSuperadmin: !!u.isSuperadmin });
     if (u.role === 'owner') {
       try {
         const j = await api('/api/cms');
-        setCms({ ...j.cms, listing: {}, tpSt: {}, utjSt: {} });
+        const items = j.titip.map(titipToDesign);
+        setCms({ ...j.cms, listing: {}, tpSt: {}, utjSt: {}, ...reviewMaps(items) });
         setListings(j.listings.filter((d) => d.lat != null && d.lng != null));
-        setTitip(j.titip.map(titipToDesign));
+        setTitip(items);
         setSurveys(j.surveys.map(surveyToDesign));
         setOwned(j.owned.length ? j.owned : null);
       } catch (e) { notify('Data CMS gagal dimuat: ' + e.message); }
       return;
     }
-    const [p, sv] = await Promise.all([api('/api/pantau').catch(() => null), api('/api/survei').catch(() => null), loadTitip(false)]);
+    const [p, sv, pm] = await Promise.all([api('/api/pantau').catch(() => null), api('/api/survei').catch(() => null), api('/api/penjual/profil').catch(() => null), loadTitip(false)]);
+    setPemilik(pm?.pemilik || null);
     setOwned(p?.items?.length ? p.items : null);
     setSurveys(sv ? sv.items.map(surveyToDesign) : undefined);
     setCms((c) => ({
@@ -93,7 +117,7 @@ export default function VinmelApp({ backend, titipApi, listings: listings0, cmsC
 
   const onLogout = useCallback(() => {
     if (!backend) return;
-    setUser(null); setOwned(null); setSurveys(undefined); setTitip(undefined);
+    setUser(null); setOwned(null); setSurveys(undefined); setTitip(undefined); setPemilik(null);
     setCms((c) => Object.fromEntries(CONTENT_KEYS.filter((k) => k in c).map((k) => [k, c[k]])));
     setListings(listings0);
     fetch('/api/auth/logout', { method: 'POST' }).catch(() => {});
@@ -140,13 +164,48 @@ export default function VinmelApp({ backend, titipApi, listings: listings0, cmsC
     const changed = (k) => Object.keys(next[k] || {}).filter((x) => !same((prev[k] || {})[x], next[k][x]));
 
     if ('listing' in patch) changed('listing').forEach((id) => saveListing(id, next.listing[id]));
+    // Aksi review (Lolos review / Minta revisi / Tolak / Setujui ...): riwayat baru di tpLog + tahap di tpSt.
+    const reviewed = new Set();
+    if ('tpLog' in patch) {
+      Object.keys(next.tpLog || {}).forEach((ref) => {
+        const entry = (next.tpLog[ref] || [])[0];
+        if (!entry || entry === (prev.tpLog?.[ref] || [])[0]) return;
+        const it = (titip || []).find((x) => x.ref === ref);
+        const stage = next.tpSt?.[ref];
+        if (!it || stage == null) return;
+        reviewed.add(ref);
+        send('/api/titip/' + it.id + '/review', 'POST', { stage, action: entry.act, note: entry.note })
+          .then((j) => {
+            const d = titipToDesign(j.item);
+            setTitip((list) => (list || []).map((x) => (x.ref === ref ? { ...x, stage: d.stage, reviewNote: d.reviewNote, log: d.log } : x)));
+            setCms((c) => {
+              const msg = { ...(c.tpMsg || {}) };
+              if (d.reviewNote && (d.stage === 1 || d.stage === 6)) msg[ref] = d.reviewNote; else delete msg[ref];
+              return { ...c, tpLog: { ...c.tpLog, [ref]: d.log }, tpMsg: msg };
+            });
+          })
+          .catch((e) => {
+            notify('Review belum tersimpan: ' + e.message);
+            setCms((c) => ({ ...c, tpLog: { ...c.tpLog, [ref]: prev.tpLog?.[ref] || [] }, tpMsg: { ...c.tpMsg, [ref]: prev.tpMsg?.[ref] } }));
+          })
+          .finally(() => dropKey('tpSt', ref));
+      });
+    }
+    if ('tpChk' in patch) {
+      changed('tpChk').forEach((ref) => {
+        const it = (titip || []).find((x) => x.ref === ref);
+        if (!it) return;
+        send('/api/titip/' + it.id + '/checklist', 'PUT', { checks: next.tpChk[ref] })
+          .catch((e) => { notify('Checklist belum tersimpan: ' + e.message); setCms((c) => ({ ...c, tpChk: { ...c.tpChk, [ref]: prev.tpChk?.[ref] || {} } })); });
+      });
+    }
     if ('tpSt' in patch) {
-      changed('tpSt').forEach((ref) => {
+      changed('tpSt').filter((ref) => !reviewed.has(ref)).forEach((ref) => {
         const it = (titip || []).find((x) => x.ref === ref);
         if (!it) return;
         const stage = next.tpSt[ref];
         send('/api/titip/' + it.id, 'PATCH', { stage })
-          .then(() => setTitip((list) => (list || []).map((x) => (x.ref === ref ? { ...x, stage } : x))))
+          .then((j) => { const d = titipToDesign(j.item); setTitip((list) => (list || []).map((x) => (x.ref === ref ? { ...x, stage: d.stage, log: d.log } : x))); setCms((c) => ({ ...c, tpLog: { ...c.tpLog, [ref]: d.log } })); })
           .catch((e) => notify('Tahap titip belum tersimpan: ' + e.message))
           .finally(() => dropKey('tpSt', ref));
       });
@@ -198,6 +257,30 @@ export default function VinmelApp({ backend, titipApi, listings: listings0, cmsC
     }).catch((e) => notify('Permintaan UTJ belum tercatat: ' + e.message));
   }, [notify, setCms]);
 
+  // Data pemilik (akun penjual) -> /api/penjual/profil
+  const onPemilik = useCallback((rec) => {
+    const before = pemilik;
+    setPemilik({ ...rec, complete: true });
+    setUser((u) => (u && u.role === 'pembeli' ? { ...u, role: 'penjual' } : u));
+    send('/api/penjual/profil', 'PUT', rec)
+      .then((j) => setPemilik(j.pemilik))
+      .catch((e) => { notify('Data pemilik belum tersimpan: ' + e.message); setPemilik(before); });
+  }, [notify, pemilik]);
+
+  // Foto profil owner / testimoni -> storage (bucket "konten"), lalu URL-nya disimpan di konten.
+  const onUpload = useCallback(async (file, kind, index) => {
+    const fd = new FormData();
+    fd.append('kind', kind); fd.append('photo', file);
+    notify('Mengunggah foto…');
+    try {
+      const j = await api('/api/cms/foto', { method: 'POST', body: fd });
+      const c = cmsRef.current;
+      if (kind === 'owner') onCms({ about: { ...(c.about || {}), photo: j.url } });
+      else onCms({ testi: (c.testi || []).map((x, i) => (i === index ? { ...x, photo: j.url } : x)) });
+      notify('Foto tersimpan.');
+    } catch (e) { notify('Foto belum terunggah: ' + e.message); }
+  }, [notify, onCms]);
+
   const onSubmitTitip = useCallback(async (tp) => {
     const { photos = [], ...rest } = tp;
     const fd = new FormData();
@@ -222,7 +305,8 @@ export default function VinmelApp({ backend, titipApi, listings: listings0, cmsC
       <DesignComponent
         {...props}
         listings={listings}
-        authApi={backend ? '/api' : ''}
+        // Di production login selalu lewat server (tanpa backend = gagal), jadi tidak ada OTP pratinjau yang menerima kode apa pun.
+        authApi={backend || authLocked ? '/api' : ''}
         sessionUser={backend ? user : undefined}
         owned={owned}
         onLogin={refresh}
@@ -235,6 +319,10 @@ export default function VinmelApp({ backend, titipApi, listings: listings0, cmsC
         onSurvey={backend ? onSurvey : undefined}
         onUtjRequest={backend ? onUtjRequest : undefined}
         titipItems={backend && user ? titipItems : undefined}
+        pemilik={backend ? (pemilik ? (pemilik.complete ? pemilik : (({ name, ...rest }) => rest)(pemilik)) : null) : undefined}
+        onPemilik={backend ? onPemilik : undefined}
+        onUpload={backend ? onUpload : undefined}
+        market={market || undefined}
       />
       {note ? (
         <div role="status" style={{ position: 'fixed', left: '50%', transform: 'translateX(-50%)', bottom: 88, zIndex: 120, maxWidth: 'min(520px, calc(100vw - 32px))', background: '#1B2420', color: '#FFFFFF', padding: '12px 16px', borderRadius: 12, fontSize: 14, lineHeight: 1.45, boxShadow: '0 8px 24px rgba(0,0,0,.22)' }}>

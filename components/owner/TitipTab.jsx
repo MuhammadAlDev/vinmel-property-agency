@@ -2,7 +2,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { api, rp } from './api';
 
-const STAGES = [[0, 'Dalam review'], [1, 'Perlu revisi'], [2, 'Survei'], [3, 'Approval'], [4, 'Disetujui'], [5, 'Tayang'], [9, 'Ditolak']];
+const STAGES = [[0, 'Dalam review'], [1, 'Perlu revisi'], [2, 'Survei'], [3, 'Approval'], [4, 'Disetujui'], [5, 'Tayang'], [6, 'Ditolak']];
 const stageLabel = (n) => STAGES.find((s) => s[0] === n)?.[1] || '—';
 const wa = (phone, text) => 'https://wa.me/' + phone + '?text=' + encodeURIComponent(text);
 const fmt = (iso) => (iso ? new Date(iso).toLocaleString('id-ID', { dateStyle: 'medium', timeStyle: 'short' }) : '');
