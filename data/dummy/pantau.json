@@ -1,0 +1,339 @@
+[
+  {
+    "key": "a",
+    "title": "Rumah Minimalis 2 Lantai",
+    "unit": "Unit B-12",
+    "location": "Bintaro, Tangerang Selatan",
+    "cover": "/assets/a3d3de7f4f80512034b449f86313effd.jpg",
+    "progress": 68,
+    "statusText": "Tahap dinding & atap",
+    "purchased": "12 Jan 2026",
+    "handover": "Mar 2027",
+    "updated": "28 Okt 2026",
+    "legal": [
+      {
+        "title": "Cek sertifikat induk di BPN",
+        "date": "05 Feb 2026",
+        "state": "done",
+        "note": "Sertifikat induk developer dinyatakan asli dan bebas sengketa.",
+        "doc": "Hasil pengecekan BPN"
+      },
+      {
+        "title": "IMB / PBG",
+        "date": "10 Feb 2026",
+        "state": "done",
+        "note": "Persetujuan Bangunan Gedung untuk unit B-12 sudah terbit.",
+        "doc": "No. PBG: [NOMOR PBG]"
+      },
+      {
+        "title": "PPJB",
+        "date": "20 Feb 2026",
+        "state": "done",
+        "note": "Perjanjian Pengikatan Jual Beli ditandatangani di hadapan notaris.",
+        "doc": "No. akta PPJB: [NOMOR AKTA]"
+      },
+      {
+        "title": "Pemecahan & pembuatan SHM",
+        "date": "Est. Des 2026",
+        "state": "current",
+        "pct": 60,
+        "note": "Sertifikat induk sedang dipecah per kavling. Pengukuran BPN selesai, menunggu penerbitan SHM unit.",
+        "doc": ""
+      },
+      {
+        "title": "AJB (Akta Jual Beli)",
+        "date": "Est. Mar 2027",
+        "state": "next",
+        "note": "Ditandatangani di hadapan PPAT setelah SHM unit terbit dan pelunasan / akad KPR final.",
+        "doc": ""
+      },
+      {
+        "title": "Balik nama SHM",
+        "date": "Est. Apr – Mei 2027",
+        "state": "next",
+        "note": "SHM diproses balik nama dari developer ke nama Anda di BPN.",
+        "doc": ""
+      },
+      {
+        "title": "PBB atas nama pembeli",
+        "date": "Est. Mei 2027",
+        "state": "next",
+        "note": "Pemecahan SPPT PBB dan perubahan nama wajib pajak ke nama Anda.",
+        "doc": ""
+      }
+    ],
+    "notary": {
+      "name": "[NAMA NOTARIS], S.H., M.Kn.",
+      "address": "[ALAMAT KANTOR NOTARIS, KECAMATAN, KOTA]",
+      "phone": "[NOMOR TELEPON KANTOR]",
+      "hours": "Senin – Jumat, 08.30 – 16.30"
+    },
+    "steps": [
+      {
+        "title": "Booking & uang muka",
+        "date": "12 Jan 2026",
+        "state": "done",
+        "note": "Booking fee dan uang muka diterima. Unit B-12 resmi tercatat atas nama Anda.",
+        "photos": [
+          {
+            "src": "/assets/6283d63c43db1630ef2b6e96681875a4.jpg",
+            "label": "Bukti bayar booking fee",
+            "date": "12 Jan 2026"
+          },
+          {
+            "src": "/assets/9b199195ca42d65468bc1f2104e617ca.jpg",
+            "label": "Bukti bayar uang muka",
+            "date": "19 Jan 2026"
+          }
+        ]
+      },
+      {
+        "title": "PPJB & akad kredit",
+        "date": "20 Feb 2026",
+        "state": "done",
+        "note": "Penandatanganan PPJB dan akad KPR bersama bank dan notaris.",
+        "photos": [
+          {
+            "src": "/assets/e4583a6dbed1b24ba167bbe0e28edc9c.jpg",
+            "label": "Dokumen PPJB & akad KPR",
+            "date": "20 Feb 2026"
+          },
+          {
+            "src": "/assets/7ecd4f1864afd1ecadfad22f4b79f55d.jpg",
+            "label": "Penandatanganan akad",
+            "date": "20 Feb 2026"
+          }
+        ]
+      },
+      {
+        "title": "Pekerjaan pondasi",
+        "date": "Mar – Apr 2026",
+        "state": "done",
+        "note": "Galian tanah, pemasangan besi, dan pengecoran pondasi selesai sesuai gambar kerja.",
+        "photos": [
+          {
+            "src": "/assets/ad4fd05c01ef016e2fc6395e9a360932.jpg",
+            "label": "Pondasi",
+            "date": "18 Apr 2026"
+          }
+        ]
+      },
+      {
+        "title": "Struktur kolom & balok",
+        "date": "Mei – Jul 2026",
+        "state": "done",
+        "note": "Kolom, balok, dan plat lantai 2 selesai dicor. Uji kekuatan beton lolos.",
+        "photos": [
+          {
+            "src": "/assets/e56f41226deedb35a71d10b08d4b7266.jpg",
+            "label": "Struktur lantai 1",
+            "date": "06 Jun 2026"
+          },
+          {
+            "src": "/assets/0a73a0af27e4f7c725e8f4a5a6b0b73f.jpg",
+            "label": "Struktur lantai 2",
+            "date": "24 Jul 2026"
+          }
+        ]
+      },
+      {
+        "title": "Dinding & rangka atap",
+        "date": "Agu – Nov 2026",
+        "state": "current",
+        "pct": 70,
+        "note": "Pemasangan bata dan rangka atap baja ringan selesai. Plester dinding lantai 1 sedang berjalan.",
+        "photos": [
+          {
+            "src": "/assets/d7924205f9723c698295161e07497a41.jpg",
+            "label": "Dinding & rangka atap",
+            "date": "28 Okt 2026"
+          },
+          {
+            "src": "/assets/0a73a0af27e4f7c725e8f4a5a6b0b73f.jpg",
+            "label": "Tampak samping",
+            "date": "15 Sep 2026"
+          }
+        ]
+      },
+      {
+        "title": "Finishing",
+        "date": "Des 2026 – Feb 2027",
+        "state": "next",
+        "note": "Plester aci, keramik, kusen, pengecatan, serta instalasi listrik dan air.",
+        "photos": []
+      },
+      {
+        "title": "Serah terima kunci",
+        "date": "Mar 2027",
+        "state": "next",
+        "note": "Inspeksi bersama, pengecekan kualitas, lalu serah terima kunci.",
+        "photos": []
+      }
+    ]
+  },
+  {
+    "key": "b",
+    "title": "Rumah Hook Taman Luas",
+    "unit": "Kav. C-03",
+    "location": "Cibubur, Jakarta Timur",
+    "cover": "/assets/83c967883699f4f4515045d52e7d9128.jpg",
+    "progress": 91,
+    "statusText": "Tahap finishing",
+    "purchased": "03 Agu 2025",
+    "handover": "Des 2026",
+    "updated": "30 Okt 2026",
+    "legal": [
+      {
+        "title": "Cek sertifikat induk di BPN",
+        "date": "20 Agu 2025",
+        "state": "done",
+        "note": "Sertifikat induk dinyatakan asli dan bebas sengketa.",
+        "doc": "Hasil pengecekan BPN"
+      },
+      {
+        "title": "IMB / PBG",
+        "date": "28 Agu 2025",
+        "state": "done",
+        "note": "Persetujuan Bangunan Gedung untuk kavling C-03 sudah terbit.",
+        "doc": "No. PBG: [NOMOR PBG]"
+      },
+      {
+        "title": "PPJB",
+        "date": "15 Sep 2025",
+        "state": "done",
+        "note": "Perjanjian Pengikatan Jual Beli ditandatangani di hadapan notaris.",
+        "doc": "No. akta PPJB: [NOMOR AKTA]"
+      },
+      {
+        "title": "Pemecahan & pembuatan SHM",
+        "date": "22 Sep 2026",
+        "state": "done",
+        "note": "SHM unit sudah terbit atas nama developer, siap untuk AJB.",
+        "doc": "No. SHM: [NOMOR SHM]"
+      },
+      {
+        "title": "AJB (Akta Jual Beli)",
+        "date": "Dijadwalkan Des 2026",
+        "state": "current",
+        "pct": 50,
+        "note": "Draf akta sedang disiapkan PPAT. Penandatanganan bersamaan dengan serah terima kunci.",
+        "doc": ""
+      },
+      {
+        "title": "Balik nama SHM",
+        "date": "Est. Jan – Feb 2027",
+        "state": "next",
+        "note": "SHM diproses balik nama ke nama Anda di BPN setelah AJB.",
+        "doc": ""
+      },
+      {
+        "title": "PBB atas nama pembeli",
+        "date": "Est. Feb 2027",
+        "state": "next",
+        "note": "Pemecahan SPPT PBB dan perubahan nama wajib pajak ke nama Anda.",
+        "doc": ""
+      }
+    ],
+    "notary": {
+      "name": "[NAMA NOTARIS], S.H., M.Kn.",
+      "address": "[ALAMAT KANTOR NOTARIS, KECAMATAN, KOTA]",
+      "phone": "[NOMOR TELEPON KANTOR]",
+      "hours": "Senin – Jumat, 08.30 – 16.30"
+    },
+    "steps": [
+      {
+        "title": "Booking & uang muka",
+        "date": "03 Agu 2025",
+        "state": "done",
+        "note": "Booking fee dan uang muka diterima.",
+        "photos": [
+          {
+            "src": "/assets/56fe6290a1df85611ac497195ff7757a.jpg",
+            "label": "Bukti bayar booking fee",
+            "date": "03 Agu 2025"
+          },
+          {
+            "src": "/assets/f95c05add858054409fe49dd226162ed.jpg",
+            "label": "Bukti bayar uang muka",
+            "date": "10 Agu 2025"
+          }
+        ]
+      },
+      {
+        "title": "PPJB & akad kredit",
+        "date": "15 Sep 2025",
+        "state": "done",
+        "note": "Penandatanganan PPJB dan akad KPR selesai.",
+        "photos": [
+          {
+            "src": "/assets/7ecd4f1864afd1ecadfad22f4b79f55d.jpg",
+            "label": "Penandatanganan akad",
+            "date": "15 Sep 2025"
+          },
+          {
+            "src": "/assets/e4583a6dbed1b24ba167bbe0e28edc9c.jpg",
+            "label": "Dokumen PPJB & akad KPR",
+            "date": "15 Sep 2025"
+          }
+        ]
+      },
+      {
+        "title": "Pondasi & struktur",
+        "date": "Okt 2025 – Feb 2026",
+        "state": "done",
+        "note": "Pondasi, kolom, balok, dan plat lantai selesai.",
+        "photos": [
+          {
+            "src": "/assets/ad4fd05c01ef016e2fc6395e9a360932.jpg",
+            "label": "Pondasi",
+            "date": "20 Nov 2025"
+          },
+          {
+            "src": "/assets/0a73a0af27e4f7c725e8f4a5a6b0b73f.jpg",
+            "label": "Struktur",
+            "date": "14 Feb 2026"
+          }
+        ]
+      },
+      {
+        "title": "Dinding & atap",
+        "date": "Mar – Jun 2026",
+        "state": "done",
+        "note": "Dinding, rangka atap, dan genteng terpasang.",
+        "photos": [
+          {
+            "src": "/assets/d7924205f9723c698295161e07497a41.jpg",
+            "label": "Dinding & atap",
+            "date": "22 Jun 2026"
+          }
+        ]
+      },
+      {
+        "title": "Finishing",
+        "date": "Jul – Nov 2026",
+        "state": "current",
+        "pct": 75,
+        "note": "Pengecatan eksterior selesai. Pemasangan keramik dan kitchen set sedang berjalan.",
+        "photos": [
+          {
+            "src": "/assets/bedb707ddf04e896a8d0b508d2d68c31.jpg",
+            "label": "Finishing eksterior",
+            "date": "30 Okt 2026"
+          },
+          {
+            "src": "/assets/d7924205f9723c698295161e07497a41.jpg",
+            "label": "Sebelum pengecatan",
+            "date": "02 Sep 2026"
+          }
+        ]
+      },
+      {
+        "title": "Serah terima kunci",
+        "date": "Des 2026",
+        "state": "next",
+        "note": "Inspeksi bersama, pengecekan kualitas, lalu serah terima kunci.",
+        "photos": []
+      }
+    ]
+  }
+]
