@@ -128,6 +128,7 @@ input:focus,select:focus,button:focus-visible,a:focus-visible{outline:3px solid 
 .nav-links.open .nav-link{color:#1B2420 !important;animation:none !important;padding:15px 2px;font-size:16px;border-bottom:1px solid #EEF1EC}
 .nav-links.open .nav-link:hover{color:#1E8A91 !important}
 .nav-links.open .mobile-only{display:block}
+.nav-links.open .mobile-only.nav-saved{display:flex;align-items:center;gap:8px}
 .hero{min-height:0 !important}
 .hero-inner{padding:120px 20px 96px !important;gap:18px !important}
 .hero-title{font-size:44px !important}
@@ -135,6 +136,9 @@ input:focus,select:focus,button:focus-visible,a:focus-visible{outline:3px solid 
 .sec{padding-top:72px !important;padding-bottom:80px !important}
 .cta-box{padding:36px 28px !important}
 }
+@media (min-width: 961px) and (max-width: 1239px){.nav-links{gap:20px !important}.nav-actions{gap:16px !important}.nav-actions .nav-btn{padding:10px 16px !important}}
+.nav-actions .nav-btn{max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media (min-width: 961px) and (max-width: 1119px){.nav-links,.nav-actions{gap:14px !important;font-size:14px !important}.nav-actions .nav-btn{max-width:130px;padding:9px 14px !important}}
 @media (max-width: 600px){
 .hero-inner{padding:104px 16px 88px !important}
 .hero-title{font-size:34px !important;line-height:1.12 !important}
@@ -149,6 +153,47 @@ input:focus,select:focus,button:focus-visible,a:focus-visible{outline:3px solid 
 .chat-panel{height:min(500px, calc(100vh - 120px)) !important}
 .chat-hint{display:none !important}
 .scroll-cue{display:none !important}
+}
+/* ===== Revisi Amel 2026-11-04: login, favorit, survei, peta, bagikan, booking ===== */
+.vm-backdrop{position:fixed;inset:0;background:rgba(12,16,14,.55);display:flex;align-items:center;justify-content:center;padding:16px}
+.vm-sheet{width:460px;max-width:100%;max-height:calc(100vh - 32px);overflow-y:auto;background:#FFFFFF;border-radius:24px;padding:26px;display:flex;flex-direction:column;gap:16px;position:relative;animation:popIn .3s ease both;box-shadow:0 30px 80px -30px rgba(10,20,15,.5)}
+.vm-sheet.wide{width:620px}
+.vm-x{position:absolute;top:14px;right:14px;width:44px;height:44px;border:0;border-radius:999px;background:#F3F5F1;color:#1B2420;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.vm-eyebrow{font-size:13px;font-weight:700;color:#4A5751;text-transform:uppercase;letter-spacing:.08em}
+.vm-h{margin:0;font-size:24px;font-weight:800;letter-spacing:-0.02em;color:#1B2420}
+.vm-label{display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:700;color:#1B2420;flex:1 1 200px;min-width:0}
+.vm-input{font:inherit;font-size:15px;font-weight:500;min-height:48px;padding:0 14px;border-radius:12px;border:1.5px solid #D5DBD3;background:#FFFFFF;color:#1B2420;width:100%}
+.vm-input.otp{font-size:26px;font-weight:800;letter-spacing:.5em;text-align:center}
+.vm-btn{font:inherit;font-weight:700;font-size:15px;min-height:50px;padding:0 20px;border-radius:999px;border:0;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;transition:background-color .2s ease,transform .2s ease}
+.vm-btn:hover{transform:translateY(-1px)}
+.vm-btn.pri{background:#1F4D3A;color:#FFFFFF}.vm-btn.pri:hover{background:#163828;color:#FFFFFF}
+.vm-btn.cta{background:#EC8A3E;color:#1B2420}.vm-btn.cta:hover{background:#F4A462;color:#1B2420}
+.vm-btn.out{background:#FFFFFF;color:#1F4D3A;border:1.5px solid #1F4D3A}.vm-btn.out:hover{background:#E3EFE6;color:#1F4D3A}
+.vm-btn.ghost{background:#F3F5F1;color:#1B2420}.vm-btn.ghost:hover{background:#E3E7E1;color:#1B2420}
+.vm-btn.google{background:#FFFFFF;color:#1B2420;border:1.5px solid #D5DBD3}.vm-btn.google:hover{background:#F7F8F5;color:#1B2420}
+.vm-err{font-size:13px;font-weight:600;color:#B4361A}
+.vm-note{font-size:13px;line-height:1.5;color:#234A78;background:#DCE6F2;border-radius:12px;padding:10px 12px}
+.vm-warn{font-size:14px;line-height:1.55;color:#9A3D0F;background:#FBE6D4;border-radius:14px;padding:12px 14px}
+.vm-row{display:flex;align-items:center;gap:12px;padding:12px;border-radius:16px;background:#F7F8F5;border:1px solid #E3E7E1}
+.fav-btn{position:absolute;right:12px;top:12px;width:40px;height:40px;border-radius:999px;border:0;background:#FFFFFF;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.18);transition:transform .15s ease;z-index:2}
+.fav-btn:hover{transform:scale(1.08)}
+.fav-btn[aria-pressed="true"] svg,.fav-on svg{animation:favPop .35s ease}
+@keyframes favPop{0%{transform:scale(.6)}60%{transform:scale(1.25)}100%{transform:scale(1)}}
+@keyframes sheetUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:none}}
+.nav-count{min-width:20px;height:20px;padding:0 6px;border-radius:999px;background:#EC8A3E;color:#1B2420;font-size:12px;font-weight:800;display:inline-flex;align-items:center;justify-content:center}
+.map-box{position:relative;width:100%;overflow:hidden;background:#E3E7E1;border:1px solid #E3E7E1}
+.map-box img{position:absolute;max-width:none;user-select:none;pointer-events:none}
+.map-pin{position:absolute;transform:translate(-50%,-130%);padding:5px 10px;border-radius:999px;background:#1F4D3A;color:#FFFFFF;font:inherit;font-size:12px;font-weight:800;border:2px solid #FFFFFF;cursor:pointer;white-space:nowrap;box-shadow:0 4px 12px rgba(0,0,0,.25)}
+.map-pin::after{content:"";position:absolute;left:50%;bottom:-7px;transform:translateX(-50%);border-left:6px solid transparent;border-right:6px solid transparent;border-top:6px solid #FFFFFF}
+.map-pin:hover,.map-pin:focus-visible{background:#EC8A3E;color:#1B2420;z-index:3}
+.vm-toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:96;display:flex;align-items:center;gap:12px;max-width:calc(100% - 32px);padding:12px 12px 12px 18px;border-radius:16px;background:#1B2420;color:#FFFFFF;font-size:14px;font-weight:600;box-shadow:0 20px 50px -20px rgba(0,0,0,.5);animation:fadeUp .3s ease both}
+.vm-toast button{font:inherit;font-weight:800;font-size:14px;min-height:40px;padding:0 14px;border-radius:999px;border:0;background:#EC8A3E;color:#1B2420;cursor:pointer;flex:0 0 auto}
+.seg{display:inline-flex;padding:4px;border-radius:999px;background:#FFFFFF;border:1px solid #E3E7E1}
+.seg button{font:inherit;font-weight:700;font-size:14px;min-height:40px;padding:0 16px;border-radius:999px;border:0;cursor:pointer;display:flex;align-items:center;gap:6px}
+@media (max-width:600px){
+.vm-backdrop{align-items:flex-end;padding:0}
+.vm-sheet,.vm-sheet.wide{width:100%;max-height:92vh;border-radius:24px 24px 0 0;animation:sheetUp .3s ease both;padding:22px 18px 28px}
+.hide-sm{display:none}
 }
 @media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important;scroll-behavior:auto !important}}
 </style>
@@ -171,7 +216,8 @@ input:focus,select:focus,button:focus-visible,a:focus-visible{outline:3px solid 
 <a href="#kontak" onClick="{{closeNav}}" class="nav-link" style="text-decoration: none">Kontak</a>
 <button type="button" onClick="{{openTitipNav}}" class="nav-link mobile-only" style="cursor: pointer; font: inherit; font-size: 16px; text-align: left; background: transparent; border: 0; border-bottom: 1px solid #EEF1EC">Titip Properti</button>
 <a href="#titip" onClick="{{closeNav}}" class="nav-link mobile-only" style="text-decoration: none">Gabung Agen</a>
-<a href="#kontak" onClick="{{closeNav}}" class="mobile-only mobile-cta" style="text-decoration: none; font-weight: 700; padding: 14px 20px; border-radius: 999px; background: #1F4D3A; color: #FFFFFF; text-align: center; margin-top: 10px">Masuk</a>
+<button type="button" onClick="{{openSavedNav}}" class="nav-link mobile-only nav-saved" style="cursor: pointer; font: inherit; font-size: 16px; text-align: left; background: transparent; border: 0; border-bottom: 1px solid #EEF1EC">Tersimpan<sc-if value="{{hasFav}}" hint-placeholder-val="{{ false }}"><span class="nav-count">{{favCount}}</span></sc-if></button>
+<button type="button" onClick="{{acctClickNav}}" class="mobile-only mobile-cta" style="cursor: pointer; font: inherit; font-weight: 700; font-size: 16px; padding: 14px 20px; border-radius: 999px; border: 0; background: #1F4D3A; color: #FFFFFF; text-align: center; margin-top: 10px">{{acctLabel}}</button>
 </div>
 <button type="button" class="nav-toggle hfg" onClick="{{toggleNav}}" aria-label="Buka menu" aria-expanded="{{navExpanded}}" style="width: 44px; height: 44px; border: 0; background: transparent; cursor: pointer; align-items: center; justify-content: center; padding: 0">
 <sc-if value="{{navClosed}}" hint-placeholder-val="{{ true }}">
@@ -184,7 +230,8 @@ input:focus,select:focus,button:focus-visible,a:focus-visible{outline:3px solid 
 <div class="nav-actions" style="display: flex; gap: 24px; align-items: center; font-size: 15px; font-weight: 600">
 <button type="button" onClick="{{openTitip}}" class="nav-link" style="cursor: pointer; font: inherit; font-weight: 600; background: transparent; border: 0">Titip Properti</button>
 <a href="#titip" class="nav-link" style="text-decoration: none">Gabung Agen</a>
-<a href="#kontak" class="nav-btn" style="text-decoration: none; font-weight: 700; padding: 11px 20px; border-radius: 999px">Masuk</a>
+<button type="button" onClick="{{openSaved}}" class="nav-link" aria-label="{{favNavLabel}}" title="Properti tersimpan" style="cursor: pointer; font: inherit; font-weight: 600; background: transparent; border: 0; display: flex; align-items: center; gap: 6px; padding: 0"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-9.3-9.4C1.5 7.9 3.6 4.5 7 4.5c2 0 3.6 1.1 5 3 1.4-1.9 3-3 5-3 3.4 0 5.5 3.4 4.3 6.6-1.8 4.8-9.3 9.4-9.3 9.4z"></path></svg><sc-if value="{{hasFav}}" hint-placeholder-val="{{ false }}"><span class="nav-count">{{favCount}}</span></sc-if></button>
+<button type="button" onClick="{{acctClick}}" class="nav-btn" style="cursor: pointer; font: inherit; font-weight: 700; padding: 11px 20px; border-radius: 999px; background: transparent">{{acctLabel}}</button>
 </div>
 </nav>
 </header>
@@ -285,8 +332,8 @@ Pantau properti saya</button>
 <img class="photo" src="{{ph.src}}" alt="{{ph.alt}}" draggable="false" style="flex: 0 0 100%; width: 100%; height: 100%; object-fit: cover; display: block; scroll-snap-align: start">
 </sc-for>
 </div>
-<span style="position: absolute; left: 12px; top: 12px; padding: 6px 12px; border-radius: 999px; background: #FFFFFF; font-size: 12px; font-weight: 700; color: #1B2420">{{item.typeLabel}}</span>
-<span style="position: absolute; right: 12px; top: 12px; padding: 6px 12px; border-radius: 999px; background: #1F4D3A; font-size: 12px; font-weight: 700; color: #FFFFFF">{{item.deal}}</span>
+<span style="position: absolute; left: 12px; top: 12px; display: flex; gap: 6px"><span style="padding: 6px 12px; border-radius: 999px; background: #FFFFFF; font-size: 12px; font-weight: 700; color: #1B2420">{{item.typeLabel}}</span><span style="padding: 6px 12px; border-radius: 999px; background: #1F4D3A; font-size: 12px; font-weight: 700; color: #FFFFFF">{{item.deal}}</span></span>
+<button type="button" class="fav-btn" onClick="{{item.toggleFav}}" aria-pressed="{{item.favPressed}}" aria-label="{{item.favLabel}}" title="{{item.favLabel}}"><svg width="20" height="20" viewBox="0 0 24 24" fill="{{item.favFill}}" stroke="{{item.favStroke}}" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-9.3-9.4C1.5 7.9 3.6 4.5 7 4.5c2 0 3.6 1.1 5 3 1.4-1.9 3-3 5-3 3.4 0 5.5 3.4 4.3 6.6-1.8 4.8-9.3 9.4-9.3 9.4z"></path></svg></button>
 <button type="button" class="gal-nav gal-prev" onClick="{{item.prev}}" aria-label="Foto sebelumnya"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg></button>
 <button type="button" class="gal-nav gal-next" onClick="{{item.next}}" aria-label="Foto berikutnya"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg></button>
 <div style="position: absolute; left: 0; right: 0; bottom: 10px; display: flex; justify-content: center; gap: 6px">
@@ -465,9 +512,18 @@ Pantau properti saya</button>
 </div>
 <div style="display: flex; flex-direction: column; gap: 10px; font-size: 15px; color: #4A5751">
 <span style="font-weight: 700; color: #1B2420">Hubungi kami</span>
-<span>[NOMOR WHATSAPP]</span>
-<span>[EMAIL KANTOR]</span>
-<span>[ALAMAT KANTOR]</span>
+<a href="{{contactWa}}" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: #4A5751; display: flex; align-items: center; gap: 8px; min-height: 32px"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 11.8a8.5 8.5 0 0 1-12.6 7.4L3.5 20.5l1.3-4.3A8.5 8.5 0 1 1 20.5 11.8z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"></path></svg>0831-8231-1993 (WhatsApp)</a>
+<a href="mailto:test@gmail.com" style="text-decoration: none; color: #4A5751; display: flex; align-items: center; gap: 8px; min-height: 32px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"></rect><path d="M4 7l8 6 8-6"></path></svg>test@gmail.com</a>
+<button type="button" onClick="{{acctClick}}" style="cursor: pointer; font: inherit; font-size: 15px; text-align: left; padding: 0; border: 0; background: transparent; color: #1F4D3A; font-weight: 700; min-height: 32px">{{footerAcct}}</button>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px; font-size: 15px; color: #4A5751; flex: 0 1 300px">
+<span style="font-weight: 700; color: #1B2420">Kantor kami</span>
+<sc-for list="{{offices}}" as="of" hint-placeholder-count="2">
+<div style="display: flex; gap: 10px; padding: 12px 14px; border-radius: 14px; background: #FFFFFF; border: 1px solid #E3E7E1">
+<span style="flex: 0 0 36px; width: 36px; height: 36px; border-radius: 10px; background: #E3EFE6; color: #1F4D3A; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"></path><circle cx="12" cy="9.5" r="2.5"></circle></svg></span>
+<span style="display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-weight: 700; color: #1B2420">{{of.city}}</span><span style="font-size: 14px; line-height: 1.5">{{of.address}}</span><a href="{{of.map}}" target="_blank" rel="noopener noreferrer" style="font-size: 14px; font-weight: 700; color: #1F4D3A">Lihat di OpenStreetMap</a></span>
+</div>
+</sc-for>
 </div>
 </div>
 <div style="max-width: 1200px; margin: 40px auto 0; padding-top: 24px; border-top: 1px solid #E3E7E1; display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; font-size: 14px; color: #4A5751">
@@ -1079,7 +1135,7 @@ Kembali ke beranda
 </div>
 <div style="max-width: 1100px; margin: 0 auto; padding: 32px 24px 120px; display: flex; flex-direction: column; gap: 28px">
 <div style="display: flex; flex-direction: column; gap: 8px">
-<span style="font-size: 15px; font-weight: 600; color: #4A5751">Halo, [NAMA PEMBELI]</span>
+<span style="font-size: 15px; font-weight: 600; color: #4A5751">Halo, {{buyerName}}</span>
 <h1 class="dt-title" style="margin: 0; font-size: 40px; letter-spacing: -0.03em; font-weight: 800">Pantau properti saya</h1>
 <span style="font-size: 16px; color: #4A5751">Lihat perkembangan pembangunan properti yang sudah Anda beli, lengkap dengan foto dari lapangan.</span>
 </div>
@@ -1368,6 +1424,13 @@ Kembali ke beranda
 <sc-if value="{{nearLoading}}" hint-placeholder-val="{{ false }}">
 <div style="display: flex; align-items: center; gap: 12px; padding: 14px 18px; border-radius: 16px; background: #E3EFE6; color: #1F4D3A; font-weight: 600; font-size: 15px"><span class="spin" style="width: 18px; height: 18px; border-radius: 999px; border: 2.5px solid #1F4D3A; border-right-color: transparent"></span>Membaca lokasimu…</div>
 </sc-if>
+<div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between">
+<div class="seg" role="group" aria-label="Tampilan hasil">
+<button type="button" onClick="{{setLvList}}" aria-pressed="{{lvListPressed}}" style="background: {{lvListBg}}; color: {{lvListFg}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"></path></svg>Daftar</button>
+<button type="button" onClick="{{setLvMap}}" aria-pressed="{{lvMapPressed}}" style="background: {{lvMapBg}}; color: {{lvMapFg}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4L3.5 6v14L9 18l6 2 5.5-2V4L15 6z"></path><path d="M9 4v14M15 6v14"></path></svg>Peta</button>
+</div>
+<a href="{{alertWa}}" target="_blank" rel="noopener noreferrer" class="vm-btn out" style="min-height: 44px; font-size: 14px; padding: 0 16px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"></path><path d="M10 20.5a2 2 0 0 0 4 0"></path></svg>Kabari saya kalau ada yang cocok</a>
+</div>
 <sc-if value="{{nearActive}}" hint-placeholder-val="{{ false }}">
 <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; padding: 12px 12px 12px 18px; border-radius: 16px; background: #E3EFE6; color: #1F4D3A; font-weight: 600; font-size: 15px">
 <span style="display: flex; align-items: center; gap: 10px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"></path><circle cx="12" cy="9.5" r="2.5"></circle></svg>{{nearText}}</span>
@@ -1385,8 +1448,20 @@ Kembali ke beranda
 <span style="font-size: 20px; font-weight: 800">Belum ada properti yang cocok</span>
 <span style="font-size: 15px; color: #4A5751; max-width: 420px">Coba longgarkan filter, misalnya rentang harga atau luas, atau tanya Cimel untuk dicarikan.</span>
 <button type="button" onClick="{{resetLf}}" class="btn" style="cursor: pointer; font: inherit; font-weight: 700; font-size: 15px; min-height: 46px; padding: 0 22px; border-radius: 999px; border: 0; background: #1F4D3A; color: #FFFFFF">Reset filter</button>
+<a href="{{alertWa}}" target="_blank" rel="noopener noreferrer" class="vm-btn out" style="min-height: 46px; font-size: 15px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"></path><path d="M10 20.5a2 2 0 0 0 4 0"></path></svg>Kabari saya kalau ada yang cocok</a>
 </div>
 </sc-if>
+<sc-if value="{{lvMap}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; gap: 10px">
+<div class="map-box" role="group" aria-label="Peta hasil pencarian" style="aspect-ratio: 1000 / 600; border-radius: 24px">
+<sc-for list="{{rMapTiles}}" as="tl" hint-placeholder-count="12"><img src="{{tl.src}}" alt="" draggable="false" loading="lazy" style="left: {{tl.l}}; top: {{tl.t}}; width: {{tl.w}}; height: {{tl.h}}"></sc-for>
+<sc-for list="{{mapPins}}" as="pin" hint-placeholder-count="6"><button type="button" class="map-pin" onClick="{{pin.open}}" aria-label="{{pin.aria}}" title="{{pin.aria}}" style="left: {{pin.l}}; top: {{pin.t}}">{{pin.label}}</button></sc-for>
+<a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer" style="position: absolute; right: 0; bottom: 0; padding: 3px 8px; background: rgba(255,255,255,0.88); font-size: 11px; color: #1B2420; border-radius: 8px 0 0 0; text-decoration: none">© OpenStreetMap contributors</a>
+</div>
+<span style="font-size: 13px; color: #4A5751">Pin menunjukkan area perkiraan, bukan alamat persis. Ketuk pin untuk membuka detail properti.</span>
+</div>
+</sc-if>
+<sc-if value="{{lvList}}" hint-placeholder-val="{{ true }}">
 <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 22px">
 <sc-for list="{{results}}" as="item" hint-placeholder-count="6">
 <article class="card" style="background: {{item.cardBg}}; border-radius: 24px; overflow: hidden; display: flex; flex-direction: column">
@@ -1397,8 +1472,8 @@ Kembali ke beranda
 <img class="photo" src="{{ph.src}}" alt="{{ph.alt}}" draggable="false" style="flex: 0 0 100%; width: 100%; height: 100%; object-fit: cover; display: block; scroll-snap-align: start">
 </sc-for>
 </div>
-<span style="position: absolute; left: 12px; top: 12px; padding: 6px 12px; border-radius: 999px; background: #FFFFFF; font-size: 12px; font-weight: 700; color: #1B2420">{{item.typeLabel}}</span>
-<span style="position: absolute; right: 12px; top: 12px; padding: 6px 12px; border-radius: 999px; background: #1F4D3A; font-size: 12px; font-weight: 700; color: #FFFFFF">{{item.deal}}</span>
+<span style="position: absolute; left: 12px; top: 12px; display: flex; gap: 6px"><span style="padding: 6px 12px; border-radius: 999px; background: #FFFFFF; font-size: 12px; font-weight: 700; color: #1B2420">{{item.typeLabel}}</span><span style="padding: 6px 12px; border-radius: 999px; background: #1F4D3A; font-size: 12px; font-weight: 700; color: #FFFFFF">{{item.deal}}</span></span>
+<button type="button" class="fav-btn" onClick="{{item.toggleFav}}" aria-pressed="{{item.favPressed}}" aria-label="{{item.favLabel}}" title="{{item.favLabel}}"><svg width="20" height="20" viewBox="0 0 24 24" fill="{{item.favFill}}" stroke="{{item.favStroke}}" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-9.3-9.4C1.5 7.9 3.6 4.5 7 4.5c2 0 3.6 1.1 5 3 1.4-1.9 3-3 5-3 3.4 0 5.5 3.4 4.3 6.6-1.8 4.8-9.3 9.4-9.3 9.4z"></path></svg></button>
 <button type="button" class="gal-nav gal-prev" onClick="{{item.prev}}" aria-label="Foto sebelumnya"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg></button>
 <button type="button" class="gal-nav gal-next" onClick="{{item.next}}" aria-label="Foto berikutnya"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg></button>
 <div style="position: absolute; left: 0; right: 0; bottom: 10px; display: flex; justify-content: center; gap: 6px">
@@ -1491,6 +1566,7 @@ Kembali ke beranda
 </article>
 </sc-for>
 </div>
+</sc-if>
 </div>
 </div>
 </div>
@@ -1506,6 +1582,10 @@ Kembali ke beranda
 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg>
 Kembali ke listing
 </button>
+<div style="display: flex; align-items: center; gap: 8px">
+<button type="button" onClick="{{dt.toggleFav}}" aria-pressed="{{dt.favPressed}}" aria-label="{{dt.favLabel}}" class="vm-btn out" style="min-height: 44px; padding: 0 14px; font-size: 14px"><svg width="18" height="18" viewBox="0 0 24 24" fill="{{dt.favFill}}" stroke="{{dt.favStroke}}" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-9.3-9.4C1.5 7.9 3.6 4.5 7 4.5c2 0 3.6 1.1 5 3 1.4-1.9 3-3 5-3 3.4 0 5.5 3.4 4.3 6.6-1.8 4.8-9.3 9.4-9.3 9.4z"></path></svg><span class="hide-sm">{{dt.favText}}</span></button>
+<button type="button" onClick="{{dt.share}}" aria-label="Bagikan properti ini" class="vm-btn out" style="min-height: 44px; padding: 0 14px; font-size: 14px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5.5" r="2.5"></circle><circle cx="6" cy="12" r="2.5"></circle><circle cx="18" cy="18.5" r="2.5"></circle><path d="M8.2 10.8l7.6-4.1M8.2 13.2l7.6 4.1"></path></svg><span class="hide-sm">Bagikan</span></button>
+</div>
 <span style="display: flex; align-items: baseline; gap: 5px; letter-spacing: -0.02em"><span style="font-weight: 800; font-size: 18px; color: #1B2420">vinmel</span><span style="font-weight: 500; font-size: 18px; color: #4A5751">agency</span></span>
 </div>
 </div>
@@ -1651,6 +1731,18 @@ Kembali ke listing
 </div>
 </div>
 <div style="display: flex; flex-direction: column; gap: 14px">
+<span style="display: flex; flex-direction: column; gap: 2px"><h2 style="margin: 0; font-size: 22px; font-weight: 800; letter-spacing: -0.02em">Lokasi</h2><span style="font-size: 14px; color: #4A5751">Area perkiraan di sekitar {{dt.location}}</span></span>
+<div class="map-box" role="img" aria-label="Peta area sekitar {{dt.location}}, radius sekitar 500 meter" style="aspect-ratio: 800 / 340; border-radius: 20px">
+<sc-for list="{{dt.mapTiles}}" as="tl" hint-placeholder-count="12"><img src="{{tl.src}}" alt="" draggable="false" loading="lazy" style="left: {{tl.l}}; top: {{tl.t}}; width: {{tl.w}}; height: {{tl.h}}"></sc-for>
+<span aria-hidden="true" style="position: absolute; left: {{dt.areaL}}; top: {{dt.areaT}}; width: {{dt.areaW}}; height: {{dt.areaH}}; transform: translate(-50%, -50%); border-radius: 50%; background: rgba(236,138,62,0.22); border: 2px solid #EC8A3E"></span>
+<a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer" style="position: absolute; right: 0; bottom: 0; padding: 3px 8px; background: rgba(255,255,255,0.88); font-size: 11px; color: #1B2420; border-radius: 8px 0 0 0; text-decoration: none">© OpenStreetMap contributors</a>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between">
+<span style="font-size: 14px; color: #4A5751; line-height: 1.5; max-width: 560px">Lingkaran menunjukkan area dalam radius ± 500 m. Alamat persis dibagikan agen setelah jadwal survei dikonfirmasi, untuk menjaga privasi pemilik.</span>
+<a href="{{dt.osmHref}}" target="_blank" rel="noopener noreferrer" class="vm-btn out" style="min-height: 44px; font-size: 14px; padding: 0 16px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"></path><circle cx="12" cy="9.5" r="2.5"></circle></svg>Buka di OpenStreetMap</a>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 14px">
 <span style="display: flex; flex-direction: column; gap: 2px"><h2 style="margin: 0; font-size: 22px; font-weight: 800; letter-spacing: -0.02em">Legalitas</h2><span style="font-size: 14px; color: #4A5751">Status dicek langsung oleh agen Vinmel Agency</span></span>
 <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px">
 <sc-for list="{{dt.x.legal}}" as="t" hint-placeholder-count="4">
@@ -1701,7 +1793,8 @@ Tanya via WhatsApp
 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg>
 </button>
 </sc-if>
-<button type="button" onClick="{{dt.ask}}" class="btn" style="min-height: 52px; border-radius: 14px; border: 1.5px solid #1F4D3A; background: #FFFFFF; color: #1F4D3A; font: inherit; font-weight: 700; font-size: 15px; cursor: pointer">Jadwalkan survei lewat chat</button>
+<button type="button" onClick="{{dt.openSurvey}}" class="vm-btn cta" style="min-height: 54px; border-radius: 14px; font-size: 16px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="3"></rect><path d="M3.5 10h17M8 3v4M16 3v4"></path></svg>Jadwalkan survei</button>
+<button type="button" onClick="{{dt.openBooking}}" class="vm-btn out" style="min-height: 52px; border-radius: 14px">{{dt.bookLabel}}</button>
 <button type="button" onClick="{{dt.cmpToggle}}" aria-pressed="{{dt.cmpPressed}}" class="btn" style="min-height: 52px; border-radius: 14px; border: 1.5px solid #1F4D3A; background: {{dt.cmpBg}}; color: {{dt.cmpFg}}; font: inherit; font-weight: 700; font-size: 15px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18"></path><path d="M5 7h14"></path><path d="M5 7l-3 7a3.5 3.5 0 0 0 6 0z"></path><path d="M19 7l-3 7a3.5 3.5 0 0 0 6 0z"></path><path d="M8 21h8"></path></svg>{{dt.cmpText}}</button>
 <span style="font-size: 13px; line-height: 1.5; color: #4A5751">Pesan WhatsApp otomatis berisi nama, lokasi, dan detail properti ini.</span>
 </aside>
@@ -2082,10 +2175,162 @@ Tukar A ↔ B
 </sc-if>
 </div>
 </div>
+<!-- ===== Revisi Amel 2026-11-04 ===== -->
+<!-- LOGIN: OTP WhatsApp + Google -->
+<sc-if value="{{authOpen}}" hint-placeholder-val="{{ false }}">
+<div class="vm-backdrop" role="dialog" aria-modal="true" aria-label="Masuk ke Vinmel Agency" style="z-index: 95">
+<div class="vm-sheet">
+<button type="button" class="vm-x" onClick="{{au.close}}" aria-label="Tutup"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+<span style="display: flex; flex-direction: column; gap: 6px; padding-right: 48px"><span class="vm-eyebrow">Akun Vinmel</span><h2 class="vm-h">{{au.title}}</h2><span style="font-size: 15px; line-height: 1.5; color: #4A5751">{{au.sub}}</span></span>
+<sc-if value="{{au.isPick}}" hint-placeholder-val="{{ true }}">
+<button type="button" onClick="{{au.pickWa}}" class="vm-btn wa-btn" style="min-height: 54px; border-radius: 14px"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 11.8a8.5 8.5 0 0 1-12.6 7.4L3.5 20.5l1.3-4.3A8.5 8.5 0 1 1 20.5 11.8z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"></path></svg>Masuk dengan WhatsApp (OTP)</button>
+<button type="button" onClick="{{au.google}}" class="vm-btn google" style="min-height: 54px; border-radius: 14px"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M21.6 12.2c0-.7-.1-1.4-.2-2H12v3.8h5.4a4.6 4.6 0 0 1-2 3v2.5h3.2c1.9-1.7 3-4.3 3-7.3z" fill="#4285F4"></path><path d="M12 22c2.7 0 5-.9 6.6-2.4l-3.2-2.5c-.9.6-2 1-3.4 1-2.6 0-4.8-1.8-5.6-4.1H3.1v2.6A10 10 0 0 0 12 22z" fill="#34A853"></path><path d="M6.4 14c-.2-.6-.3-1.3-.3-2s.1-1.4.3-2V7.4H3.1a10 10 0 0 0 0 9.2z" fill="#FBBC05"></path><path d="M12 5.9c1.5 0 2.8.5 3.8 1.5l2.9-2.9A10 10 0 0 0 3.1 7.4L6.4 10c.8-2.3 3-4.1 5.6-4.1z" fill="#EA4335"></path></svg>Masuk dengan Google</button>
+<span style="font-size: 13px; line-height: 1.5; color: #4A5751">Dengan masuk, favorit dan jadwal survei tersimpan di akunmu. Kami tidak pernah meminta password atau kode OTP lewat chat.</span>
+</sc-if>
+<sc-if value="{{au.isWa}}" hint-placeholder-val="{{ false }}">
+<label class="vm-label">Nama lengkap<input type="text" class="vm-input" value="{{au.name}}" onChange="{{au.setName}}" autocomplete="name" placeholder="Contoh: Budi Santoso"></label>
+<label class="vm-label">Nomor WhatsApp<input type="tel" class="vm-input" value="{{au.phone}}" onChange="{{au.setPhone}}" onKeyDown="{{au.phoneKey}}" inputmode="tel" autocomplete="tel" placeholder="Contoh: 0812 3456 7890"></label>
+<sc-if value="{{au.hasErr}}" hint-placeholder-val="{{ false }}"><span class="vm-err" role="alert">{{au.err}}</span></sc-if>
+<button type="button" onClick="{{au.sendOtp}}" class="vm-btn pri">{{au.sendLabel}}</button>
+<button type="button" onClick="{{au.back}}" class="vm-btn ghost">Pilih cara lain</button>
+</sc-if>
+<sc-if value="{{au.isOtp}}" hint-placeholder-val="{{ false }}">
+<label class="vm-label">Kode 6 digit<input type="text" class="vm-input otp" value="{{au.code}}" onChange="{{au.setCode}}" onKeyDown="{{au.codeKey}}" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="••••••"></label>
+<sc-if value="{{au.hasErr}}" hint-placeholder-val="{{ false }}"><span class="vm-err" role="alert">{{au.err}}</span></sc-if>
+<button type="button" onClick="{{au.verify}}" class="vm-btn pri">{{au.verifyLabel}}</button>
+<div style="display: flex; gap: 10px; flex-wrap: wrap"><button type="button" onClick="{{au.back}}" class="vm-btn ghost" style="flex: 1 1 140px">Ganti nomor</button><button type="button" onClick="{{au.sendOtp}}" class="vm-btn ghost" style="flex: 1 1 140px">Kirim ulang kode</button></div>
+</sc-if>
+<sc-if value="{{au.preview}}" hint-placeholder-val="{{ true }}"><span class="vm-note">Pratinjau desain: kode OTP dan Google Sign-In belum tersambung ke server. Kode 6 digit apa pun diterima. Isi properti <b>authApi</b> agar login sungguhan aktif.</span></sc-if>
+</div>
+</div>
+</sc-if>
+
+<!-- AKUN & TERSIMPAN -->
+<sc-if value="{{showAcct}}" hint-placeholder-val="{{ false }}">
+<div class="vm-backdrop" role="dialog" aria-modal="true" aria-label="Akun dan properti tersimpan" style="z-index: 94">
+<div class="vm-sheet wide">
+<button type="button" class="vm-x" onClick="{{closeAcct}}" aria-label="Tutup"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+<sc-if value="{{hasUser}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; align-items: center; gap: 14px; padding-right: 48px"><span style="flex: 0 0 52px; width: 52px; height: 52px; border-radius: 999px; background: #1F4D3A; color: #FFFFFF; font-size: 22px; font-weight: 800; display: flex; align-items: center; justify-content: center">{{userInitial}}</span><span style="display: flex; flex-direction: column; gap: 2px; min-width: 0"><span class="vm-h" style="font-size: 22px">{{userName}}</span><span style="font-size: 14px; color: #4A5751">{{userVia}}</span></span></div>
+</sc-if>
+<sc-if value="{{noUser}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; flex-direction: column; gap: 10px; padding: 16px; border-radius: 16px; background: #E3EFE6; margin-right: 48px"><span style="font-size: 16px; font-weight: 800; color: #1F4D3A">Kamu belum masuk</span><span style="font-size: 14px; line-height: 1.5; color: #1F4D3A">Favorit dan jadwal di bawah baru tersimpan di perangkat ini. Masuk supaya tidak hilang.</span><button type="button" onClick="{{openLogin}}" class="vm-btn pri" style="align-self: flex-start; min-height: 44px">Masuk sekarang</button></div>
+</sc-if>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<h3 style="margin: 0; font-size: 18px; font-weight: 800">Properti tersimpan ({{favCount}})</h3>
+<sc-if value="{{noFav}}" hint-placeholder-val="{{ false }}"><span style="font-size: 14px; color: #4A5751; line-height: 1.5">Belum ada. Tekan ikon hati di kartu properti untuk menyimpannya di sini.</span></sc-if>
+<sc-for list="{{favList}}" as="fv" hint-placeholder-count="2">
+<div class="vm-row">
+<img src="{{fv.cover}}" alt="" style="flex: 0 0 64px; width: 64px; height: 64px; border-radius: 12px; object-fit: cover; background: #E3E7E1">
+<span style="flex: 1 1 auto; display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-weight: 800; font-size: 15px">{{fv.title}}</span><span style="font-size: 13px; color: #4A5751">{{fv.location}}</span><span style="font-size: 14px; font-weight: 800; color: #1F4D3A">{{fv.priceText}}</span></span>
+<button type="button" onClick="{{fv.open}}" class="vm-btn out" style="min-height: 40px; padding: 0 14px; font-size: 14px">Lihat</button>
+<button type="button" onClick="{{fv.remove}}" aria-label="{{fv.removeLabel}}" title="Hapus dari tersimpan" style="flex: 0 0 40px; width: 40px; height: 40px; border-radius: 999px; border: 0; background: #FFFFFF; color: #B4361A; cursor: pointer; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="#EC8A3E" stroke="#EC8A3E" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-9.3-9.4C1.5 7.9 3.6 4.5 7 4.5c2 0 3.6 1.1 5 3 1.4-1.9 3-3 5-3 3.4 0 5.5 3.4 4.3 6.6-1.8 4.8-9.3 9.4-9.3 9.4z"></path></svg></button>
+</div>
+</sc-for>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<h3 style="margin: 0; font-size: 18px; font-weight: 800">Jadwal survei saya</h3>
+<sc-if value="{{noSurvey}}" hint-placeholder-val="{{ false }}"><span style="font-size: 14px; color: #4A5751; line-height: 1.5">Belum ada jadwal. Buka detail properti lalu tekan "Jadwalkan survei".</span></sc-if>
+<sc-for list="{{svList}}" as="sl" hint-placeholder-count="1">
+<div class="vm-row" style="flex-wrap: wrap">
+<span style="flex: 0 0 44px; width: 44px; height: 44px; border-radius: 12px; background: #FBE6D4; color: #9A3D0F; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="3"></rect><path d="M3.5 10h17M8 3v4M16 3v4"></path></svg></span>
+<span style="flex: 1 1 200px; display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-weight: 800; font-size: 15px">{{sl.title}}</span><span style="font-size: 14px; color: #4A5751">{{sl.when}}</span><span style="align-self: flex-start; margin-top: 4px; padding: 3px 10px; border-radius: 999px; background: #DCE6F2; color: #234A78; font-size: 12px; font-weight: 800">Menunggu konfirmasi agen</span></span>
+<a href="{{sl.wa}}" target="_blank" rel="noopener noreferrer" class="vm-btn out" style="min-height: 40px; padding: 0 14px; font-size: 14px">Kirim ulang ke WA</a>
+</div>
+</sc-for>
+</div>
+<sc-if value="{{hasUser}}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{logout}}" class="vm-btn ghost">Keluar</button></sc-if>
+</div>
+</div>
+</sc-if>
+
+<!-- JADWAL SURVEI -->
+<sc-if value="{{svOpen}}" hint-placeholder-val="{{ false }}">
+<div class="vm-backdrop" role="dialog" aria-modal="true" aria-label="Jadwalkan survei" style="z-index: 95">
+<div class="vm-sheet wide">
+<button type="button" class="vm-x" onClick="{{svClose}}" aria-label="Tutup"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+<sc-if value="{{svForm}}" hint-placeholder-val="{{ true }}">
+<span style="display: flex; flex-direction: column; gap: 4px; padding-right: 48px"><span class="vm-eyebrow">Jadwalkan survei</span><h2 class="vm-h">{{svProp.title}}</h2><span style="font-size: 14px; color: #4A5751">{{svProp.location}}</span></span>
+<div role="group" aria-labelledby="sv-date-l" style="display: flex; flex-direction: column; gap: 8px">
+<span id="sv-date-l" style="font-size: 13px; font-weight: 700">Pilih tanggal</span>
+<div style="display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px">
+<sc-for list="{{svDates}}" as="dc" hint-placeholder-count="7"><button type="button" onClick="{{dc.pick}}" aria-pressed="{{dc.pressed}}" aria-label="{{dc.aria}}" style="flex: 0 0 66px; min-height: 76px; border-radius: 16px; border: 1.5px solid {{dc.border}}; background: {{dc.bg}}; color: {{dc.fg}}; font: inherit; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px"><span style="font-size: 12px; font-weight: 600">{{dc.day}}</span><span style="font-size: 20px; font-weight: 800">{{dc.num}}</span><span style="font-size: 12px; font-weight: 600">{{dc.mon}}</span></button></sc-for>
+</div>
+<sc-if value="{{svErr.hasDate}}" hint-placeholder-val="{{ false }}"><span class="vm-err">{{svErr.date}}</span></sc-if>
+</div>
+<div role="group" aria-labelledby="sv-slot-l" style="display: flex; flex-direction: column; gap: 8px">
+<span id="sv-slot-l" style="font-size: 13px; font-weight: 700">Pilih jam (WIB)</span>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+<sc-for list="{{svSlots}}" as="sc" hint-placeholder-count="3"><button type="button" onClick="{{sc.pick}}" aria-pressed="{{sc.pressed}}" style="min-height: 60px; border-radius: 14px; border: 1.5px solid {{sc.border}}; background: {{sc.bg}}; color: {{sc.fg}}; font: inherit; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px"><span style="font-size: 15px; font-weight: 800">{{sc.label}}</span><span style="font-size: 12px; font-weight: 600">{{sc.range}}</span></button></sc-for>
+</div>
+<sc-if value="{{svErr.hasSlot}}" hint-placeholder-val="{{ false }}"><span class="vm-err">{{svErr.slot}}</span></sc-if>
+</div>
+<div style="display: flex; gap: 12px; flex-wrap: wrap">
+<label class="vm-label">Nama<input type="text" class="vm-input" value="{{svData.name}}" onChange="{{svSetName}}" autocomplete="name" placeholder="Nama lengkap"><sc-if value="{{svErr.hasName}}" hint-placeholder-val="{{ false }}"><span class="vm-err">{{svErr.name}}</span></sc-if></label>
+<label class="vm-label">Nomor WhatsApp<input type="tel" class="vm-input" value="{{svData.phone}}" onChange="{{svSetPhone}}" inputmode="tel" autocomplete="tel" placeholder="0812 3456 7890"><sc-if value="{{svErr.hasPhone}}" hint-placeholder-val="{{ false }}"><span class="vm-err">{{svErr.phone}}</span></sc-if></label>
+</div>
+<label class="vm-label">Catatan untuk agen (opsional)<input type="text" class="vm-input" value="{{svData.note}}" onChange="{{svSetNote}}" placeholder="Contoh: datang berdua, ingin lihat kamar utama"></label>
+<span class="vm-note">Agen akan mengonfirmasi jadwal lewat WhatsApp sebelum hari survei. Alamat persis dikirim setelah jadwal dikonfirmasi.</span>
+<div style="display: flex; gap: 10px; flex-wrap: wrap"><button type="button" onClick="{{svClose}}" class="vm-btn ghost" style="flex: 1 1 140px">Batal</button><button type="button" onClick="{{svSubmit}}" class="vm-btn pri" style="flex: 2 1 200px">Lanjut</button></div>
+</sc-if>
+<sc-if value="{{svDone}}" hint-placeholder-val="{{ false }}">
+<span style="width: 56px; height: 56px; border-radius: 999px; background: #E3EFE6; color: #1F4D3A; display: flex; align-items: center; justify-content: center"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></span>
+<span style="display: flex; flex-direction: column; gap: 6px; padding-right: 48px"><h2 class="vm-h">Satu langkah lagi</h2><span style="font-size: 15px; line-height: 1.5; color: #4A5751">Jadwal sudah tercatat di akunmu. Kirim ke agen lewat WhatsApp supaya bisa langsung dikonfirmasi.</span></span>
+<div style="display: grid; grid-template-columns: auto 1fr; gap: 8px 16px; padding: 16px; border-radius: 16px; background: #F7F8F5; border: 1px solid #E3E7E1; font-size: 15px">
+<span style="color: #4A5751">Properti</span><span style="font-weight: 700">{{svRec.title}}</span>
+<span style="color: #4A5751">Tanggal</span><span style="font-weight: 700">{{svRec.dateLabel}}</span>
+<span style="color: #4A5751">Jam</span><span style="font-weight: 700">{{svRec.slotLabel}}</span>
+<span style="color: #4A5751">Atas nama</span><span style="font-weight: 700">{{svRec.name}}</span>
+</div>
+<a href="{{svRec.wa}}" target="_blank" rel="noopener noreferrer" class="vm-btn wa-btn" style="min-height: 54px; border-radius: 14px"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 11.8a8.5 8.5 0 0 1-12.6 7.4L3.5 20.5l1.3-4.3A8.5 8.5 0 1 1 20.5 11.8z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"></path></svg>Kirim ke agen lewat WhatsApp</a>
+<div style="display: flex; gap: 10px; flex-wrap: wrap">
+<a href="{{svRec.gcal}}" target="_blank" rel="noopener noreferrer" class="vm-btn out" style="flex: 1 1 180px; min-height: 46px; font-size: 14px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="3"></rect><path d="M3.5 10h17M8 3v4M16 3v4"></path></svg>Google Calendar</a>
+<a href="{{svRec.ics}}" download="survei-vinmel.ics" class="vm-btn out" style="flex: 1 1 180px; min-height: 46px; font-size: 14px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="3"></rect><path d="M3.5 10h17M8 3v4M16 3v4"></path></svg>File kalender (.ics)</a>
+</div>
+<button type="button" onClick="{{svClose}}" class="vm-btn ghost">Selesai</button>
+</sc-if>
+</div>
+</div>
+</sc-if>
+
+<!-- BOOKING / TANDA JADI: pembayaran manual lewat admin -->
+<sc-if value="{{bkOpen}}" hint-placeholder-val="{{ false }}">
+<div class="vm-backdrop" role="dialog" aria-modal="true" aria-label="{{bk.title}}" style="z-index: 95">
+<div class="vm-sheet wide">
+<button type="button" class="vm-x" onClick="{{bk.close}}" aria-label="Tutup"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+<span style="display: flex; flex-direction: column; gap: 4px; padding-right: 48px"><span class="vm-eyebrow">{{bk.eyebrow}}</span><h2 class="vm-h">{{bk.title}}</h2><span style="font-size: 14px; color: #4A5751">{{bk.sub}}</span></span>
+<ol style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 12px">
+<sc-for list="{{bk.steps}}" as="st" hint-placeholder-count="4"><li style="display: flex; gap: 12px"><span style="flex: 0 0 32px; width: 32px; height: 32px; border-radius: 999px; background: #FBE6D4; color: #9A3D0F; font-weight: 800; font-size: 14px; display: flex; align-items: center; justify-content: center">{{st.n}}</span><span style="display: flex; flex-direction: column; gap: 2px"><span style="font-weight: 800; font-size: 15px">{{st.t}}</span><span style="font-size: 14px; line-height: 1.5; color: #4A5751">{{st.b}}</span></span></li></sc-for>
+</ol>
+<span class="vm-warn"><b>Penting:</b> pembayaran dilakukan manual lewat transfer bank, tanpa payment gateway. Transfer hanya ke rekening resmi Vinmel Agency yang tertera di invoice dari admin. Jangan transfer ke rekening pribadi siapa pun, termasuk yang mengaku agen.</span>
+<a href="{{bk.wa}}" target="_blank" rel="noopener noreferrer" class="vm-btn wa-btn" style="min-height: 54px; border-radius: 14px"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 11.8a8.5 8.5 0 0 1-12.6 7.4L3.5 20.5l1.3-4.3A8.5 8.5 0 1 1 20.5 11.8z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"></path></svg>{{bk.cta}}</a>
+<span style="font-size: 13px; line-height: 1.5; color: #4A5751">Nominal dan syarat pengembalian dana disampaikan admin sebelum kamu transfer.</span>
+</div>
+</div>
+</sc-if>
+
+<!-- BAGIKAN (cadangan bila Web Share API tidak tersedia) -->
+<sc-if value="{{shareOpen}}" hint-placeholder-val="{{ false }}">
+<div class="vm-backdrop" role="dialog" aria-modal="true" aria-label="Bagikan properti" style="z-index: 95">
+<div class="vm-sheet">
+<button type="button" class="vm-x" onClick="{{sh.close}}" aria-label="Tutup"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+<h2 class="vm-h" style="padding-right: 48px">Bagikan properti</h2>
+<div class="vm-row"><img src="{{sh.cover}}" alt="" style="flex: 0 0 64px; width: 64px; height: 64px; border-radius: 12px; object-fit: cover; background: #E3E7E1"><span style="display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-weight: 800; font-size: 15px">{{sh.title}}</span><span style="font-size: 13px; color: #4A5751">{{sh.location}}</span><span style="font-size: 14px; font-weight: 800; color: #1F4D3A">{{sh.price}}</span></span></div>
+<a href="{{sh.wa}}" target="_blank" rel="noopener noreferrer" class="vm-btn wa-btn" style="border-radius: 14px"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 11.8a8.5 8.5 0 0 1-12.6 7.4L3.5 20.5l1.3-4.3A8.5 8.5 0 1 1 20.5 11.8z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"></path></svg>Kirim lewat WhatsApp</a>
+<a href="{{sh.fb}}" target="_blank" rel="noopener noreferrer" class="vm-btn out" style="border-radius: 14px">Bagikan ke Facebook</a>
+<label class="vm-label">Tautan properti<span style="display: flex; gap: 8px"><input type="text" class="vm-input" value="{{sh.link}}" readonly onFocus="{{sh.select}}"><button type="button" onClick="{{sh.copy}}" class="vm-btn pri" style="flex: 0 0 auto; border-radius: 12px; min-height: 48px">Salin</button></span></label>
+</div>
+</div>
+</sc-if>
+
+<!-- TOAST -->
+<sc-if value="{{hasToast}}" hint-placeholder-val="{{ false }}">
+<div class="vm-toast" role="status"><span>{{toast.text}}</span><sc-if value="{{toast.hasAction}}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{toast.act}}">{{toast.actLabel}}</button></sc-if></div>
+</sc-if>
 
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"waNumber":{"editor":"text","default":"","section":"WhatsApp"},"siteUrl":{"editor":"text","default":"https://vinmelagency.com","section":"WhatsApp"},"$preview":{"width":1440,"height":4300}}'>
+<script type="text/x-dc" data-dc-script data-props='{"waNumber":{"editor":"text","default":"6283182311993","section":"WhatsApp"},"authApi":{"editor":"text","default":"","section":"Login"},"siteUrl":{"editor":"text","default":"https://vinmelagency.com","section":"WhatsApp"},"$preview":{"width":1440,"height":4300}}'>
 class Component extends DCLogic {
   constructor(props) {
     super(props);
@@ -2109,7 +2354,7 @@ class Component extends DCLogic {
     if (t.indexOf('rumah') > -1) return 'Oke, untuk rumah berapa kamar tidur yang kamu butuhkan? Saya tampilkan pilihan yang sesuai budget.';
     if (t.indexOf('apartemen') > -1) return 'Mau beli atau sewa apartemen? Sebutkan juga kisaran budget-nya ya.';
     if (t.indexOf('tanah') > -1) return 'Untuk tanah, kamu cari kavling siap bangun atau lahan investasi?';
-    if (t.indexOf('survei') > -1 || t.indexOf('jadwal') > -1) return 'Bisa! Pilih hari dan jam yang cocok, nanti agen kami konfirmasi lewat WhatsApp.';
+    if (t.indexOf('survei') > -1 || t.indexOf('jadwal') > -1) return 'Bisa! Buka detail properti yang kamu minati, lalu tekan "Jadwalkan survei" untuk memilih tanggal dan jam. Agen kami konfirmasi lewat WhatsApp.';
     return 'Terima kasih! Agen kami akan segera membalas. Sementara itu, kamu bisa cek listing di halaman ini.';
   }
   send(text) {
@@ -2125,10 +2370,74 @@ class Component extends DCLogic {
     var base = String(this.props.siteUrl ?? 'https://vinmelagency.com').replace(/\/+$/, '');
     return base + '/#properti-' + this.slugOf(d);
   }
+  waNum() {
+    return String(this.props.waNumber || '6283182311993').replace(/[^0-9]/g, '');
+  }
+  waTo(msg) {
+    return 'https://wa.me/' + this.waNum() + '?text=' + encodeURIComponent(msg);
+  }
+  store(key, val) {
+    try { window.localStorage.setItem('vinmel_' + key, JSON.stringify(val)); } catch (e) {}
+  }
+  load(key, def) {
+    try { var v = window.localStorage.getItem('vinmel_' + key); return v ? JSON.parse(v) : def; } catch (e) { return def; }
+  }
+  toast(text, action) {
+    var self = this;
+    clearTimeout(this._toastT);
+    this.setState({ toast: { text: text, action: action || null } });
+    this._toastT = setTimeout(function () { self.setState({ toast: null }); }, 5000);
+  }
+  toggleFav(d) {
+    var cur = (this.state.fav || []).slice();
+    var i = cur.indexOf(d.id);
+    if (i > -1) cur.splice(i, 1); else cur.push(d.id);
+    this.setState({ fav: cur });
+    this.store('fav', cur);
+    if (i > -1) this.toast('Dihapus dari Tersimpan.');
+    else if (this.state.user) this.toast('Disimpan ke Tersimpan.');
+    else this.toast('Disimpan di perangkat ini. Masuk supaya favoritmu tidak hilang.', 'login');
+  }
+  detailKey(st) {
+    st = st || {};
+    return st.detail != null ? 'id:' + st.detail : (st.detailSlug ? 'slug:' + st.detailSlug : '');
+  }
   componentDidMount() {
+    var self = this;
     try {
       var m = (window.location.hash || '').match(/^#properti-(.+)$/);
       if (m) this.setState({ detailSlug: decodeURIComponent(m[1]) });
+    } catch (e) {}
+    this.setState({ fav: this.load('fav', []), user: this.load('user', null), surveys: this.load('survei', []) });
+    // Deep link: tombol back browser/HP menutup detail properti.
+    this._onPop = function () {
+      var mm = (window.location.hash || '').match(/^#properti-(.+)$/);
+      var next = mm ? { detail: null, detailSlug: decodeURIComponent(mm[1]) } : { detail: null, detailSlug: null };
+      var cur = self.state.detail != null && self._slugs ? self._slugs[self.state.detail] : self.state.detailSlug;
+      if ((cur || null) === (next.detailSlug || null)) return;
+      self._fromPop = true;
+      self.setState(next);
+    };
+    try { window.addEventListener('popstate', this._onPop); } catch (e) {}
+  }
+  componentWillUnmount() {
+    try { window.removeEventListener('popstate', this._onPop); } catch (e) {}
+    clearTimeout(this._toastT);
+  }
+  componentDidUpdate(prevProps, prevState) {
+    var a = this.detailKey(prevState), b = this.detailKey(this.state);
+    if (a === b) return;
+    if (this._fromPop) { this._fromPop = false; return; }
+    try {
+      var base = window.location.pathname + window.location.search;
+      if (this.state.detail != null && this._slugs) {
+        var url = base + '#properti-' + this._slugs[this.state.detail];
+        if (a) window.history.replaceState({ vinmel: 1 }, '', url);
+        else window.history.pushState({ vinmel: 1 }, '', url);
+      } else if (!b) {
+        if (window.history.state && window.history.state.vinmel) window.history.back();
+        else window.history.replaceState(null, '', base);
+      }
     } catch (e) {}
   }
   getPos(after) {
@@ -2170,7 +2479,7 @@ class Component extends DCLogic {
     } catch (e) { ask(); }
   }
   waLink(d, label) {
-    var num = String(this.props.waNumber ?? '').replace(/[^0-9]/g, '');
+    var num = this.waNum();
     var msg = 'Halo, saya ingin tau info lebih detail terkait property ' + d.title + ' di ' + d.location +
       '\n\nDetail properti:' +
       '\n• Tipe: ' + label + ' (' + d.deal + ')' +
@@ -2220,6 +2529,43 @@ class Component extends DCLogic {
     var s = this.state;
     var IC = {'arah': '/_blob/b6e41fb3893f6d056e7936a7d0b7c3cb', 'balkon': '/_blob/cfc4963e37b82e131a0c74f9ebd2fac3', 'bandara': '/_blob/c684831b98475369d66b967d6d2698a4', 'cash': '/_blob/55d1e7cf1c744ed2ae0e2e26d472e935', 'cctv': '/_blob/9c966e5b8df8b1329a6c018e396cd1f1', 'cert': '/_blob/f361efa90efaba8e3f7932a63ea94114', 'clubhouse': '/_blob/e048a461d51ca52c87d4b5407d19eb25', 'developer': '/_blob/99f6b44ab10d78aa21a19af773675b0c', 'doc': '/_blob/a8179a4c8dd905aa6b408a65d64c2003', 'faskes': '/_blob/651127973d672ad9f5e4ab153b78c31e', 'garasi': '/_blob/ab0bb404cd026d32aa1c70999a6946a2', 'gudang': '/_blob/6b03bb5cf1c33a4e0ff92b29dd4e9ed3', 'gym': '/_blob/d8c20616a5af014df0123799719411fe', 'ibadah': '/_blob/6f0e4447a0bd732d910cf672d3da419f', 'imb': '/_blob/3f255bdb886d05e63205f86ffc09c3a5', 'inden': '/_blob/01f976f30547721b57c0d60226f2128e', 'invest': '/_blob/edd672dc90d596722be20c37f6bb9edf', 'ipl': '/_blob/5fda7d75ea4006fcf3d2a1a7bc009a16', 'jogging': '/_blob/9ba4ab5cc655078ca5fecdb8e4be264c', 'kota': '/_blob/7d7ebcdaa9ce7783027dfb7012d77d74', 'kpr': '/_blob/f45458ffae3f723714c0b01c59a4d68c', 'lantai': '/_blob/26b1d1e88d3b868db9ae6bf4317d18f5', 'minimarket': '/_blob/418143e5a4497228cc90810f68546a69', 'no': '/_blob/a1e9c1fdfb37240a57a294bed2f69218', 'onegate': '/_blob/c263bf43e3581ee49a317e55be1c36dc', 'parkir': '/_blob/ec719d1da63c5041768f3c90a787993e', 'pbb': '/_blob/1ab1dcd4362ceb1a4d6a9d161a2e06de', 'playground': '/_blob/b8568a4c9f902313b395916a62756f53', 'pool': '/_blob/2ade62ee3aeb9261d44662175565bcec', 'renov': '/_blob/b5dfffde0ecb8a9210c9ff31de3c3e65', 'security': '/_blob/03c1e5a59f0df831df67ea2a049d83c8', 'status': '/_blob/d263cc3893a40428943d55583e40f5e9', 'taman': '/_blob/dcc349d43b8fba01658a7fec83e3e821', 'tol': '/_blob/9488e7d619bfa50d1a16fc484ccf8882', 'verified': '/_blob/8182e48edbefd40f03b2f5eb69a2d99f', 'walk': '/_blob/c54f61f63b02d2a2148e1bb7a217c9c4', 'yes': '/_blob/3cefa7d02165746fcda4687b3e54ba43'};
     var parseRp = function (t) { var m = String(t).replace(',', '.').match(/([\d.]+)\s*(M|jt)/); return m ? parseFloat(m[1]) * (m[2] === 'M' ? 1e9 : 1e6) : 0; };
+    // ---- Peta OpenStreetMap (tanpa library: ubin OSM + proyeksi Web Mercator) ----
+    var pct = function (v) { return (v * 100).toFixed(3) + '%'; };
+    var wpx = function (lat, lng, z) { var n = 256 * Math.pow(2, z); var sn = Math.sin(lat * Math.PI / 180); return { x: (lng + 180) / 360 * n, y: (0.5 - Math.log((1 + sn) / (1 - sn)) / (4 * Math.PI)) * n }; };
+    var mapView = function (pts, VW, VH, zMax, fixed) {
+      if (!pts.length) pts = [{ lat: -6.25, lng: 106.83 }];
+      var z = zMax, minX, maxX, minY, maxY;
+      var measure = function () {
+        var P = pts.map(function (p) { return wpx(p.lat, p.lng, z); });
+        minX = Math.min.apply(null, P.map(function (p) { return p.x; })); maxX = Math.max.apply(null, P.map(function (p) { return p.x; }));
+        minY = Math.min.apply(null, P.map(function (p) { return p.y; })); maxY = Math.max.apply(null, P.map(function (p) { return p.y; }));
+      };
+      measure();
+      while (!fixed && z > 4 && (maxX - minX > VW * 0.8 || maxY - minY > VH * 0.7)) { z--; measure(); }
+      var ox = (minX + maxX) / 2 - VW / 2, oy = (minY + maxY) / 2 - VH / 2 + (fixed ? 0 : VH * 0.04), n = Math.pow(2, z), tiles = [];
+      for (var tx = Math.floor(ox / 256); tx <= Math.floor((ox + VW) / 256); tx++) {
+        for (var ty = Math.floor(oy / 256); ty <= Math.floor((oy + VH) / 256); ty++) {
+          if (ty < 0 || ty >= n) continue;
+          tiles.push({ src: 'https://tile.openstreetmap.org/' + z + '/' + (((tx % n) + n) % n) + '/' + ty + '.png', l: pct((tx * 256 - ox) / VW), t: pct((ty * 256 - oy) / VH), w: pct(257 / VW), h: pct(257 / VH) });
+        }
+      }
+      return {
+        tiles: tiles,
+        at: function (lat, lng) { var p = wpx(lat, lng, z); return { l: pct((p.x - ox) / VW), t: pct((p.y - oy) / VH) }; },
+        mpp: 156543.03392 * Math.cos(pts[0].lat * Math.PI / 180) / n
+      };
+    };
+    var shortPrice = function (d) { return String(d.price).replace(/^Rp\s*/, '') + (d.unit === '/bulan' ? '/bln' : d.unit === '/m²' ? '/m²' : ''); };
+    var favIds = s.fav || [];
+    var favProps = function (d) {
+      var on = favIds.indexOf(d.id) > -1;
+      return {
+        favPressed: on ? 'true' : 'false', favFill: on ? '#EC8A3E' : 'none', favStroke: on ? '#EC8A3E' : '#1B2420',
+        favLabel: on ? 'Hapus ' + d.title + ' dari tersimpan' : 'Simpan ' + d.title,
+        favText: on ? 'Tersimpan' : 'Simpan',
+        toggleFav: function () { self.toggleFav(d); }
+      };
+    };
     var data = [
       { id: 1, ext: {was: 'Rp 1,95 M', pay: 'kpr', 'build': 'ready', 'reno': false, 'facing': 'Utara', 'floors': 2, 'ipl': null, 'avail': ['taman', 'garasi', 'balkon'], 'sec': ['onegate', 'cctv', 'security'], 'fac': ['ibadah', 'playground', 'minimarket', 'jogging', 'parkir'], 'near': ['3 km', '15 km', '2 km', '30 km'], 'walk': 2, 'lv': 'verified', 'pbb': 'Lunas 2026', 'imb': 'Ada (PBG)', 'isNew': false, 'dev': ''}, lat: -6.272, lng: 106.728, city: 'Tangerang Selatan', cert: 'SHM', priceNum: 1850000000, ltNum: 120, lbNum: 150, ktNum: 3, photos: ['/_blob/a3d3de7f4f80512034b449f86313effd', '/_blob/0015fe3ee9f7d9fae5966c1354805c8c', '/_blob/83c967883699f4f4515045d52e7d9128'], desc: ["Rumah dua lantai bergaya minimalis modern di kawasan cluster yang tenang dan asri. Fasad bersih dengan aksen kayu, jendela besar, dan pencahayaan alami yang melimpah di setiap ruangan.", "Lantai bawah terdiri dari ruang tamu, ruang keluarga yang menyatu dengan dapur, serta satu kamar mandi. Lantai atas berisi tiga kamar tidur dengan balkon menghadap taman depan. Akses mudah ke tol, sekolah, dan pusat perbelanjaan."], type: 'rumah', title: 'Rumah Minimalis 2 Lantai', location: 'Bintaro, Tangerang Selatan', price: 'Rp 1,85 M', unit: '', deal: 'Dijual', lt: '120 m²', lb: '150 m²', kt: '3', km: '2', fasilitas: ['Carport', 'Taman', 'PLN 2200 VA'] },
       { id: 2, ext: {kmOut: 0, pay: '', 'build': 'ready', 'reno': false, 'facing': 'Timur', 'floors': 0, 'ipl': null, 'avail': [], 'sec': ['cctv'], 'fac': ['ibadah', 'minimarket'], 'near': ['5 km', '20 km', '1,5 km', '45 km'], 'walk': 3, 'lv': 'verified', 'pbb': 'Lunas 2026', 'imb': 'Ada (IMB)', 'isNew': false, 'dev': ''}, lat: -6.372, lng: 106.818, city: 'Depok', cert: 'SHM', priceNum: 1600000, ltNum: 0, lbNum: 12, ktNum: 1, photos: ['/_blob/b9ac1f72724b3b478d6fb25cb7a837e4', '/_blob/faa0a2718e3177e736a593984b61bcad', '/_blob/8d7a27adf3d9572d000675c6d2b4113e'], desc: ["Kos khusus putri dengan kamar luas, bersih, dan sudah full furnished: kasur, lemari, meja kerja, dan AC. Cocok untuk mahasiswi maupun karyawati yang menginginkan hunian nyaman dan aman.", "Lokasi strategis, hanya beberapa menit ke kampus dan stasiun. Tersedia Wi-Fi cepat, layanan laundry, CCTV 24 jam, dan penjaga kos. Harga sewa sudah termasuk listrik dan air."], type: 'kos', title: 'Kos Putri Eksklusif dekat Kampus', location: 'Beji, Depok', price: 'Rp 1,6 jt', unit: '/bulan', deal: 'Disewa', lt: '—', lb: '12 m² / kamar', kt: '1', km: '1 (dalam)', fasilitas: ['AC', 'Wi-Fi', 'Laundry'] },
@@ -2238,6 +2584,8 @@ class Component extends DCLogic {
       { id: 15, ext: {road: false, pay: 'cash', 'build': '', 'reno': false, 'facing': 'Timur', 'floors': 0, 'ipl': null, 'avail': [], 'sec': [], 'fac': ['ibadah'], 'near': ['15 km', '30 km', '8 km', '80 km'], 'walk': 1, 'lv': 'proses', 'pbb': 'Belum lunas 2026', 'imb': 'Tidak diperlukan (tanah kosong)', 'isNew': false, 'dev': ''}, lat: -6.703, lng: 106.976, city: 'Bogor', cert: 'Girik/AJB', priceNum: 750000000, ltNum: 1000, lbNum: 0, ktNum: 0, photos: ['/_blob/cb60516055ec3117e187d22c75161758', '/_blob/c8508652e2a1649eaab830823a42a563', '/_blob/f2d1559edcb7df1b8ac62392ce2fb5b8'], type: 'tanah', title: 'Tanah Kebun View Pegunungan', location: 'Puncak, Bogor', price: 'Rp 750 jt', unit: '', deal: 'Dijual', lt: '1.000 m²', lb: '—', kt: '—', km: '—', fasilitas: ['View pegunungan', 'Udara sejuk', 'Akses mobil'], desc: ['Lahan kebun dengan pemandangan pegunungan dan udara sejuk, cocok untuk villa atau agrowisata.', 'Akses mobil sampai lokasi. Dokumen Girik/AJB, bisa dibantu proses peningkatan sertifikat.'] },
       { id: 16, ext: {road: true, was: 'Rp 4,5 M', pay: 'kpr', 'build': '', 'reno': false, 'facing': 'Utara', 'floors': 0, 'ipl': null, 'avail': [], 'sec': ['cctv'], 'fac': ['minimarket', 'parkir'], 'near': ['1 km', '3 km', '2 km', '30 km'], 'walk': 3, 'lv': 'verified', 'pbb': 'Lunas 2026', 'imb': 'Tidak diperlukan (tanah kosong)', 'isNew': false, 'dev': ''}, lat: -6.312, lng: 106.667, city: 'Tangerang Selatan', cert: 'HGB', priceNum: 4200000000, ltNum: 600, lbNum: 0, ktNum: 0, photos: ['/_blob/f2d1559edcb7df1b8ac62392ce2fb5b8', '/_blob/cb60516055ec3117e187d22c75161758', '/_blob/c8508652e2a1649eaab830823a42a563'], type: 'tanah', title: 'Kavling Komersial Tepi Jalan', location: 'Serpong, Tangerang Selatan', price: 'Rp 4,2 M', unit: '', deal: 'Dijual', lt: '600 m²', lb: '—', kt: '—', km: '—', fasilitas: ['Tepi jalan utama', 'Zona komersial', 'HGB'], desc: ['Kavling komersial di tepi jalan utama kawasan Serpong yang ramai, ideal untuk ruko, showroom, atau restoran.', 'Zona komersial dengan sertifikat HGB, lingkungan berkembang dan dekat pusat bisnis.'] }
     ];
+    self._slugs = {};
+    data.forEach(function (d) { self._slugs[d.id] = self.slugOf(d); });
     var look = {
       rumah: { label: 'Rumah', tint: '#DCEBDF', ink: '#2F5E49', cardBg: '#EDF4EE' },
       kos: { label: 'Kos', tint: '#FBE6D4', ink: '#9A3D0F', cardBg: '#FBF1E8' },
@@ -2276,6 +2624,7 @@ class Component extends DCLogic {
           payLabel: d.ext.pay === 'kpr' ? 'Bisa KPR' : 'Cash only', payIcon: d.ext.pay === 'kpr' ? IC.kpr : IC.cash,
           payBg: d.ext.pay === 'kpr' ? '#E3EFE6' : '#FBE6D4', payFg: d.ext.pay === 'kpr' ? '#1F4D3A' : '#9A3D0F',
           cmpPressed: cmpProps(d).cmpPressed, cmpBg: cmpProps(d).cmpBg, cmpFg: cmpProps(d).cmpFg, cmpLabel: cmpProps(d).cmpLabel, cmpToggle: cmpProps(d).cmpToggle,
+          favPressed: favProps(d).favPressed, favFill: favProps(d).favFill, favStroke: favProps(d).favStroke, favLabel: favProps(d).favLabel, toggleFav: favProps(d).toggleFav,
           open: function () { var n = Object.assign({}, self.state.idx || {}); n.detail = 0; self.setState({ detail: d.id, idx: n, chatOpen: false }); }
         });
     }
@@ -2391,8 +2740,22 @@ class Component extends DCLogic {
           if (cur.length === 2) self.setState({ cmp: cur, detail: null, detailSlug: null, picker: null, showCompare: true, chatOpen: false });
           else self.setState({ cmp: cur, picker: cur.indexOf(dd.id) === 0 ? 1 : 0, chatOpen: false });
         },
-        ask: function () { self.send('Saya ingin jadwalkan survei untuk ' + dd.title + ' di ' + dd.location + '.'); }
+        ask: function () { self.send('Saya ingin jadwalkan survei untuk ' + dd.title + ' di ' + dd.location + '.'); },
+        favPressed: favProps(dd).favPressed, favFill: favProps(dd).favFill, favStroke: favProps(dd).favStroke, favLabel: favProps(dd).favLabel, favText: favProps(dd).favText, toggleFav: favProps(dd).toggleFav,
+        share: function () {
+          var link = self.linkOf(dd);
+          try {
+            if (navigator.share) { navigator.share({ title: dd.title + ' — Vinmel Agency', text: dd.title + ' di ' + dd.location + ', ' + dd.price + (dd.unit ? ' ' + dd.unit : ''), url: link }).catch(function () {}); return; }
+          } catch (e) {}
+          self.setState({ shareOpen: true });
+        },
+        openSurvey: function () { var u = self.state.user || {}; self.setState({ sv: { id: dd.id, date: '', slot: '', name: u.name || '', phone: u.phone || '', note: '' }, chatOpen: false }); },
+        openBooking: function () { self.setState({ bk: dd.id, chatOpen: false }); },
+        bookLabel: dd.deal === 'Dijual' ? 'Booking unit ini' : 'Ajukan sewa',
+        osmHref: 'https://www.openstreetmap.org/#map=15/' + dd.lat + '/' + dd.lng
       });
+      var dMap = mapView([dd], 800, 340, 15, true), dC = dMap.at(dd.lat, dd.lng), dD = 1000 / dMap.mpp;
+      dt.mapTiles = dMap.tiles; dt.areaL = dC.l; dt.areaT = dC.t; dt.areaW = pct(dD / 800); dt.areaH = pct(dD / 340);
     }
     var OWNED = [
       { key: 'a', title: 'Rumah Minimalis 2 Lantai', unit: 'Unit B-12', location: 'Bintaro, Tangerang Selatan', cover: '/_blob/a3d3de7f4f80512034b449f86313effd', progress: 68, statusText: 'Tahap dinding & atap', purchased: '12 Jan 2026', handover: 'Mar 2027', updated: '28 Okt 2026',
@@ -2446,7 +2809,7 @@ class Component extends DCLogic {
     var own = Object.assign({}, ownRaw, {
       progressText: ownRaw.progress + '%',
       progressW: ownRaw.progress + '%',
-      wa: 'https://wa.me/' + String(this.props.waNumber ?? '').replace(/[^0-9]/g, '') + '?text=' + encodeURIComponent('Halo, saya ingin tau update progres pembangunan ' + ownRaw.title + ' ' + ownRaw.unit + ' di ' + ownRaw.location + '.'),
+      wa: 'https://wa.me/' + this.waNum() + '?text=' + encodeURIComponent('Halo, saya ingin tau update progres pembangunan ' + ownRaw.title + ' ' + ownRaw.unit + ' di ' + ownRaw.location + '.'),
       legal: ownRaw.legal.map(function (x) {
         var done = x.state === 'done', cur = x.state === 'current';
         return { title: x.title, date: x.date, note: x.note, isDone: done, isCurrent: cur, isNext: !done && !cur,
@@ -2455,7 +2818,7 @@ class Component extends DCLogic {
       }),
       legalPct: legalPct, legalText: legalPct + '%', legalW: legalPct + '%',
       notary: Object.assign({}, ownRaw.notary, { map: 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(ownRaw.notary.address) }),
-      legalWa: 'https://wa.me/' + String(this.props.waNumber ?? '').replace(/[^0-9]/g, '') + '?text=' + encodeURIComponent('Halo, saya ingin tau status legalitas (SHM, AJB, balik nama, PBB) untuk ' + ownRaw.title + ' ' + ownRaw.unit + ' di ' + ownRaw.location + '.'),
+      legalWa: 'https://wa.me/' + this.waNum() + '?text=' + encodeURIComponent('Halo, saya ingin tau status legalitas (SHM, AJB, balik nama, PBB) untuk ' + ownRaw.title + ' ' + ownRaw.unit + ' di ' + ownRaw.location + '.'),
       summary: [
         { label: 'Tahap selesai', value: doneN + ' dari ' + ownRaw.steps.length },
         { label: 'Tahap berjalan', value: (ownRaw.steps.filter(function (x) { return x.state === 'current'; })[0] || {}).title || '—' },
@@ -2819,7 +3182,7 @@ class Component extends DCLogic {
         rows: [{ label: 'Pokok pinjaman', value: rpFull(P) }, { label: 'Uang muka', value: rpFull(dpRp) }, { label: 'Total bunga', value: rpFull(interest) }, { label: 'Total pembayaran', value: rpFull(total) }, { label: 'Estimasi dana awal*', value: rpFull(dpRp + price * 0.05) }],
         income: rpFull(M / 0.3),
         years: years,
-        wa: 'https://wa.me/' + String(this.props.waNumber ?? '').replace(/[^0-9]/g, '') + '?text=' + encodeURIComponent('Halo, saya ingin mengajukan KPR untuk ' + kd.title + ' di ' + kd.location + '.\n\nHasil simulasi:\n• Harga: ' + rpFull(price) + '\n• DP ' + K.dp + '%: ' + rpFull(dpRp) + '\n• Tenor: ' + K.tenor + ' tahun\n• Bunga: ' + K.rate + '% per tahun\n• Cicilan: ' + rpFull(M) + ' / bulan\n\nLihat detail properti: ' + self.linkOf(kd))
+        wa: 'https://wa.me/' + this.waNum() + '?text=' + encodeURIComponent('Halo, saya ingin mengajukan KPR untuk ' + kd.title + ' di ' + kd.location + '.\n\nHasil simulasi:\n• Harga: ' + rpFull(price) + '\n• DP ' + K.dp + '%: ' + rpFull(dpRp) + '\n• Tenor: ' + K.tenor + ' tahun\n• Bunga: ' + K.rate + '% per tahun\n• Cicilan: ' + rpFull(M) + ' / bulan\n\nLihat detail properti: ' + self.linkOf(kd))
       };
     }
     var filters = [['semua', 'Semua'], ['rumah', 'Rumah'], ['kos', 'Kos'], ['apartemen', 'Apartemen'], ['tanah', 'Tanah']].map(function (p) {
@@ -2831,7 +3194,234 @@ class Component extends DCLogic {
       return { label: q, send: function () { self.send(q); } };
     });
     var msgs = s.messages.map(function (m) { return { text: m.text, isUser: m.from === 'user', isBot: m.from === 'bot' }; }).reverse();
-    return {
+    // ===== Revisi Amel 2026-11-04 =====
+    var NX = {};
+    var user = s.user || null;
+    var firstName = user ? String(user.name || '').split(' ')[0] : '';
+    var digitsOnly = function (p) { return String(p || '').replace(/[^0-9]/g, ''); };
+    var normPhone = function (p) { var d = digitsOnly(p); if (d.indexOf('62') === 0) d = '0' + d.slice(2); else if (d.indexOf('8') === 0) d = '0' + d; return d; };
+    var phoneOk = function (p) { return /^08\d{8,12}$/.test(normPhone(p)); };
+    var openLogin = function () { self.setState({ auth: { step: 'pick', name: '', phone: '', code: '' }, navOpen: false, toast: null }); };
+    var openAcct = function () { self.setState({ showAcct: true, navOpen: false, chatOpen: false }); };
+    NX.openLogin = openLogin;
+    NX.hasUser = !!user; NX.noUser = !user;
+    NX.acctLabel = user ? 'Hai, ' + firstName : 'Masuk';
+    NX.acctClick = user ? openAcct : openLogin;
+    NX.acctClickNav = NX.acctClick;
+    NX.footerAcct = user ? 'Akun saya' : 'Masuk / daftar';
+    NX.userName = user ? user.name : '';
+    NX.userInitial = user ? String(user.name || '?').charAt(0).toUpperCase() : '';
+    NX.userVia = !user ? '' : user.via === 'google' ? 'Masuk lewat Google' + (user.email ? ' · ' + user.email : '') : 'Masuk lewat WhatsApp · ' + (user.phone || '');
+    NX.buyerName = user ? firstName : 'Pembeli';
+    NX.logout = function () { self.setState({ user: null, showAcct: false }); self.store('user', null); self.toast('Kamu sudah keluar.'); };
+
+    // Login (OTP WhatsApp + Google). Tanpa authApi = mode pratinjau desain.
+    var api = String(this.props.authApi ?? '').replace(/\/+$/, '');
+    var au0 = s.auth || {};
+    var auSet = function (patch) { self.setState({ auth: Object.assign({}, self.state.auth || {}, patch) }); };
+    var doLogin = function (u) { self.setState({ user: u, auth: null }); self.store('user', u); self.toast('Berhasil masuk. Halo, ' + String(u.name || '').split(' ')[0] + '!'); };
+    var post = function (path, body) {
+      return fetch(api + path, { method: 'POST', headers: { 'Content-Type': 'application/json' }, credentials: 'include', body: JSON.stringify(body) })
+        .then(function (r) { return r.json().then(function (j) { if (!r.ok || j.ok === false) throw new Error(j.message || 'gagal'); return j; }); });
+    };
+    var sendOtp = function () {
+      var a = self.state.auth || {};
+      if (String(a.name || '').trim().length < 2) { auSet({ err: 'Isi nama lengkap minimal 2 huruf.' }); return; }
+      if (!phoneOk(a.phone)) { auSet({ err: 'Nomor WhatsApp belum valid. Contoh: 0812 3456 7890.' }); return; }
+      if (!api) { auSet({ step: 'otp', err: '', code: '' }); self.toast('Kode OTP dikirim ke WhatsApp ' + normPhone(a.phone) + '.'); return; }
+      auSet({ busy: true, err: '' });
+      post('/auth/otp/send', { phone: '62' + normPhone(a.phone).slice(1) }).then(function () { auSet({ busy: false, step: 'otp', code: '' }); }, function () { auSet({ busy: false, err: 'Kode belum terkirim. Coba lagi sebentar lagi.' }); });
+    };
+    var verifyOtp = function () {
+      var a = self.state.auth || {};
+      if (!/^\d{6}$/.test(a.code || '')) { auSet({ err: 'Masukkan 6 digit kode dari WhatsApp.' }); return; }
+      var u = { name: String(a.name).trim(), phone: normPhone(a.phone), via: 'wa' };
+      if (!api) { doLogin(u); return; }
+      auSet({ busy: true, err: '' });
+      post('/auth/otp/verify', { phone: '62' + normPhone(a.phone).slice(1), code: a.code, name: u.name }).then(function (j) { doLogin(Object.assign(u, j.user || {})); }, function () { auSet({ busy: false, err: 'Kode salah atau sudah kedaluwarsa.' }); });
+    };
+    NX.authOpen = !!s.auth;
+    NX.au = {
+      isPick: au0.step === 'pick', isWa: au0.step === 'wa', isOtp: au0.step === 'otp', preview: !api,
+      title: au0.step === 'otp' ? 'Masukkan kode OTP' : 'Masuk ke Vinmel',
+      sub: au0.step === 'otp' ? 'Kami mengirim 6 digit kode ke WhatsApp ' + normPhone(au0.phone) + '.' : au0.step === 'wa' ? 'Kami kirim kode OTP ke WhatsApp-mu. Tanpa password.' : 'Simpan properti favorit, atur jadwal survei, dan pantau pengajuanmu.',
+      name: au0.name || '', phone: au0.phone || '', code: au0.code || '',
+      err: au0.err || '', hasErr: !!au0.err,
+      sendLabel: au0.busy ? 'Mengirim…' : 'Kirim kode OTP', verifyLabel: au0.busy ? 'Memeriksa…' : 'Masuk',
+      setName: function (e) { auSet({ name: e.target.value, err: '' }); },
+      setPhone: function (e) { auSet({ phone: e.target.value, err: '' }); },
+      setCode: function (e) { auSet({ code: String(e.target.value).replace(/\D/g, '').slice(0, 6), err: '' }); },
+      phoneKey: function (e) { if (e.key === 'Enter') { e.preventDefault(); sendOtp(); } },
+      codeKey: function (e) { if (e.key === 'Enter') { e.preventDefault(); verifyOtp(); } },
+      pickWa: function () { auSet({ step: 'wa', err: '' }); },
+      back: function () { auSet({ step: au0.step === 'otp' ? 'wa' : 'pick', err: '', code: '' }); },
+      close: function () { self.setState({ auth: null }); },
+      sendOtp: sendOtp, verify: verifyOtp,
+      google: function () {
+        if (api) { window.location.href = api + '/auth/google?next=' + encodeURIComponent(window.location.href); return; }
+        doLogin({ name: 'Pengguna Google', via: 'google' });
+      }
+    };
+
+    // Akun & tersimpan
+    NX.showAcct = !!s.showAcct;
+    NX.openSaved = openAcct;
+    NX.openSavedNav = openAcct;
+    NX.closeAcct = function () { self.setState({ showAcct: false }); };
+    var favData = data.filter(function (d) { return favIds.indexOf(d.id) > -1; });
+    NX.favCount = favData.length; NX.hasFav = favData.length > 0; NX.noFav = favData.length === 0;
+    NX.favNavLabel = 'Properti tersimpan (' + favData.length + ')';
+    NX.favList = favData.map(function (d) {
+      return { title: d.title, location: d.location, priceText: d.price + (d.unit ? ' ' + d.unit : ''), cover: d.photos[0], removeLabel: 'Hapus ' + d.title + ' dari tersimpan',
+        open: function () { self.setState({ showAcct: false, detail: d.id, chatOpen: false }); },
+        remove: function () { self.toggleFav(d); } };
+    });
+    var surveys = s.surveys || [];
+    NX.noSurvey = surveys.length === 0;
+    NX.svList = surveys.map(function (r) { return { title: r.title, when: r.dateLabel + ' · ' + r.slotLabel, wa: r.wa }; });
+
+    // Jadwal survei
+    var DAYS = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'], MON = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+    var SLOTS = [['pagi', 'Pagi', '09.00 – 11.00', 9], ['siang', 'Siang', '12.00 – 14.00', 12], ['sore', 'Sore', '15.00 – 17.00', 15]];
+    var pad = function (v) { return (v < 10 ? '0' : '') + v; };
+    var sv = s.sv || null;
+    var svSet = function (patch) { self.setState({ sv: Object.assign({}, self.state.sv || {}, patch) }); };
+    var svD = sv ? byId(sv.id) : null;
+    NX.svOpen = !!(sv && svD);
+    NX.svForm = !!(sv && !sv.done); NX.svDone = !!(sv && sv.done);
+    NX.svProp = svD ? { title: svD.title, location: svD.location } : {};
+    NX.svData = sv || {};
+    NX.svClose = function () { self.setState({ sv: null }); };
+    var svDates = [];
+    if (sv && !sv.done) {
+      var now = new Date();
+      for (var di = 1; di <= 7; di++) {
+        var dte = new Date(now.getFullYear(), now.getMonth(), now.getDate() + di);
+        (function (dte) {
+          var iso = dte.getFullYear() + '-' + pad(dte.getMonth() + 1) + '-' + pad(dte.getDate());
+          var on = sv.date === iso;
+          svDates.push({ day: DAYS[dte.getDay()].slice(0, 3), num: String(dte.getDate()), mon: MON[dte.getMonth()], aria: DAYS[dte.getDay()] + ', ' + dte.getDate() + ' ' + MON[dte.getMonth()],
+            pressed: on ? 'true' : 'false', bg: on ? '#1F4D3A' : '#FFFFFF', fg: on ? '#FFFFFF' : '#1B2420', border: on ? '#1F4D3A' : '#D5DBD3',
+            pick: function () { svSet({ date: iso, dateLabel: DAYS[dte.getDay()] + ', ' + dte.getDate() + ' ' + MON[dte.getMonth()] + ' ' + dte.getFullYear() }); } });
+        })(dte);
+      }
+    }
+    NX.svDates = svDates;
+    NX.svSlots = SLOTS.map(function (sl) {
+      var on = !!sv && sv.slot === sl[0];
+      return { label: sl[1], range: sl[2], pressed: on ? 'true' : 'false', bg: on ? '#1F4D3A' : '#FFFFFF', fg: on ? '#FFFFFF' : '#1B2420', border: on ? '#1F4D3A' : '#D5DBD3', pick: function () { svSet({ slot: sl[0] }); } };
+    });
+    var svE = {};
+    if (sv && !sv.done) {
+      if (!sv.date) svE.date = 'Pilih tanggal survei.';
+      if (!sv.slot) svE.slot = 'Pilih jam survei.';
+      if (String(sv.name || '').trim().length < 2) svE.name = 'Isi nama minimal 2 huruf.';
+      if (!phoneOk(sv.phone)) svE.phone = 'Nomor WhatsApp belum valid.';
+    }
+    var svTried = !!(sv && sv.tried);
+    NX.svErr = { hasDate: svTried && !!svE.date, date: svE.date || '', hasSlot: svTried && !!svE.slot, slot: svE.slot || '', hasName: svTried && !!svE.name, name: svE.name || '', hasPhone: svTried && !!svE.phone, phone: svE.phone || '' };
+    NX.svSetName = function (e) { svSet({ name: e.target.value }); };
+    NX.svSetPhone = function (e) { svSet({ phone: e.target.value }); };
+    NX.svSetNote = function (e) { svSet({ note: e.target.value }); };
+    NX.svSubmit = function () {
+      if (Object.keys(svE).length) { svSet({ tried: true }); return; }
+      var sl = SLOTS.filter(function (x) { return x[0] === sv.slot; })[0];
+      var ymd = sv.date.replace(/-/g, '');
+      var utc = function (hWib) { return ymd + 'T' + pad(hWib - 7) + '0000Z'; };
+      var link = self.linkOf(svD);
+      var slotLabel = sl[1] + ', ' + sl[2] + ' WIB';
+      var msg = 'Halo Vinmel Agency, saya ingin jadwalkan survei.\n\n• Properti: ' + svD.title + ' (' + svD.location + ')\n• Tanggal: ' + sv.dateLabel + '\n• Jam: ' + slotLabel + '\n• Nama: ' + String(sv.name).trim() + '\n• No. WA: ' + normPhone(sv.phone) + (sv.note ? '\n• Catatan: ' + sv.note : '') + '\n\nLink properti: ' + link;
+      var esc = function (t) { return String(t).replace(/([,;\\])/g, '\\$1').replace(/\n/g, '\\n'); };
+      var ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Vinmel Agency//Survei//ID', 'BEGIN:VEVENT', 'UID:survei-' + Date.now() + '@vinmelagency.com', 'DTSTAMP:' + new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d+/, ''), 'DTSTART:' + utc(sl[3]), 'DTEND:' + utc(sl[3] + 2), 'SUMMARY:' + esc('Survei: ' + svD.title), 'LOCATION:' + esc(svD.location), 'DESCRIPTION:' + esc('Survei bersama agen Vinmel Agency (menunggu konfirmasi lewat WhatsApp). ' + link), 'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
+      var rec = {
+        propId: svD.id, title: svD.title, dateLabel: sv.dateLabel, slotLabel: slotLabel, name: String(sv.name).trim(),
+        wa: self.waTo(msg),
+        gcal: 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + encodeURIComponent('Survei: ' + svD.title) + '&dates=' + utc(sl[3]) + '/' + utc(sl[3] + 2) + '&location=' + encodeURIComponent(svD.location) + '&details=' + encodeURIComponent('Survei bersama agen Vinmel Agency. Jadwal menunggu konfirmasi agen lewat WhatsApp. ' + link),
+        ics: 'data:text/calendar;charset=utf-8,' + encodeURIComponent(ics)
+      };
+      var list = [rec].concat(self.state.surveys || []).slice(0, 20);
+      self.setState({ surveys: list, sv: Object.assign({}, sv, { done: true, rec: rec }) });
+      self.store('survei', list);
+    };
+    NX.svRec = (sv && sv.rec) || {};
+
+    // Booking / tanda jadi (pembayaran manual, tanpa payment gateway)
+    var bkD = s.bk != null ? byId(s.bk) : null;
+    NX.bkOpen = !!bkD;
+    NX.bk = !bkD ? { steps: [] } : (function () {
+      var jual = bkD.deal === 'Dijual', word = jual ? 'booking fee' : 'uang tanda jadi';
+      return {
+        eyebrow: jual ? 'Booking unit' : 'Ajukan sewa',
+        title: bkD.title, sub: bkD.location + ' · ' + bkD.price + (bkD.unit ? ' ' + bkD.unit : ''),
+        steps: [
+          { n: '1', t: 'Konfirmasi ketersediaan', b: 'Kirim pesan ke admin. Admin mengecek ' + (jual ? 'unit' : 'kamar/unit') + ' masih tersedia dan menjelaskan nominal ' + word + ' serta syarat pengembalian dana.' },
+          { n: '2', t: 'Terima invoice resmi', b: 'Admin mengirim invoice bernomor beserta rekening resmi Vinmel Agency lewat WhatsApp atau email.' },
+          { n: '3', t: 'Transfer manual & kirim bukti', b: 'Transfer sesuai nominal di invoice, lalu kirim foto bukti transfer ke WhatsApp admin.' },
+          { n: '4', t: 'Verifikasi & kuitansi', b: 'Admin memverifikasi pembayaran, lalu mengirim kuitansi resmi. ' + (jual ? 'Unit ditandai "Booked" untukmu.' : 'Jadwal masuk dikonfirmasi.') }
+        ],
+        cta: jual ? 'Mulai booking lewat WhatsApp' : 'Ajukan sewa lewat WhatsApp',
+        wa: self.waTo('Halo admin Vinmel Agency, saya ingin ' + (jual ? 'booking' : 'menyewa') + ' properti berikut:\n\n• ' + bkD.title + ' (' + bkD.location + ')\n• Harga: ' + bkD.price + (bkD.unit ? ' ' + bkD.unit : '') + (user ? '\n• Nama: ' + user.name : '') + '\n\nMohon info ketersediaan, nominal ' + word + ', dan invoice pembayarannya.\n\nLink properti: ' + self.linkOf(bkD)),
+        close: function () { self.setState({ bk: null }); }
+      };
+    })();
+
+    // Bagikan (cadangan bila navigator.share tidak ada)
+    NX.shareOpen = !!(s.shareOpen && dd);
+    NX.sh = !dd ? {} : (function () {
+      var link = self.linkOf(dd);
+      return {
+        title: dd.title, location: dd.location, price: dd.price + (dd.unit ? ' ' + dd.unit : ''), cover: dd.photos[0], link: link,
+        wa: 'https://wa.me/?text=' + encodeURIComponent(dd.title + ' di ' + dd.location + ' — ' + dd.price + (dd.unit ? ' ' + dd.unit : '') + '\n' + link),
+        fb: 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(link),
+        select: function (e) { try { e.target.select(); } catch (x) {} },
+        copy: function () {
+          var ok = function () { self.setState({ shareOpen: false }); self.toast('Tautan properti disalin.'); };
+          try { navigator.clipboard.writeText(link).then(ok, function () { self.toast('Salin manual: tekan lama tautan di atas.'); }); } catch (x) { self.toast('Salin manual: tekan lama tautan di atas.'); }
+        },
+        close: function () { self.setState({ shareOpen: false }); }
+      };
+    })();
+
+    // Tampilan daftar / peta di "Semua properti"
+    var lvIsMap = s.lv === 'map';
+    NX.lvMap = lvIsMap; NX.lvList = !lvIsMap;
+    NX.setLvList = function () { self.setState({ lv: 'list' }); };
+    NX.setLvMap = function () { self.setState({ lv: 'map' }); };
+    NX.lvListPressed = lvIsMap ? 'false' : 'true'; NX.lvMapPressed = lvIsMap ? 'true' : 'false';
+    NX.lvListBg = lvIsMap ? 'transparent' : '#1F4D3A'; NX.lvListFg = lvIsMap ? '#1F4D3A' : '#FFFFFF';
+    NX.lvMapBg = lvIsMap ? '#1F4D3A' : 'transparent'; NX.lvMapFg = lvIsMap ? '#FFFFFF' : '#1F4D3A';
+    if (lvIsMap && s.showAll) {
+      var rMap = mapView(results, 1000, 600, 13, false);
+      NX.rMapTiles = rMap.tiles;
+      NX.mapPins = results.map(function (c) { var p = rMap.at(c.lat, c.lng); return { l: p.l, t: p.t, label: shortPrice(c), aria: c.title + ', ' + c.location + ', ' + c.price + (c.unit ? ' ' + c.unit : '') + '. Buka detail', open: c.open }; });
+    } else { NX.rMapTiles = []; NX.mapPins = []; }
+
+    // Kabari saya (saved search) lewat WhatsApp admin
+    var crit = [];
+    if (lf.type !== 'semua') crit.push(look[lf.type].label);
+    if (lf.deal !== 'semua') crit.push(lf.deal === 'Dijual' ? 'dijual' : 'disewa');
+    if (lf.city !== 'semua') crit.push('di ' + lf.city);
+    if (lf.q) crit.push('kata kunci "' + lf.q + '"');
+    if (!(lf.pi0 === 0 && lf.pi1 >= PMAX)) crit.push('harga ' + fmtRp(PSTOPS[lf.pi0]) + ' – ' + (lf.pi1 >= PMAX ? 'Rp 5 M+' : fmtRp(PSTOPS[lf.pi1])));
+    if (+lf.kt) crit.push('minimal ' + lf.kt + ' kamar tidur');
+    if (+lf.lt) crit.push('luas tanah ≥ ' + lf.lt + ' m²');
+    if (+lf.lb) crit.push('luas bangunan ≥ ' + lf.lb + ' m²');
+    if (lf.cert !== 'semua') crit.push('sertifikat ' + lf.cert);
+    NX.alertWa = self.waTo('Halo Vinmel Agency, tolong kabari saya kalau ada properti baru yang cocok' + (crit.length ? ': ' + crit.join(', ') : '') + '. Kabari juga kalau ada penurunan harga. Terima kasih!');
+
+    // Kontak & kantor
+    NX.contactWa = self.waTo('Halo Vinmel Agency, saya ingin bertanya.');
+    NX.offices = [
+      { city: 'Jakarta', address: 'Apartemen Tokyo Riverside, PIK 2', map: 'https://www.openstreetmap.org/search?query=' + encodeURIComponent('Tokyo Riverside PIK 2') },
+      { city: 'Malang', address: 'Perum Atlantis Hills Kav. E-12', map: 'https://www.openstreetmap.org/search?query=' + encodeURIComponent('Atlantis Hills Malang') }
+    ];
+
+    // Toast
+    var tst = s.toast || null;
+    NX.hasToast = !!tst;
+    NX.toast = !tst ? {} : { text: tst.text, hasAction: tst.action === 'login' && !user, actLabel: 'Masuk', act: openLogin };
+
+    return Object.assign(NX, {
       videoRef: function (el) { if (el) { el.muted = true; var pr = el.play && el.play(); if (pr && pr.catch) pr.catch(function () {}); } },
       navCls: s.navOpen ? 'open' : '',
       navOpen: s.navOpen,
@@ -2968,7 +3558,7 @@ class Component extends DCLogic {
       tpSendRevision: function () { setTp({ stage: 0 }); },
       tpFlow: tpFlow,
       tpTitleShown: tp.title || 'Properti Anda', tpWhereShown: (tp.address || '') + (tp.city ? ', ' + tp.city : ''), tpPriceShown: tp.price ? 'Rp ' + tp.price + (tp.deal === 'Disewa' ? ' / bulan' : '') : '',
-      tpWa: 'https://wa.me/' + String(this.props.waNumber ?? '').replace(/[^0-9]/g, '') + '?text=' + encodeURIComponent('Halo tim Vinmel, saya ingin menanyakan status pengajuan titip properti ' + (tp.ref || '') + ' (' + (tp.title || '') + ').'),
+      tpWa: 'https://wa.me/' + this.waNum() + '?text=' + encodeURIComponent('Halo tim Vinmel, saya ingin menanyakan status pengajuan titip properti ' + (tp.ref || '') + ' (' + (tp.title || '') + ').'),
       tpDemoNext: function () { setTp({ stage: stg >= 5 ? 0 : stg + 1 }); },
       tpDemoLabel: ['Simulasi: reviewer minta revisi', 'Simulasi: revisi diterima, lolos review', 'Simulasi: survei selesai', 'Simulasi: manajer menyetujui', 'Simulasi: listing tayang', 'Ulangi simulasi'][stg],
       showKpr: !!s.kpr,
@@ -3048,7 +3638,7 @@ class Component extends DCLogic {
       draft: s.draft,
       onDraft: function (e) { self.setState({ draft: e.target.value }); },
       onSend: function (e) { e.preventDefault(); self.send(s.draft); }
-    };
+    });
   }
 }
 </script>

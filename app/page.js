@@ -5,6 +5,7 @@ export default function Home() {
     <DesignComponent
       waNumber={process.env.NEXT_PUBLIC_WA_NUMBER ?? ''}
       siteUrl={process.env.NEXT_PUBLIC_SITE_URL ?? 'https://vinmelagency.com'}
+      authApi={process.env.NEXT_PUBLIC_AUTH_API ?? ''}
     />
   );
 }
