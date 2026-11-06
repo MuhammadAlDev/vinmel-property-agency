@@ -1,6 +1,7 @@
 'use client';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import DesignComponent from './DesignComponent';
+import { supabaseBrowser } from '@/lib/supabase/browser';
 
 const to08 = (p) => (String(p || '').startsWith('62') ? '0' + String(p).slice(2) : String(p || ''));
 const dots = (v) => String(Math.round(Number(v) || 0)).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
@@ -33,6 +34,14 @@ const titipToDesign = (t) => {
     reviewNote: t.reviewNote || '', checklist: t.checklist || {}, log: t.log || [],
   };
 };
+// Progres dari backend -> state cms.extraSteps / stepState / handover di desain (Revisi 2).
+const progressMaps = (owned) => ({
+  extraSteps: Object.fromEntries(owned.map((o) => [o.key, (o.customSteps || []).map(({ id, title, date, note }) => ({ id, title, date, note }))])),
+  stepState: Object.fromEntries(owned.map((o) => [o.key, Object.fromEntries((o.customSteps || []).map((x) => [x.title, { state: x.state || 'next' }]))])),
+  handover: Object.fromEntries(owned.filter((o) => o.handoverDate).map((o) => [o.key, { date: o.handoverDate }])),
+});
+const blobOf = (src) => fetch(src).then((r) => r.blob());
+
 // Checklist, riwayat, dan catatan review per ref (state cms.tpChk / tpLog / tpMsg di desain).
 const reviewMaps = (items) => ({
   tpChk: Object.fromEntries(items.map((t) => [t.ref, t.checklist || {}])),
@@ -92,7 +101,7 @@ export default function VinmelApp({ backend, authLocked, titipApi, listings: lis
       try {
         const j = await api('/api/cms');
         const items = j.titip.map(titipToDesign);
-        setCms({ ...j.cms, listing: {}, tpSt: {}, utjSt: {}, ...reviewMaps(items) });
+        setCms({ ...j.cms, listing: {}, tpSt: {}, utjSt: {}, ...reviewMaps(items), ...progressMaps(j.owned) });
         setListings(j.listings.filter((d) => d.lat != null && d.lng != null));
         setTitip(items);
         setSurveys(j.surveys.map(surveyToDesign));
@@ -108,6 +117,7 @@ export default function VinmelApp({ backend, authLocked, titipApi, listings: lis
       ...c,
       updates: p?.updates || {},
       progress: Object.fromEntries((p?.items || []).map((o) => [o.key, o.progress])),
+      ...progressMaps(p?.items || []),
       svSt: Object.fromEntries((sv?.items || []).map((r) => [r.uid, r.status])),
     }));
   }, [backend, loadTitip, notify, setCms, surveyToDesign]);
@@ -233,6 +243,25 @@ export default function VinmelApp({ backend, authLocked, titipApi, listings: lis
           api('/api/pantau/' + encodeURIComponent(key) + '/updates/' + u.id, { method: 'DELETE' }).catch((e) => notify('Update belum terhapus: ' + e.message)));
       }
     }
+    // Tahap tambahan, status tahap, serah terima (per unit pembeli) -> /api/pantau/:id/progres
+    const prog = {};
+    const add = (k, f, v) => { (prog[k] ||= {})[f] = v; };
+    if ('extraSteps' in patch) changed('extraSteps').forEach((k) => add(k, 'extraSteps', next.extraSteps[k] || []));
+    if ('stepState' in patch) changed('stepState').forEach((k) => add(k, 'stepState', next.stepState[k] || {}));
+    if ('handover' in patch) {
+      new Set([...Object.keys(prev.handover || {}), ...Object.keys(next.handover || {})]).forEach((k) => {
+        if (!same(prev.handover?.[k], next.handover?.[k])) add(k, 'handover', next.handover?.[k] || null);
+      });
+    }
+    Object.entries(prog).forEach(([key, body]) => {
+      send('/api/pantau/' + encodeURIComponent(key) + '/progres', 'PUT', body)
+        .then((j) => { setOwned((list) => (list || []).map((o) => (o.key === key ? j.item : o))); setCms((c) => ({ ...c, progress: { ...c.progress, [key]: j.item.progress } })); })
+        .catch((e) => {
+          notify('Progres belum tersimpan: ' + e.message);
+          setCms((c) => ({ ...c, extraSteps: { ...c.extraSteps, [key]: prev.extraSteps?.[key] || [] }, stepState: { ...c.stepState, [key]: prev.stepState?.[key] || {} },
+            handover: Object.fromEntries(Object.entries({ ...c.handover, [key]: prev.handover?.[key] }).filter(([, v]) => v)) }));
+        });
+    });
     // Konten diketik per huruf -> simpan setelah jeda.
     CONTENT_KEYS.filter((k) => k in patch).forEach((k) => {
       clearTimeout(timers.current[k]);
@@ -281,8 +310,38 @@ export default function VinmelApp({ backend, authLocked, titipApi, listings: lis
     } catch (e) { notify('Foto belum terunggah: ' + e.message); }
   }, [notify, onCms]);
 
+  // Bukti transfer UTJ dari modal "Sudah deal? Bayar UTJ" -> bucket privat utj-bukti (lewat server).
+  const onUtjProof = useCallback(async (d) => {
+    if (!userRef.current) throw new Error('Masuk dulu supaya bukti UTJ tercatat di akunmu.');
+    const fd = new FormData();
+    fd.append('propId', String(d.propId)); fd.append('name', d.name); fd.append('phone', d.phone); fd.append('invoiceNo', d.invNo || '');
+    const blob = await blobOf(d.proof.src);
+    fd.append('proof', new File([blob], d.proof.name || 'bukti', { type: blob.type || (d.proof.isImg ? 'image/jpeg' : 'application/pdf') }));
+    const j = await api('/api/utj', { method: 'POST', body: fd });
+    if (userRef.current?.role === 'owner') setCms((c) => ({ ...c, utj: [j.item, ...(c.utj || []).filter((x) => x.inv !== j.item.inv)] }));
+    return j.item;
+  }, [setCms]);
+
+  // Video tour & foto 360°: unggah langsung ke Storage lewat signed upload URL dari server, lalu kirim path-nya.
+  const uploadMedia = useCallback(async (kind, item) => {
+    const sb = supabaseBrowser();
+    if (!sb) throw new Error('unggah media butuh Supabase');
+    const blob = await blobOf(item.src);
+    const type = blob.type || (kind === 'video' ? 'video/mp4' : 'image/jpeg');
+    const u = await send('/api/titip/media', 'POST', { kind, name: item.name, type, size: blob.size });
+    const { error } = await sb.storage.from(u.bucket).uploadToSignedUrl(u.path, u.token, blob, { contentType: type });
+    if (error) throw new Error(error.message);
+    return u.path;
+  }, []);
+
   const onSubmitTitip = useCallback(async (tp) => {
-    const { photos = [], ...rest } = tp;
+    const { photos = [], video, pano = [], ...rest } = tp;
+    if ((video?.src || pano.length) && userRef.current) {
+      try {
+        rest.media = { video: video?.src ? await uploadMedia('video', video) : null, pano: [] };
+        for (const p of pano.slice(0, 10)) if (p?.src) rest.media.pano.push(await uploadMedia('pano', p));
+      } catch (e) { notify('Video/foto 360° belum terunggah (' + e.message + '). Pengajuan tetap dikirim; kirim media lewat WhatsApp.'); delete rest.media; }
+    }
     const fd = new FormData();
     fd.append('data', JSON.stringify(rest));
     for (const ph of photos) {
@@ -295,7 +354,7 @@ export default function VinmelApp({ backend, authLocked, titipApi, listings: lis
     if (!r.ok || !j.ok) throw new Error(j.message || 'Pengajuan belum terkirim. Coba lagi.');
     if (userRef.current) loadTitip(userRef.current.role === 'owner');
     return { ref: j.ref };
-  }, [loadTitip]);
+  }, [loadTitip, notify, uploadMedia]);
 
   const tpSt = cms.tpSt || {};
   const titipItems = titip ? titip.map((t) => (tpSt[t.ref] != null ? { ...t, stage: tpSt[t.ref] } : t)) : undefined;
@@ -322,6 +381,7 @@ export default function VinmelApp({ backend, authLocked, titipApi, listings: lis
         pemilik={backend ? (pemilik ? (pemilik.complete ? pemilik : (({ name, ...rest }) => rest)(pemilik)) : null) : undefined}
         onPemilik={backend ? onPemilik : undefined}
         onUpload={backend ? onUpload : undefined}
+        onUtjProof={backend ? onUtjProof : undefined}
         market={market || undefined}
       />
       {note ? (

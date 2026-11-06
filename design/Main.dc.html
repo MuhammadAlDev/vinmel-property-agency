@@ -521,7 +521,7 @@ select.vm-input{appearance:auto;padding-right:8px}
 </div>
 <p style="margin: 0; font-size: 15px; line-height: 1.6; color: #3A4740">{{ab.bio}}</p>
 <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px">
-<sc-for list="{{ab.stats}}" as="sx" hint-placeholder-count="3"><span style="display: flex; flex-direction: column; gap: 2px; padding: 12px; border-radius: 16px; background: #FFFFFF; border: 1px solid #E3E7E1; min-width: 0"><span style="font-size: 20px; font-weight: 800; color: #1F4D3A; overflow-wrap: anywhere">{{sx.v}}</span><span style="font-size: 13px; color: #4A5751; line-height: 1.4">{{sx.l}}</span></span></sc-for>
+<sc-for list="{{ab.stats}}" as="sx" hint-placeholder-count="3"><span style="display: flex; flex-direction: column; gap: 2px; padding: 12px; border-radius: 16px; background: #FFFFFF; border: 1px solid #E3E7E1; min-width: 0"><span style="font-size: 20px; font-weight: 800; color: #1F4D3A; overflow-wrap: anywhere">{{sx.v}}</span><span style="font-size: 13px; color: #4A5751; line-height: 1.4">{{sx.l}}</span><sc-if value="{{sx.hasD}}" hint-placeholder-val="{{ false }}"><span style="font-size: 12px; color: #4A5751; line-height: 1.4">{{sx.d}}</span></sc-if></span></sc-for>
 </div>
 <div style="display: flex; gap: 10px; flex-wrap: wrap">
 <a href="{{contactWa}}" target="_blank" rel="noopener noreferrer" class="vm-btn wa-btn" style="flex: 1 1 200px; border-radius: 14px"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 11.8a8.5 8.5 0 0 1-12.6 7.4L3.5 20.5l1.3-4.3A8.5 8.5 0 1 1 20.5 11.8z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"></path></svg>{{tx.abChat}}</a>
@@ -683,17 +683,31 @@ select.vm-input{appearance:auto;padding-right:8px}
 </div>
 
 <div style="background: #FFFFFF; border: 1px solid #E3E7E1; border-radius: 24px; padding: 20px; display: flex; flex-direction: column; gap: 14px">
-<span style="font-size: 20px; font-weight: 800">{{L.m25}}</span>
+<div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between"><span style="font-size: 20px; font-weight: 800">{{kp.tHead}}</span><span class="tabbar" role="group" aria-label="Rincian"><sc-for list="{{kp.views}}" as="vw" hint-placeholder-count="2"><button type="button" onClick="{{vw.pick}}" aria-pressed="{{vw.pressed}}" style="background: {{vw.bg}}; color: {{vw.fg}}">{{vw.label}}</button></sc-for></span></div>
+<sc-if value="{{kp.isYear}}" hint-placeholder-val="{{ true }}">
 <div style="overflow-x: auto">
-<table style="width: 100%; min-width: 560px; border-collapse: collapse; font-size: 14px">
-<thead><tr style="text-align: left; color: #4A5751"><th scope="col" style="padding: 10px 12px; font-weight: 700">{{L.m26}}</th><th scope="col" style="padding: 10px 12px; font-weight: 700; text-align: right">{{L.m27}}</th><th scope="col" style="padding: 10px 12px; font-weight: 700; text-align: right">{{L.m19}}</th><th scope="col" style="padding: 10px 12px; font-weight: 700; text-align: right">{{L.m20}}</th><th scope="col" style="padding: 10px 12px; font-weight: 700; text-align: right">{{L.m28}}</th></tr></thead>
+<table style="width: 100%; min-width: 640px; border-collapse: collapse; font-size: 14px">
+<thead><tr style="text-align: left; color: #4A5751"><th scope="col" style="padding: 10px 12px; font-weight: 700">{{L.m26}}</th><th scope="col" style="padding: 10px 12px; font-weight: 700; text-align: right">{{kp.tMonthly}}</th><th scope="col" style="padding: 10px 12px; font-weight: 700; text-align: right">{{L.m27}}</th><th scope="col" style="padding: 10px 12px; font-weight: 700; text-align: right">{{L.m19}}</th><th scope="col" style="padding: 10px 12px; font-weight: 700; text-align: right">{{L.m20}}</th><th scope="col" style="padding: 10px 12px; font-weight: 700; text-align: right">{{L.m28}}</th></tr></thead>
 <tbody>
 <sc-for list="{{kp.years}}" as="y" hint-placeholder-count="5">
-<tr style="border-top: 1px solid #EEF1EC"><td style="padding: 10px 12px; font-weight: 700">{{y.n}}</td><td style="padding: 10px 12px; text-align: right">{{y.paid}}</td><td style="padding: 10px 12px; text-align: right">{{y.principal}}</td><td style="padding: 10px 12px; text-align: right">{{y.interest}}</td><td style="padding: 10px 12px; text-align: right; font-weight: 700">{{y.balance}}</td></tr>
+<tr style="border-top: 1px solid #EEF1EC"><td style="padding: 10px 12px; font-weight: 700">{{y.n}}</td><td style="padding: 10px 12px; text-align: right; font-weight: 800; color: #1F4D3A">{{y.monthly}}</td><td style="padding: 10px 12px; text-align: right">{{y.paid}}</td><td style="padding: 10px 12px; text-align: right">{{y.principal}}</td><td style="padding: 10px 12px; text-align: right">{{y.interest}}</td><td style="padding: 10px 12px; text-align: right; font-weight: 700">{{y.balance}}</td></tr>
 </sc-for>
 </tbody>
 </table>
 </div>
+</sc-if>
+<sc-if value="{{kp.isMonth}}" hint-placeholder-val="{{ false }}">
+<label class="vm-label" style="max-width: 220px"><select class="vm-input" value="{{kp.mYear}}" onChange="{{kp.setMYear}}" aria-label="Tahun"><sc-for list="{{kp.yearOpts}}" as="o" hint-placeholder-count="5"><option value="{{o.v}}">{{o.t}}</option></sc-for></select></label>
+<div style="overflow-x: auto">
+<table style="width: 100%; min-width: 640px; border-collapse: collapse; font-size: 14px">
+<thead><tr style="text-align: left; color: #4A5751"><th scope="col" style="padding: 10px 12px; font-weight: 700">#</th><th scope="col" style="padding: 10px 12px; font-weight: 700">{{L.m139}}</th><th scope="col" style="padding: 10px 12px; font-weight: 700; text-align: right">{{kp.tMonthly}}</th><th scope="col" style="padding: 10px 12px; font-weight: 700; text-align: right">{{L.m19}}</th><th scope="col" style="padding: 10px 12px; font-weight: 700; text-align: right">{{L.m20}}</th><th scope="col" style="padding: 10px 12px; font-weight: 700; text-align: right">{{L.m28}}</th></tr></thead>
+<tbody>
+<sc-for list="{{kp.months}}" as="mo" hint-placeholder-count="12"><tr style="border-top: 1px solid #EEF1EC"><td style="padding: 10px 12px; font-weight: 700; white-space: nowrap">{{mo.n}}</td><td style="padding: 10px 12px; white-space: nowrap">{{mo.when}}</td><td style="padding: 10px 12px; text-align: right; font-weight: 800; color: #1F4D3A; white-space: nowrap">{{mo.pay}}</td><td style="padding: 10px 12px; text-align: right; white-space: nowrap">{{mo.principal}}</td><td style="padding: 10px 12px; text-align: right; white-space: nowrap">{{mo.interest}}</td><td style="padding: 10px 12px; text-align: right; white-space: nowrap">{{mo.balance}}</td></tr></sc-for>
+</tbody>
+</table>
+</div>
+<span style="font-size: 13px; line-height: 1.5; color: #4A5751">{{kp.monthNote}}</span>
+</sc-if>
 </div>
 </div>
 </div>
@@ -782,64 +796,66 @@ select.vm-input{appearance:auto;padding-right:8px}
 </sc-for>
 </div>
 </div>
+<span style="flex: 1 1 100%; font-size: 16px; font-weight: 800; padding-top: 6px; border-top: 1px solid #EEF1EC; margin-top: 4px">{{tpT.main}}</span>
 <label style="display: flex; flex-direction: column; gap: 8px; flex: 1 1 100%; min-width: 0">
 <span style="font-size: 13px; font-weight: 700; color: #1B2420">{{L.m41}}</span>
 <input type="text" value="{{tp.title}}" onChange="{{tpSet.title}}" placeholder="{{L.m488}}" style="font: inherit; font-size: 15px; min-height: 48px; padding: 0 14px; border-radius: 12px; border: 1.5px solid {{tpErrB.title}}; background: #FFFFFF; color: #1B2420; width: 100%">
 <sc-if value="{{tpErr.title}}" hint-placeholder-val="{{ false }}"><span role="alert" style="font-size: 13px; font-weight: 600; color: #B4361A">{{tpErrMsg.title}}</span></sc-if>
 </label>
-<label style="display: flex; flex-direction: column; gap: 8px; flex: 2 1 360px; min-width: 0">
+<label style="display: flex; flex-direction: column; gap: 8px; flex: 1 1 100%; min-width: 0">
 <span style="font-size: 13px; font-weight: 700; color: #1B2420">{{L.m42}}</span>
 <input type="text" value="{{tp.address}}" onChange="{{tpSet.address}}" placeholder="{{L.m489}}" style="font: inherit; font-size: 15px; min-height: 48px; padding: 0 14px; border-radius: 12px; border: 1.5px solid {{tpErrB.address}}; background: #FFFFFF; color: #1B2420; width: 100%">
 <sc-if value="{{tpErr.address}}" hint-placeholder-val="{{ false }}"><span role="alert" style="font-size: 13px; font-weight: 600; color: #B4361A">{{tpErrMsg.address}}</span></sc-if>
 </label>
-<label style="display: flex; flex-direction: column; gap: 8px; flex: 1 1 200px; min-width: 0">
+<label style="display: flex; flex-direction: column; gap: 8px; flex: 1 1 220px; min-width: 0">
 <span style="font-size: 13px; font-weight: 700; color: #1B2420">{{L.m43}}</span>
 <select value="{{tp.city}}" onChange="{{tpSet.city}}" style="font: inherit; font-size: 15px; min-height: 48px; padding: 0 14px; border-radius: 12px; border: 1.5px solid {{tpErrB.city}}; background: #FFFFFF; color: #1B2420; width: 100%"><option value="">{{L.m44}}</option><option value="Jakarta Selatan">Jakarta Selatan</option><option value="Jakarta Timur">Jakarta Timur</option><option value="Jakarta Pusat">Jakarta Pusat</option><option value="Tangerang">Tangerang</option><option value="Tangerang Selatan">Tangerang Selatan</option><option value="Depok">Depok</option><option value="Bogor">Bogor</option><option value="Bekasi">Bekasi</option></select>
 <sc-if value="{{tpErr.city}}" hint-placeholder-val="{{ false }}"><span role="alert" style="font-size: 13px; font-weight: 600; color: #B4361A">{{tpErrMsg.city}}</span></sc-if>
 </label>
-<label style="display: flex; flex-direction: column; gap: 8px; flex: 1 1 240px; min-width: 0">
+<label style="display: flex; flex-direction: column; gap: 8px; flex: 1 1 220px; min-width: 0">
 <span style="font-size: 13px; font-weight: 700; color: #1B2420">{{tpPriceLabel}}</span>
 <input type="text" value="{{tp.price}}" onChange="{{tpSet.price}}" placeholder="{{L.m490}}" inputmode="numeric" style="font: inherit; font-size: 15px; min-height: 48px; padding: 0 14px; border-radius: 12px; border: 1.5px solid {{tpErrB.price}}; background: #FFFFFF; color: #1B2420; width: 100%">
 <sc-if value="{{tpErr.price}}" hint-placeholder-val="{{ false }}"><span role="alert" style="font-size: 13px; font-weight: 600; color: #B4361A">{{tpErrMsg.price}}</span></sc-if>
 </label>
 <sc-if value="{{tpIsJual}}" hint-placeholder-val="{{ true }}">
-<label style="display: flex; flex-direction: column; gap: 8px; flex: 1 1 240px; min-width: 0">
+<label style="display: flex; flex-direction: column; gap: 8px; flex: 1 1 220px; min-width: 0">
 <span style="font-size: 13px; font-weight: 700; color: #1B2420">{{L.m45}} <span style="font-weight: 600; color: #4A5751">{{L.m36}}</span></span>
 <input type="text" inputmode="numeric" value="{{tp.wasPrice}}" onChange="{{tpSet.wasPrice}}" placeholder="{{L.m491}}" style="font: inherit; font-size: 15px; min-height: 48px; padding: 0 14px; border-radius: 12px; border: 1.5px solid {{tpErrB.wasPrice}}; background: #FFFFFF; color: #1B2420; width: 100%">
 <sc-if value="{{tpHasDisc}}" hint-placeholder-val="{{ false }}"><span style="align-self: flex-start; display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; color: #1F4D3A"><span style="text-decoration: line-through; color: #4A5751; font-weight: 600">{{tpWasShown}}</span><span style="padding: 3px 8px; border-radius: 999px; background: #C2611F; color: #FFFFFF">{{tpDiscText}}</span>{{L.m46}}</span></sc-if>
 <sc-if value="{{tpErr.wasPrice}}" hint-placeholder-val="{{ false }}"><span role="alert" style="font-size: 13px; font-weight: 600; color: #B4361A">{{tpErrMsg.wasPrice}}</span></sc-if>
 </label>
 </sc-if>
+<span style="flex: 1 1 100%; font-size: 16px; font-weight: 800; padding-top: 6px; border-top: 1px solid #EEF1EC; margin-top: 4px">{{tpT.size}}</span>
 <sc-if value="{{tpShowLt}}" hint-placeholder-val="{{ true }}">
-<label style="display: flex; flex-direction: column; gap: 8px; flex: 1 1 140px; min-width: 0">
+<label style="display: flex; flex-direction: column; gap: 8px; flex: 1 1 150px; min-width: 0">
 <span style="font-size: 13px; font-weight: 700; color: #1B2420">{{tpLbl.lt}}</span>
 <input type="text" value="{{tp.lt}}" onChange="{{tpSet.lt}}" placeholder="{{L.m492}}" inputmode="numeric" style="font: inherit; font-size: 15px; min-height: 48px; padding: 0 14px; border-radius: 12px; border: 1.5px solid {{tpErrB.lt}}; background: #FFFFFF; color: #1B2420; width: 100%">
 <sc-if value="{{tpErr.lt}}" hint-placeholder-val="{{ false }}"><span role="alert" style="font-size: 13px; font-weight: 600; color: #B4361A">{{tpErrMsg.lt}}</span></sc-if>
 </label>
 </sc-if>
 <sc-if value="{{tpShowLb}}" hint-placeholder-val="{{ true }}">
-<label style="display: flex; flex-direction: column; gap: 8px; flex: 1 1 140px; min-width: 0">
+<label style="display: flex; flex-direction: column; gap: 8px; flex: 1 1 150px; min-width: 0">
 <span style="font-size: 13px; font-weight: 700; color: #1B2420">{{tpLbl.lb}}</span>
 <input type="text" value="{{tp.lb}}" onChange="{{tpSet.lb}}" placeholder="{{L.m493}}" inputmode="numeric" style="font: inherit; font-size: 15px; min-height: 48px; padding: 0 14px; border-radius: 12px; border: 1.5px solid {{tpErrB.lb}}; background: #FFFFFF; color: #1B2420; width: 100%">
 <sc-if value="{{tpErr.lb}}" hint-placeholder-val="{{ false }}"><span role="alert" style="font-size: 13px; font-weight: 600; color: #B4361A">{{tpErrMsg.lb}}</span></sc-if>
 </label>
 </sc-if>
 <sc-if value="{{tpShowKt}}" hint-placeholder-val="{{ true }}">
-<label style="display: flex; flex-direction: column; gap: 8px; flex: 1 1 120px; min-width: 0">
+<label style="display: flex; flex-direction: column; gap: 8px; flex: 1 1 150px; min-width: 0">
 <span style="font-size: 13px; font-weight: 700; color: #1B2420">{{tpLbl.kt}}</span>
 <input type="text" value="{{tp.kt}}" onChange="{{tpSet.kt}}" placeholder="{{L.m494}}" inputmode="numeric" style="font: inherit; font-size: 15px; min-height: 48px; padding: 0 14px; border-radius: 12px; border: 1.5px solid {{tpErrB.kt}}; background: #FFFFFF; color: #1B2420; width: 100%">
 <sc-if value="{{tpErr.kt}}" hint-placeholder-val="{{ false }}"><span role="alert" style="font-size: 13px; font-weight: 600; color: #B4361A">{{tpErrMsg.kt}}</span></sc-if>
 </label>
 </sc-if>
 <sc-if value="{{tpShowKm}}" hint-placeholder-val="{{ true }}">
-<label style="display: flex; flex-direction: column; gap: 8px; flex: 1 1 120px; min-width: 0">
+<label style="display: flex; flex-direction: column; gap: 8px; flex: 1 1 150px; min-width: 0">
 <span style="font-size: 13px; font-weight: 700; color: #1B2420">{{tpLbl.km}}</span>
 <input type="text" value="{{tp.km}}" onChange="{{tpSet.km}}" placeholder="{{L.m495}}" inputmode="numeric" style="font: inherit; font-size: 15px; min-height: 48px; padding: 0 14px; border-radius: 12px; border: 1.5px solid {{tpErrB.km}}; background: #FFFFFF; color: #1B2420; width: 100%">
 <sc-if value="{{tpErr.km}}" hint-placeholder-val="{{ false }}"><span role="alert" style="font-size: 13px; font-weight: 600; color: #B4361A">{{tpErrMsg.km}}</span></sc-if>
 </label>
 </sc-if>
 <sc-if value="{{tpIsKosF}}" hint-placeholder-val="{{ false }}">
-<label style="display: flex; flex-direction: column; gap: 8px; flex: 1 1 160px; min-width: 0">
+<label style="display: flex; flex-direction: column; gap: 8px; flex: 1 1 150px; min-width: 0">
 <span style="font-size: 13px; font-weight: 700; color: #1B2420">{{L.m47}} <span style="font-weight: 600; color: #4A5751">{{L.m36}}</span></span>
 <input type="text" inputmode="numeric" value="{{tp.kmOut}}" onChange="{{tpSet.kmOut}}" placeholder="{{L.m495}}" style="font: inherit; font-size: 15px; min-height: 48px; padding: 0 14px; border-radius: 12px; border: 1.5px solid {{tpErrB.kmOut}}; background: #FFFFFF; color: #1B2420; width: 100%">
 <sc-if value="{{tpErr.kmOut}}" hint-placeholder-val="{{ false }}"><span role="alert" style="font-size: 13px; font-weight: 600; color: #B4361A">{{tpErrMsg.kmOut}}</span></sc-if>
@@ -867,13 +883,13 @@ select.vm-input{appearance:auto;padding-right:8px}
 </sc-if>
 <span style="flex: 1 1 100%; font-size: 16px; font-weight: 800; padding-top: 6px; border-top: 1px solid #EEF1EC; margin-top: 4px">{{L.m50}}</span>
 <sc-if value="{{tpIsRumah}}" hint-placeholder-val="{{ true }}">
-<label style="display: flex; flex-direction: column; gap: 8px; flex: 1 1 160px; min-width: 0">
+<label style="display: flex; flex-direction: column; gap: 8px; flex: 1 1 220px; min-width: 0">
 <span style="font-size: 13px; font-weight: 700; color: #1B2420; display: flex; align-items: center; gap: 6px"><img src="/_blob/26b1d1e88d3b868db9ae6bf4317d18f5" alt="" style="width: 18px; height: 18px; display: block">{{L.m51}} <span style="font-weight: 600; color: #4A5751">{{L.m36}}</span></span>
 <input type="text" inputmode="numeric" value="{{tp.floors}}" onChange="{{tpSet.floors}}" placeholder="{{L.m495}}" style="font: inherit; font-size: 15px; min-height: 48px; padding: 0 14px; border-radius: 12px; border: 1.5px solid {{tpErrB.floors}}; background: #FFFFFF; color: #1B2420; width: 100%">
 <sc-if value="{{tpErr.floors}}" hint-placeholder-val="{{ false }}"><span role="alert" style="font-size: 13px; font-weight: 600; color: #B4361A">{{tpErrMsg.floors}}</span></sc-if>
 </label>
 </sc-if>
-<label style="display: flex; flex-direction: column; gap: 8px; flex: 1 1 200px; min-width: 0">
+<label style="display: flex; flex-direction: column; gap: 8px; flex: 1 1 220px; min-width: 0">
 <span style="font-size: 13px; font-weight: 700; color: #1B2420; display: flex; align-items: center; gap: 6px"><img src="/_blob/b6e41fb3893f6d056e7936a7d0b7c3cb" alt="" style="width: 18px; height: 18px; display: block">{{L.m52}} <span style="font-weight: 600; color: #4A5751">{{L.m36}}</span></span>
 <select value="{{tp.facing}}" onChange="{{tpSet.facing}}" style="font: inherit; font-size: 15px; min-height: 48px; padding: 0 14px; border-radius: 12px; border: 1.5px solid #D5DBD3; background: #FFFFFF; color: #1B2420; width: 100%"><option value="">{{L.m53}}</option><option value="Utara">{{L.m54}}</option><option value="Timur Laut">{{L.m55}}</option><option value="Timur">{{L.m56}}</option><option value="Tenggara">{{L.m57}}</option><option value="Selatan">{{L.m58}}</option><option value="Barat Daya">{{L.m59}}</option><option value="Barat">{{L.m60}}</option><option value="Barat Laut">{{L.m61}}</option></select>
 </label>
@@ -936,20 +952,21 @@ select.vm-input{appearance:auto;padding-right:8px}
 </div>
 <sc-if value="{{tpErr.iplMode}}" hint-placeholder-val="{{ false }}"><span role="alert" style="flex: 1 1 100%; font-size: 13px; font-weight: 600; color: #B4361A">{{tpErrMsg.iplMode}}</span></sc-if>
 <sc-if value="{{tpIplPaid}}" hint-placeholder-val="{{ false }}">
-<label style="display: flex; flex-direction: column; gap: 8px; flex: 1 1 240px; min-width: 0">
+<label style="display: flex; flex-direction: column; gap: 8px; flex: 1 1 220px; min-width: 0">
 <span style="font-size: 13px; font-weight: 700; color: #1B2420; display: flex; align-items: center; gap: 6px"><img src="/_blob/5fda7d75ea4006fcf3d2a1a7bc009a16" alt="" style="width: 18px; height: 18px; display: block">{{L.m69}}</span>
 <input type="text" inputmode="numeric" value="{{tp.iplAmount}}" onChange="{{tpSet.iplAmount}}" placeholder="{{L.m497}}" style="font: inherit; font-size: 15px; min-height: 48px; padding: 0 14px; border-radius: 12px; border: 1.5px solid {{tpErrB.iplAmount}}; background: #FFFFFF; color: #1B2420; width: 100%">
 <sc-if value="{{tpErr.iplAmount}}" hint-placeholder-val="{{ false }}"><span role="alert" style="font-size: 13px; font-weight: 600; color: #B4361A">{{tpErrMsg.iplAmount}}</span></sc-if>
 </label>
 </sc-if>
 <sc-if value="{{tpIplFree}}" hint-placeholder-val="{{ false }}">
-<label style="display: flex; flex-direction: column; gap: 8px; flex: 1 1 240px; min-width: 0">
+<label style="display: flex; flex-direction: column; gap: 8px; flex: 1 1 220px; min-width: 0">
 <span style="font-size: 13px; font-weight: 700; color: #1B2420; display: flex; align-items: center; gap: 6px"><img src="/_blob/5fda7d75ea4006fcf3d2a1a7bc009a16" alt="" style="width: 18px; height: 18px; display: block">{{L.m70}}</span>
 <input type="text" inputmode="numeric" value="{{tp.iplYears}}" onChange="{{tpSet.iplYears}}" placeholder="{{L.m495}}" style="font: inherit; font-size: 15px; min-height: 48px; padding: 0 14px; border-radius: 12px; border: 1.5px solid {{tpErrB.iplYears}}; background: #FFFFFF; color: #1B2420; width: 100%">
 <sc-if value="{{tpErr.iplYears}}" hint-placeholder-val="{{ false }}"><span role="alert" style="font-size: 13px; font-weight: 600; color: #B4361A">{{tpErrMsg.iplYears}}</span></sc-if>
 </label>
 </sc-if>
 </sc-if>
+<span style="flex: 1 1 100%; font-size: 16px; font-weight: 800; padding-top: 6px; border-top: 1px solid #EEF1EC; margin-top: 4px">{{tpT.desc}}</span>
 <label style="display: flex; flex-direction: column; gap: 8px; flex: 1 1 100%">
 <span style="font-size: 13px; font-weight: 700; color: #1B2420">{{L.m71}}</span>
 <textarea value="{{tp.desc}}" onChange="{{tpSet.desc}}" rows="4" placeholder="{{L.m498}}" style="font: inherit; font-size: 15px; padding: 12px 14px; border-radius: 12px; border: 1.5px solid #D5DBD3; background: #FFFFFF; color: #1B2420; width: 100%; resize: vertical"></textarea>
@@ -988,26 +1005,20 @@ select.vm-input{appearance:auto;padding-right:8px}
 </div>
 </div>
 <span style="flex: 1 1 100%; font-size: 16px; font-weight: 800; padding-top: 6px; border-top: 1px solid #EEF1EC; margin-top: 4px">{{L.m77}}</span>
-<label style="display: flex; flex-direction: column; gap: 8px; flex: 1 1 200px; min-width: 0">
-<span style="font-size: 13px; font-weight: 700; color: #1B2420; display: flex; align-items: center; gap: 6px"><img src="/_blob/9488e7d619bfa50d1a16fc484ccf8882" alt="" style="width: 18px; height: 18px; display: block">{{L.m78}} <span style="font-weight: 600; color: #4A5751">{{L.m36}}</span></span>
-<input type="text" value="{{tp.nearTol}}" onChange="{{tpSet.nearTol}}" placeholder="{{L.m499}}" style="font: inherit; font-size: 15px; min-height: 48px; padding: 0 14px; border-radius: 12px; border: 1.5px solid {{tpErrB.nearTol}}; background: #FFFFFF; color: #1B2420; width: 100%">
-<sc-if value="{{tpErr.nearTol}}" hint-placeholder-val="{{ false }}"><span role="alert" style="font-size: 13px; font-weight: 600; color: #B4361A">{{tpErrMsg.nearTol}}</span></sc-if>
-</label>
-<label style="display: flex; flex-direction: column; gap: 8px; flex: 1 1 200px; min-width: 0">
-<span style="font-size: 13px; font-weight: 700; color: #1B2420; display: flex; align-items: center; gap: 6px"><img src="/_blob/7d7ebcdaa9ce7783027dfb7012d77d74" alt="" style="width: 18px; height: 18px; display: block">{{L.m79}} <span style="font-weight: 600; color: #4A5751">{{L.m36}}</span></span>
-<input type="text" value="{{tp.nearKota}}" onChange="{{tpSet.nearKota}}" placeholder="{{L.m500}}" style="font: inherit; font-size: 15px; min-height: 48px; padding: 0 14px; border-radius: 12px; border: 1.5px solid {{tpErrB.nearKota}}; background: #FFFFFF; color: #1B2420; width: 100%">
-<sc-if value="{{tpErr.nearKota}}" hint-placeholder-val="{{ false }}"><span role="alert" style="font-size: 13px; font-weight: 600; color: #B4361A">{{tpErrMsg.nearKota}}</span></sc-if>
-</label>
-<label style="display: flex; flex-direction: column; gap: 8px; flex: 1 1 200px; min-width: 0">
-<span style="font-size: 13px; font-weight: 700; color: #1B2420; display: flex; align-items: center; gap: 6px"><img src="/_blob/651127973d672ad9f5e4ab153b78c31e" alt="" style="width: 18px; height: 18px; display: block">{{L.m80}} <span style="font-weight: 600; color: #4A5751">{{L.m36}}</span></span>
-<input type="text" value="{{tp.nearFaskes}}" onChange="{{tpSet.nearFaskes}}" placeholder="{{L.m501}}" style="font: inherit; font-size: 15px; min-height: 48px; padding: 0 14px; border-radius: 12px; border: 1.5px solid {{tpErrB.nearFaskes}}; background: #FFFFFF; color: #1B2420; width: 100%">
-<sc-if value="{{tpErr.nearFaskes}}" hint-placeholder-val="{{ false }}"><span role="alert" style="font-size: 13px; font-weight: 600; color: #B4361A">{{tpErrMsg.nearFaskes}}</span></sc-if>
-</label>
-<label style="display: flex; flex-direction: column; gap: 8px; flex: 1 1 200px; min-width: 0">
-<span style="font-size: 13px; font-weight: 700; color: #1B2420; display: flex; align-items: center; gap: 6px"><img src="/_blob/c684831b98475369d66b967d6d2698a4" alt="" style="width: 18px; height: 18px; display: block">{{L.m81}} <span style="font-weight: 600; color: #4A5751">{{L.m36}}</span></span>
-<input type="text" value="{{tp.nearBandara}}" onChange="{{tpSet.nearBandara}}" placeholder="{{L.m502}}" style="font: inherit; font-size: 15px; min-height: 48px; padding: 0 14px; border-radius: 12px; border: 1.5px solid {{tpErrB.nearBandara}}; background: #FFFFFF; color: #1B2420; width: 100%">
-<sc-if value="{{tpErr.nearBandara}}" hint-placeholder-val="{{ false }}"><span role="alert" style="font-size: 13px; font-weight: 600; color: #B4361A">{{tpErrMsg.nearBandara}}</span></sc-if>
-</label>
+<span style="flex: 1 1 100%; font-size: 14px; color: #4A5751; margin-top: -8px">{{tpT.nearHint}}</span>
+<sc-for list="{{tpNear}}" as="ng" hint-placeholder-count="4">
+<div style="flex: 1 1 100%; display: flex; flex-direction: column; gap: 10px; padding: 16px; border-radius: 16px; border: 1px solid #E3E7E1; background: #F7F8F5">
+<span style="display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 800"><img src="{{ng.icon}}" alt="" style="width: 20px; height: 20px; display: block">{{ng.label}}</span>
+<sc-for list="{{ng.items}}" as="nt" hint-placeholder-count="1">
+<div style="display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) 44px; gap: 8px; align-items: end">
+<label class="vm-label">{{nt.nameLabel}}<input type="text" class="vm-input" value="{{nt.n}}" onChange="{{nt.setN}}" placeholder="{{nt.namePh}}"></label>
+<label class="vm-label">{{nt.distLabel}}<input type="text" class="vm-input" value="{{nt.d}}" onChange="{{nt.setD}}" placeholder="{{nt.distPh}}"></label>
+<button type="button" onClick="{{nt.remove}}" aria-label="{{nt.removeAria}}" style="width: 44px; height: 48px; border-radius: 12px; border: 1.5px solid #D5DBD3; background: #FFFFFF; color: #B4361A; cursor: pointer; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+</div>
+</sc-for>
+<button type="button" onClick="{{ng.add}}" class="mini" style="align-self: flex-start">{{ng.addLabel}}</button>
+</div>
+</sc-for>
 <div style="display: flex; flex-direction: column; gap: 8px; flex: 1 1 100%">
 <span style="font-size: 13px; font-weight: 700; color: #1B2420">{{L.m82}} <span style="font-weight: 600; color: #4A5751">{{L.m36}}</span></span>
 <div role="group" aria-label="{{L.m82}}" style="display: flex; flex-wrap: wrap; gap: 8px">
@@ -1085,12 +1096,27 @@ select.vm-input{appearance:auto;padding-right:8px}
 <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px">
 <sc-for list="{{tpPhotoList}}" as="ph" hint-placeholder-count="3">
 <div style="position: relative; height: 96px; border-radius: 14px; overflow: hidden; background: #E3E7E1">
-<img src="{{ph.src}}" alt="{{ph.name}}" style="width: 100%; height: 100%; object-fit: cover; display: block">
+<img src="{{ph.src}}" alt="{{ph.name}}" style="width: 100%; height: 100%; object-fit: cover; display: block"><sc-if value="{{ph.isCover}}" hint-placeholder-val="{{ false }}"><span style="position: absolute; left: 6px; bottom: 6px; padding: 2px 8px; border-radius: 999px; background: #1F4D3A; color: #FFFFFF; font-size: 11px; font-weight: 800">{{ph.coverLabel}}</span></sc-if><sc-if value="{{ph.canCover}}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{ph.makeCover}}" style="position: absolute; left: 6px; bottom: 6px; padding: 2px 8px; border: 0; border-radius: 999px; background: rgba(255,255,255,0.92); color: #1B2420; font: inherit; font-size: 11px; font-weight: 800; cursor: pointer; min-height: 24px">{{ph.coverBtn}}</button></sc-if>
 <button type="button" onClick="{{ph.remove}}" aria-label="{{L.m439}} {{ph.name}}" style="position: absolute; top: 6px; right: 6px; width: 30px; height: 30px; border: 0; border-radius: 999px; background: rgba(255,255,255,0.92); color: #1B2420; cursor: pointer; display: flex; align-items: center; justify-content: center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
 </div>
 </sc-for>
 </div>
 </sc-if>
+<span style="font-size: 13px; color: #4A5751">{{tpPhotoCount}}</span>
+<span style="font-size: 16px; font-weight: 800; padding-top: 6px; border-top: 1px solid #EEF1EC">{{tpT.video}}</span>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px">
+<label class="drop-zone" style="display: flex; align-items: center; gap: 12px; padding: 14px; border-radius: 14px; border: 1.5px dashed #C9D1C6; cursor: pointer; position: relative"><span aria-hidden="true" style="flex: 0 0 44px; width: 44px; height: 44px; border-radius: 12px; background: #E3EFE6; color: #1F4D3A; display: flex; align-items: center; justify-content: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="13" height="12" rx="2"></rect><path d="M16 10l5-3v10l-5-3z"></path></svg></span><span style="display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-weight: 800; font-size: 15px">{{tpT.videoUp}}</span><span style="font-size: 13px; color: #4A5751; overflow-wrap: anywhere">{{tpVideoText}}</span></span><input type="file" accept="video/mp4,video/quicktime,video/*" onChange="{{tpSetVideo}}" style="position: absolute; inset: 0; opacity: 0; cursor: pointer"></label>
+<label class="vm-label">{{tpT.videoUrl}}<input type="url" class="vm-input" value="{{tp.videoUrl}}" onChange="{{tpSet2.videoUrl}}" placeholder="https://youtu.be/…"></label>
+</div>
+<sc-if value="{{tpHasVideo}}" hint-placeholder-val="{{ false }}"><div class="vm-row" style="flex-wrap: wrap"><video src="{{tpVideoSrc}}" controls="" preload="metadata" style="flex: 1 1 260px; max-width: 360px; max-height: 200px; border-radius: 12px; background: #1B2420"></video><button type="button" onClick="{{tpRemoveVideo}}" class="mini warn">{{tpT.remove}}</button></div></sc-if>
+<span style="font-size: 16px; font-weight: 800; padding-top: 6px; border-top: 1px solid #EEF1EC">{{tpT.tour}}</span>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px">
+<label class="vm-label">{{tpT.tourUrl}}<input type="url" class="vm-input" value="{{tp.tourUrl}}" onChange="{{tpSet2.tourUrl}}" placeholder="https://my.matterport.com/… / https://kuula.co/…"></label>
+<label class="drop-zone" style="display: flex; align-items: center; gap: 12px; padding: 14px; border-radius: 14px; border: 1.5px dashed #C9D1C6; cursor: pointer; position: relative"><span aria-hidden="true" style="flex: 0 0 44px; width: 44px; height: 44px; border-radius: 12px; background: #E3EFE6; color: #1F4D3A; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800">360°</span><span style="display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-weight: 800; font-size: 15px">{{tpT.panoUp}}</span><span style="font-size: 13px; color: #4A5751">{{tpPanoText}}</span></span><input type="file" accept="image/*" multiple="" onChange="{{tpAddPano}}" style="position: absolute; inset: 0; opacity: 0; cursor: pointer"></label>
+</div>
+<sc-if value="{{tpHasPano}}" hint-placeholder-val="{{ false }}"><div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px"><sc-for list="{{tpPanoList}}" as="pn" hint-placeholder-count="2"><div style="position: relative; height: 80px; border-radius: 12px; overflow: hidden; background: #E3E7E1"><img src="{{pn.src}}" alt="{{pn.name}}" style="width: 100%; height: 100%; object-fit: cover; display: block"><button type="button" onClick="{{pn.remove}}" aria-label="{{pn.removeAria}}" style="position: absolute; top: 6px; right: 6px; width: 30px; height: 30px; border: 0; border-radius: 999px; background: rgba(255,255,255,0.92); color: #1B2420; cursor: pointer">×</button></div></sc-for></div></sc-if>
+<sc-if value="{{tpErr.media}}" hint-placeholder-val="{{ false }}"><span role="alert" style="font-size: 13px; font-weight: 600; color: #B4361A">{{tpErrMsg.media}}</span></sc-if>
+<span style="font-size: 13px; line-height: 1.5; color: #4A5751">{{tpT.mediaNote}}</span>
 <div style="display: flex; flex-direction: column; gap: 10px">
 <span style="font-size: 15px; font-weight: 800">{{L.m97}}</span>
 <sc-for list="{{tpDocs}}" as="dc" hint-placeholder-count="4">
@@ -2388,7 +2414,7 @@ select.vm-input{appearance:auto;padding-right:8px}
 <div class="vm-sheet">
 <button type="button" class="vm-x" onClick="{{au.close}}" aria-label="{{L.m531}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
 <span style="display: flex; flex-direction: column; gap: 6px; padding-right: 48px"><span class="vm-eyebrow">{{L.m265}}</span><h2 class="vm-h">{{au.title}}</h2><span style="font-size: 15px; line-height: 1.5; color: #4A5751">{{au.sub}}</span></span>
-<sc-if value="{{au.showRole}}" hint-placeholder-val="{{ true }}"><div class="tabbar" role="group" aria-label="{{L.m374}}" style="align-self: stretch"><sc-for list="{{au.roles}}" as="rl" hint-placeholder-count="2"><button type="button" onClick="{{rl.pick}}" aria-pressed="{{rl.pressed}}" style="flex: 1 1 0; background: {{rl.bg}}; color: {{rl.fg}}">{{rl.label}}</button></sc-for></div></sc-if>
+<sc-if value="{{au.showRole}}" hint-placeholder-val="{{ true }}"><div role="radiogroup" aria-label="{{au.roleAria}}" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px"><sc-for list="{{au.roles}}" as="rl" hint-placeholder-count="2"><button type="button" role="radio" aria-checked="{{rl.pressed}}" onClick="{{rl.pick}}" style="cursor: pointer; font: inherit; text-align: left; min-height: 64px; padding: 10px 12px; border-radius: 14px; border: 2px solid {{rl.border}}; background: {{rl.bg2}}; color: #1B2420; display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-size: 14px; font-weight: 800; line-height: 1.3">{{rl.label}}</span><span style="font-size: 12px; line-height: 1.35; color: #4A5751">{{rl.hint}}</span></button></sc-for></div></sc-if>
 <sc-if value="{{au.isPick}}" hint-placeholder-val="{{ true }}">
 <button type="button" onClick="{{au.pickWa}}" class="vm-btn wa-btn" style="min-height: 54px; border-radius: 14px"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 11.8a8.5 8.5 0 0 1-12.6 7.4L3.5 20.5l1.3-4.3A8.5 8.5 0 1 1 20.5 11.8z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"></path></svg>{{L.m266}}</button>
 <button type="button" onClick="{{au.google}}" class="vm-btn google" style="min-height: 54px; border-radius: 14px"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M21.6 12.2c0-.7-.1-1.4-.2-2H12v3.8h5.4a4.6 4.6 0 0 1-2 3v2.5h3.2c1.9-1.7 3-4.3 3-7.3z" fill="#4285F4"></path><path d="M12 22c2.7 0 5-.9 6.6-2.4l-3.2-2.5c-.9.6-2 1-3.4 1-2.6 0-4.8-1.8-5.6-4.1H3.1v2.6A10 10 0 0 0 12 22z" fill="#34A853"></path><path d="M6.4 14c-.2-.6-.3-1.3-.3-2s.1-1.4.3-2V7.4H3.1a10 10 0 0 0 0 9.2z" fill="#FBBC05"></path><path d="M12 5.9c1.5 0 2.8.5 3.8 1.5l2.9-2.9A10 10 0 0 0 3.1 7.4L6.4 10c.8-2.3 3-4.1 5.6-4.1z" fill="#EA4335"></path></svg>{{L.m267}}</button>
@@ -2515,7 +2541,26 @@ select.vm-input{appearance:auto;padding-right:8px}
 <sc-if value="{{bk.isUtj}}" hint-placeholder-val="{{ true }}"><div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 16px; border-radius: 16px; background: #E3EFE6; color: #1F4D3A; flex-wrap: wrap"><span style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 13px; font-weight: 800">{{L.m305}}</span><span style="font-size: 13px">{{L.m306}}</span></span><span style="font-size: 26px; font-weight: 800; letter-spacing: -0.02em">{{L.m307}}</span></div></sc-if>
 <sc-if value="{{bk.noUtj}}" hint-placeholder-val="{{ false }}"><span class="vm-note">{{bk.noUtjText}}</span></sc-if>
 <span class="vm-warn"><b>{{L.m308}}</b> {{L.m309}}</span>
-<a href="{{bk.wa}}" target="_blank" rel="noopener noreferrer" onClick="{{bk.request}}" class="vm-btn wa-btn" style="min-height: 54px; border-radius: 14px"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 11.8a8.5 8.5 0 0 1-12.6 7.4L3.5 20.5l1.3-4.3A8.5 8.5 0 1 1 20.5 11.8z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"></path></svg>{{bk.cta}}</a>
+<sc-if value="{{bk.noUtj}}" hint-placeholder-val="{{ false }}"><a href="{{bk.wa}}" target="_blank" rel="noopener noreferrer" onClick="{{bk.request}}" class="vm-btn wa-btn" style="min-height: 54px; border-radius: 14px"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 11.8a8.5 8.5 0 0 1-12.6 7.4L3.5 20.5l1.3-4.3A8.5 8.5 0 1 1 20.5 11.8z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"></path></svg>{{bk.cta}}</a></sc-if>
+<sc-if value="{{bk.utjForm}}" hint-placeholder-val="{{ true }}">
+<div class="vm-row" style="align-items: stretch; flex-wrap: wrap; background: #FFFFFF"><img src="{{bk.cover}}" alt="" style="flex: 0 0 112px; width: 112px; height: 84px; border-radius: 12px; object-fit: cover; background: #E3E7E1"><span style="flex: 1 1 180px; display: flex; flex-direction: column; gap: 2px; min-width: 0; justify-content: center"><span style="font-size: 16px; font-weight: 800">{{bk.title}}</span><span style="font-size: 13px; color: #4A5751">{{bk.location}}</span><span style="font-size: 15px; font-weight: 800; color: #1F4D3A">{{bk.price}}</span></span></div>
+<span style="font-size: 17px; font-weight: 800">{{bk.t.formTitle}}</span>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px">
+<label class="vm-label">{{bk.t.name}}<input type="text" class="vm-input" value="{{bk.f.name}}" onChange="{{bk.setName}}" autocomplete="name"></label>
+<label class="vm-label">{{bk.t.phone}}<input type="tel" class="vm-input" value="{{bk.f.phone}}" onChange="{{bk.setPhone}}" inputmode="tel" autocomplete="tel" placeholder="08xx xxxx xxxx"></label>
+<label class="vm-label">{{bk.t.invNo}}<input type="text" class="vm-input" value="{{bk.f.invNo}}" onChange="{{bk.setInvNo}}" placeholder="UTJ-xxxxxx"></label>
+</div>
+<label class="drop-zone" style="display: flex; align-items: center; gap: 12px; padding: 14px; border-radius: 14px; border: 1.5px dashed #C9D1C6; cursor: pointer; position: relative"><span aria-hidden="true" style="flex: 0 0 44px; width: 44px; height: 44px; border-radius: 12px; background: #E3EFE6; color: #1F4D3A; display: flex; align-items: center; justify-content: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5"></path><path d="M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"></path></svg></span><span style="display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-weight: 800; font-size: 15px">{{bk.t.proof}}</span><span style="font-size: 13px; color: #4A5751">{{bk.proofText}}</span></span><input type="file" accept="image/*,application/pdf" onChange="{{bk.setProof}}" style="position: absolute; inset: 0; opacity: 0; cursor: pointer"></label>
+<sc-if value="{{bk.proofImg}}" hint-placeholder-val="{{ false }}"><img src="{{bk.proofSrc}}" alt="{{bk.t.proofAlt}}" style="max-width: 100%; max-height: 220px; object-fit: contain; border-radius: 12px; border: 1px solid #E3E7E1; align-self: flex-start"></sc-if>
+<sc-if value="{{bk.hasErr}}" hint-placeholder-val="{{ false }}"><span class="vm-err" role="alert">{{bk.err}}</span></sc-if>
+<button type="button" onClick="{{bk.submit}}" class="vm-btn pri" style="min-height: 54px; border-radius: 14px">{{bk.t.submit}}</button>
+<a href="{{bk.wa}}" target="_blank" rel="noopener noreferrer" class="vm-btn ghost" style="min-height: 44px; font-size: 14px">{{bk.t.askInv}}</a>
+</sc-if>
+<sc-if value="{{bk.utjDone}}" hint-placeholder-val="{{ false }}">
+<div role="status" style="display: flex; flex-direction: column; gap: 8px; padding: 18px; border-radius: 16px; background: #E3EFE6; color: #1F4D3A"><span style="font-size: 18px; font-weight: 800">{{bk.t.doneTitle}}</span><span style="font-size: 15px; line-height: 1.5">{{bk.doneText}}</span></div>
+<a href="{{bk.doneWa}}" target="_blank" rel="noopener noreferrer" class="vm-btn wa-btn" style="min-height: 48px; border-radius: 14px">{{bk.t.doneWa}}</a>
+<button type="button" onClick="{{bk.close}}" class="vm-btn ghost">{{bk.t.close}}</button>
+</sc-if>
 <span style="font-size: 13px; line-height: 1.5; color: #4A5751">{{bk.foot}}</span>
 </div>
 </div>
@@ -2671,6 +2716,7 @@ select.vm-input{appearance:auto;padding-right:8px}
 </div>
 <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start">
 <div class="card-w" style="flex: 999 1 480px; gap: 16px">
+<sc-if value="{{rg.hasSwitch}}" hint-placeholder-val="{{ false }}"><span class="vm-note">{{rg.switchNote}}</span></sc-if>
 <sc-if value="{{rg.isForm}}" hint-placeholder-val="{{ true }}">
 <div style="display: flex; flex-wrap: wrap; gap: 14px"><label class="vm-label" style="flex: 1 1 240px">{{L.m32}}<input type="text" class="vm-input" value="{{rg.f.name}}" onChange="{{rg.set.name}}" autocomplete="name" placeholder="{{L.m486}}"><sc-if value="{{rg.e.name}}" hint-placeholder-val="{{ false }}"><span class="vm-err" role="alert">{{rg.m.name}}</span></sc-if></label><label class="vm-label" style="flex: 1 1 240px">{{L.m33}}<input type="tel" class="vm-input" value="{{rg.f.phone}}" onChange="{{rg.set.phone}}" inputmode="tel" autocomplete="tel" placeholder="{{L.m545}}"><sc-if value="{{rg.e.phone}}" hint-placeholder-val="{{ false }}"><span class="vm-err" role="alert">{{rg.m.phone}}</span></sc-if></label></div>
 <div style="display: flex; flex-wrap: wrap; gap: 14px"><label class="vm-label" style="flex: 1 1 240px">{{L.m346}}<input type="email" class="vm-input" value="{{rg.f.email}}" onChange="{{rg.set.email}}" autocomplete="email" placeholder="{{L.m487}}"><sc-if value="{{rg.e.email}}" hint-placeholder-val="{{ false }}"><span class="vm-err" role="alert">{{rg.m.email}}</span></sc-if></label><label class="vm-label" style="flex: 1 1 240px">{{L.m347}}<input type="text" class="vm-input" value="{{rg.f.city}}" onChange="{{rg.set.city}}" placeholder="{{L.m556}}"><sc-if value="{{rg.e.city}}" hint-placeholder-val="{{ false }}"><span class="vm-err" role="alert">{{rg.m.city}}</span></sc-if></label></div>
@@ -2782,6 +2828,7 @@ select.vm-input{appearance:auto;padding-right:8px}
 </sc-if>
 
 <sc-if value="{{cm.isList}}" hint-placeholder-val="{{ false }}">
+<div class="vm-row" style="flex-wrap: wrap; align-items: flex-start; background: #F3F8F4; border-color: #CFE3D6; gap: 14px"><span aria-hidden="true" style="flex: 0 0 36px; width: 36px; height: 36px; border-radius: 12px; background: #1F4D3A; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-weight: 800">i</span><span style="flex: 1 1 280px; display: flex; flex-direction: column; gap: 6px; min-width: 0"><span style="font-size: 15px; font-weight: 800">{{cm.df.title}}</span><span style="font-size: 14px; line-height: 1.55; color: #3A4740">{{cm.df.body}}</span><span style="display: flex; gap: 6px; flex-wrap: wrap; align-items: center; margin-top: 4px"><sc-for list="{{cm.df.flow}}" as="fw" hint-placeholder-count="4"><span style="display: inline-flex; align-items: center; gap: 6px"><span class="badge" style="background: {{fw.bg}}; color: {{fw.fg}}">{{fw.t}}</span><sc-if value="{{fw.arrow}}" hint-placeholder-val="{{ true }}"><span aria-hidden="true" style="color: #4A5751">→</span></sc-if></span></sc-for></span></span><button type="button" onClick="{{cm.df.go}}" class="mini">{{cm.df.goLabel}}</button></div>
 <sc-if value="{{cm.editing}}" hint-placeholder-val="{{ false }}">
 <div class="card-w" style="border: 2px solid #1F4D3A">
 <span style="display: flex; flex-direction: column; gap: 2px"><span class="vm-eyebrow">Edit listing</span><h2 style="margin: 0; font-size: 20px; font-weight: 800">{{cm.ed.name}}</h2></span>
@@ -2818,6 +2865,7 @@ select.vm-input{appearance:auto;padding-right:8px}
 </sc-if>
 
 <sc-if value="{{cm.isTitip}}" hint-placeholder-val="{{ false }}">
+<div class="vm-row" style="flex-wrap: wrap; align-items: flex-start; background: #F3F8F4; border-color: #CFE3D6; gap: 14px"><span aria-hidden="true" style="flex: 0 0 36px; width: 36px; height: 36px; border-radius: 12px; background: #1F4D3A; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-weight: 800">i</span><span style="flex: 1 1 280px; display: flex; flex-direction: column; gap: 6px; min-width: 0"><span style="font-size: 15px; font-weight: 800">{{cm.df.title}}</span><span style="font-size: 14px; line-height: 1.55; color: #3A4740">{{cm.df.body}}</span><span style="display: flex; gap: 6px; flex-wrap: wrap; align-items: center; margin-top: 4px"><sc-for list="{{cm.df.flow}}" as="fw" hint-placeholder-count="4"><span style="display: inline-flex; align-items: center; gap: 6px"><span class="badge" style="background: {{fw.bg}}; color: {{fw.fg}}">{{fw.t}}</span><sc-if value="{{fw.arrow}}" hint-placeholder-val="{{ true }}"><span aria-hidden="true" style="color: #4A5751">→</span></sc-if></span></sc-for></span></span><button type="button" onClick="{{cm.df.go}}" class="mini">{{cm.df.goLabel}}</button></div>
 <sc-if value="{{cm.tpOpen}}" hint-placeholder-val="{{ false }}">
 <div class="card-w" style="gap: 18px">
 <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between">
@@ -2900,7 +2948,7 @@ select.vm-input{appearance:auto;padding-right:8px}
 <table class="cms-table">
 <thead><tr><th scope="col">Invoice</th><th scope="col">{{L.m422}}</th><th scope="col">{{L.m299}}</th><th scope="col" style="text-align: right">{{L.m140}}</th><th scope="col">Status</th><th scope="col" style="text-align: right">{{L.m393}}</th></tr></thead>
 <tbody>
-<sc-for list="{{cm.utjRows}}" as="r" hint-placeholder-count="2"><tr><td style="white-space: nowrap"><span style="display: flex; flex-direction: column; gap: 2px"><span style="font-weight: 800">{{r.inv}}</span><span style="font-size: 13px; color: #4A5751">{{r.date}}</span></span></td><td style="min-width: 150px; font-weight: 700">{{r.name}}</td><td style="min-width: 180px">{{r.title}}</td><td style="text-align: right; white-space: nowrap; font-weight: 700">{{r.amount}}</td><td><span class="badge" style="background: {{r.bg}}; color: {{r.fg}}">{{r.st}}</span></td><td><span style="display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; min-width: 230px"><sc-if value="{{r.canInvWa}}" hint-placeholder-val="{{ false }}"><a href="{{r.invWa}}" target="_blank" rel="noopener noreferrer" onClick="{{r.sendInv}}" class="mini pri">{{L.m423}}</a></sc-if><sc-if value="{{r.canInv}}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{r.sendInv}}" class="mini pri">{{L.m424}}</button></sc-if><sc-if value="{{r.canProof}}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{r.proof}}" class="mini pri">{{L.m425}}</button></sc-if><sc-if value="{{r.canVerify}}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{r.verify}}" class="mini pri">{{L.m426}}</button></sc-if><sc-if value="{{r.canCancel}}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{r.cancel}}" class="mini warn">{{L.m420}}</button></sc-if></span></td></tr></sc-for>
+<sc-for list="{{cm.utjRows}}" as="r" hint-placeholder-count="2"><tr><td style="white-space: nowrap"><span style="display: flex; flex-direction: column; gap: 2px"><span style="font-weight: 800">{{r.inv}}</span><span style="font-size: 13px; color: #4A5751">{{r.date}}</span></span></td><td style="min-width: 150px"><span style="display: flex; flex-direction: column; gap: 4px; align-items: flex-start"><span style="font-weight: 700">{{r.name}}</span><sc-if value="{{r.hasProof}}" hint-placeholder-val="{{ false }}"><sc-if value="{{r.proofImg}}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{r.openProof}}" class="mini" style="min-height: 32px">{{r.proofLabel}}</button></sc-if><sc-if value="{{r.proofFile}}" hint-placeholder-val="{{ false }}"><a href="{{r.proofSrc}}" target="_blank" rel="noopener noreferrer" class="mini" style="min-height: 32px">{{r.proofLabel}}</a></sc-if></sc-if></span></td><td style="min-width: 180px">{{r.title}}</td><td style="text-align: right; white-space: nowrap; font-weight: 700">{{r.amount}}</td><td><span class="badge" style="background: {{r.bg}}; color: {{r.fg}}">{{r.st}}</span></td><td><span style="display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; min-width: 230px"><sc-if value="{{r.canInvWa}}" hint-placeholder-val="{{ false }}"><a href="{{r.invWa}}" target="_blank" rel="noopener noreferrer" onClick="{{r.sendInv}}" class="mini pri">{{L.m423}}</a></sc-if><sc-if value="{{r.canInv}}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{r.sendInv}}" class="mini pri">{{L.m424}}</button></sc-if><sc-if value="{{r.canProof}}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{r.proof}}" class="mini pri">{{L.m425}}</button></sc-if><sc-if value="{{r.canVerify}}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{r.verify}}" class="mini pri">{{L.m426}}</button></sc-if><sc-if value="{{r.canCancel}}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{r.cancel}}" class="mini warn">{{L.m420}}</button></sc-if></span></td></tr></sc-for>
 </tbody>
 </table>
 </div>
@@ -2909,6 +2957,17 @@ select.vm-input{appearance:auto;padding-right:8px}
 </sc-if>
 
 <sc-if value="{{cm.isBuyer}}" hint-placeholder-val="{{ false }}">
+<div class="card-w">
+<span style="display: flex; flex-direction: column; gap: 2px"><h2 style="margin: 0; font-size: 20px; font-weight: 800">{{cm.bt.title}}</h2><span style="font-size: 14px; color: #4A5751">{{cm.bt.sub}}</span></span>
+<div style="overflow-x: auto">
+<table class="cms-table">
+<thead><tr><th scope="col">{{cm.bt.buyer}}</th><th scope="col">{{cm.bt.unit}}</th><th scope="col">{{cm.bt.prog}}</th><th scope="col">{{cm.bt.stage}}</th><th scope="col">{{cm.bt.status}}</th><th scope="col" style="text-align: right">{{cm.bt.act}}</th></tr></thead>
+<tbody>
+<sc-for list="{{cm.buyers}}" as="by" hint-placeholder-count="2"><tr style="background: {{by.rowBg}}"><td style="min-width: 160px; font-weight: 700">{{by.buyer}}</td><td style="min-width: 220px"><span style="display: flex; align-items: center; gap: 10px"><img src="{{by.cover}}" alt="" style="flex: 0 0 48px; width: 48px; height: 40px; border-radius: 8px; object-fit: cover"><span style="display: flex; flex-direction: column; gap: 2px"><span style="font-weight: 700">{{by.title}}</span><span style="font-size: 13px; color: #4A5751">{{by.unit}}</span></span></span></td><td style="min-width: 140px"><span style="display: flex; align-items: center; gap: 8px"><span aria-hidden="true" style="flex: 1; height: 8px; border-radius: 999px; background: #E3E7E1; overflow: hidden"><span style="display: block; height: 100%; width: {{by.pctW}}; background: #1F4D3A"></span></span><span style="font-weight: 800; font-size: 13px">{{by.pctText}}</span></span></td><td style="min-width: 150px">{{by.stage}}</td><td><span class="badge" style="background: {{by.bg}}; color: {{by.fg}}">{{by.st}}</span></td><td><span style="display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; min-width: 240px"><button type="button" onClick="{{by.manage}}" class="mini">{{by.manageLabel}}</button><sc-if value="{{by.canDone}}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{by.askDone}}" class="mini pri">{{by.doneLabel}}</button></sc-if><sc-if value="{{by.confirming}}" hint-placeholder-val="{{ false }}"><span style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap"><span style="font-size: 13px; font-weight: 700">{{by.confirmText}}</span><button type="button" onClick="{{by.confirm}}" class="mini pri">{{by.yes}}</button><button type="button" onClick="{{by.cancel}}" class="mini">{{by.no}}</button></span></sc-if><sc-if value="{{by.canReopen}}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{by.reopen}}" class="mini warn">{{by.reopenLabel}}</button></sc-if></span></td></tr></sc-for>
+</tbody>
+</table>
+</div>
+</div>
 <div class="tabbar" role="group" aria-label="{{L.m570}}"><sc-for list="{{cm.units}}" as="tb" hint-placeholder-count="2"><button type="button" onClick="{{tb.pick}}" aria-pressed="{{tb.pressed}}" style="background: {{tb.bg}}; color: {{tb.fg}}">{{tb.label}}</button></sc-for></div>
 <div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start">
 <div class="card-w" style="flex: 999 1 460px">
@@ -2926,6 +2985,19 @@ select.vm-input{appearance:auto;padding-right:8px}
 <sc-if value="{{cm.noUpd}}" hint-placeholder-val="{{ true }}"><span style="font-size: 14px; color: #4A5751">{{L.m438}}</span></sc-if>
 <sc-for list="{{cm.updates}}" as="up" hint-placeholder-count="1"><div class="vm-row" style="align-items: flex-start"><sc-if value="{{up.hasPhoto}}" hint-placeholder-val="{{ false }}"><img src="{{up.photo}}" alt="" style="flex: 0 0 56px; width: 56px; height: 56px; border-radius: 10px; object-fit: cover"></sc-if><span style="flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-size: 13px; color: #4A5751">{{up.date}} · {{up.pct}}</span><span style="font-weight: 800; font-size: 14px">{{up.step}}</span><span style="font-size: 14px; line-height: 1.5">{{up.note}}</span></span><button type="button" onClick="{{up.remove}}" class="mini warn" aria-label="{{L.m572}}">{{L.m439}}</button></div></sc-for>
 </div>
+</div>
+<div class="card-w">
+<span style="display: flex; flex-direction: column; gap: 2px"><h2 style="margin: 0; font-size: 20px; font-weight: 800">{{cm.bt.addTitle}} · {{cm.u.unit}}</h2><span style="font-size: 14px; color: #4A5751">{{cm.bt.addSub}}</span></span>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px">
+<label class="vm-label">{{cm.bt.sName}}<input type="text" class="vm-input" value="{{cm.ns.f.title}}" onChange="{{cm.ns.setTitle}}" placeholder="{{cm.bt.sNamePh}}"></label>
+<label class="vm-label">{{cm.bt.sDate}}<input type="text" class="vm-input" value="{{cm.ns.f.date}}" onChange="{{cm.ns.setDate}}" placeholder="{{cm.bt.sDatePh}}"></label>
+</div>
+<label class="vm-label">{{cm.bt.sNote}}<input type="text" class="vm-input" value="{{cm.ns.f.note}}" onChange="{{cm.ns.setNote}}" placeholder="{{cm.bt.sNotePh}}"></label>
+<sc-if value="{{cm.ns.hasErr}}" hint-placeholder-val="{{ false }}"><span class="vm-err" role="alert">{{cm.ns.err}}</span></sc-if>
+<button type="button" onClick="{{cm.ns.add}}" class="vm-btn pri" style="align-self: flex-start">{{cm.bt.addBtn}}</button>
+<span style="font-size: 15px; font-weight: 800">{{cm.bt.customTitle}}</span>
+<sc-if value="{{cm.ns.noList}}" hint-placeholder-val="{{ true }}"><span style="font-size: 14px; color: #4A5751">{{cm.bt.noCustom}}</span></sc-if>
+<sc-for list="{{cm.ns.list}}" as="nx" hint-placeholder-count="1"><div class="vm-row" style="flex-wrap: wrap"><span style="flex: 1 1 200px; display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-weight: 800">{{nx.title}}</span><span style="font-size: 13px; color: #4A5751">{{nx.date}} · {{nx.note}}</span></span><button type="button" onClick="{{nx.remove}}" class="mini warn">{{cm.bt.remove}}</button></div></sc-for>
 </div>
 </sc-if>
 
@@ -2945,7 +3017,18 @@ select.vm-input{appearance:auto;padding-right:8px}
 <span style="font-size: 14px; font-weight: 800">{{L.m449}}</span>
 <div style="display: flex; flex-wrap: wrap; gap: 14px"><label class="vm-label" style="flex: 1 1 240px">Instagram<input type="url" class="vm-input" value="{{cm.pf.ig}}" onChange="{{cm.pf.set.ig}}" placeholder="https://instagram.com/…"></label><label class="vm-label" style="flex: 1 1 240px">TikTok<input type="url" class="vm-input" value="{{cm.pf.tiktok}}" onChange="{{cm.pf.set.tiktok}}" placeholder="https://tiktok.com/@…"></label><label class="vm-label" style="flex: 1 1 240px">YouTube<input type="url" class="vm-input" value="{{cm.pf.yt}}" onChange="{{cm.pf.set.yt}}" placeholder="https://youtube.com/@…"></label><label class="vm-label" style="flex: 1 1 240px">Facebook<input type="url" class="vm-input" value="{{cm.pf.fb}}" onChange="{{cm.pf.set.fb}}" placeholder="https://facebook.com/…"></label></div>
 <span style="font-size: 14px; font-weight: 800">{{L.m450}}</span>
-<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px"><sc-for list="{{cm.stats}}" as="sx" hint-placeholder-count="3"><span style="display: flex; flex-direction: column; gap: 6px"><label class="vm-label">{{L.m214}}<input type="text" class="vm-input" value="{{sx.v}}" onChange="{{sx.setV}}" placeholder="{{L.m579}}"></label><label class="vm-label">{{L.m451}}<input type="text" class="vm-input" value="{{sx.l}}" onChange="{{sx.setL}}"></label></span></sc-for></div>
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px"><sc-for list="{{cm.stats}}" as="sx" hint-placeholder-count="3"><div class="card-w" style="padding: 16px; gap: 10px; background: #F7F8F5">
+<div style="display: flex; justify-content: space-between; gap: 8px; align-items: center; flex-wrap: wrap"><span style="font-size: 13px; font-weight: 800; color: #4A5751">{{sx.no}}</span><sc-if value="{{sx.canRemove}}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{sx.remove}}" class="mini warn" style="min-height: 36px">{{sx.t.remove}}</button></sc-if></div>
+<span aria-hidden="true" style="display: flex; flex-direction: column; gap: 2px; padding: 12px; border-radius: 14px; background: #FFFFFF; border: 1px solid #E3E7E1"><span style="font-size: 22px; font-weight: 800; color: #1F4D3A">{{sx.prevV}}</span><span style="font-size: 13px; color: #4A5751">{{sx.prevL}}</span><sc-if value="{{sx.hasD}}" hint-placeholder-val="{{ false }}"><span style="font-size: 12px; color: #4A5751">{{sx.d}}</span></sc-if></span>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px">
+<label class="vm-label">{{sx.t.v}}<input type="text" class="vm-input" value="{{sx.v}}" onChange="{{sx.setV}}" placeholder="{{sx.t.vPh}}"></label>
+<label class="vm-label">{{sx.t.l}}<input type="text" class="vm-input" value="{{sx.l}}" onChange="{{sx.setL}}" placeholder="{{sx.t.lPh}}"></label>
+</div>
+<span style="display: flex; gap: 6px; flex-wrap: wrap"><sc-for list="{{sx.presets}}" as="pr" hint-placeholder-count="4"><button type="button" onClick="{{pr.pick}}" class="mini" style="min-height: 36px">{{pr.label}}</button></sc-for></span>
+<label class="vm-label">{{sx.t.d}}<input type="text" class="vm-input" value="{{sx.d}}" onChange="{{sx.setD}}" placeholder="{{sx.t.dPh}}"></label>
+<label class="vm-label">{{sx.t.src}}<input type="text" class="vm-input" value="{{sx.src}}" onChange="{{sx.setSrc}}" placeholder="{{sx.t.srcPh}}"></label>
+</div></sc-for></div>
+<sc-if value="{{cm.canAddStat}}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{cm.addStat}}" class="mini pri" style="align-self: flex-start">{{cm.addStatLabel}}</button></sc-if>
 <span class="vm-warn">{{L.m452}}</span>
 <span style="font-size: 13px; color: #4A5751">{{L.m453}}</span>
 </div>
@@ -3650,6 +3733,20 @@ class Component extends DCLogic {
         ] }
     ];
     var PIMG = { P0: '/_blob/ad4fd05c01ef016e2fc6395e9a360932', P1: '/_blob/e56f41226deedb35a71d10b08d4b7266', P2: '/_blob/0a73a0af27e4f7c725e8f4a5a6b0b73f', P3: '/_blob/d7924205f9723c698295161e07497a41', P4: '/_blob/bedb707ddf04e896a8d0b508d2d68c31', RA1: '/_blob/6283d63c43db1630ef2b6e96681875a4', RA2: '/_blob/9b199195ca42d65468bc1f2104e617ca', RB1: '/_blob/56fe6290a1df85611ac497195ff7757a', RB2: '/_blob/f95c05add858054409fe49dd226162ed', K1: '/_blob/e4583a6dbed1b24ba167bbe0e28edc9c', K2: '/_blob/7ecd4f1864afd1ecadfad22f4b79f55d' };
+    // Revisi Amel 2026-11-06: owner bisa menambah tahap, mengubah status tahap, dan menandai serah terima selesai (dari CMS)
+    var CMX = s.cms || {}, BUYER0 = { a: 'Contoh: Andi Pratama', b: 'Contoh: Sari Wulandari' };
+    OWNED = OWNED.map(function (o) {
+      var steps = o.steps.slice(), ex = (CMX.extraSteps || {})[o.key] || [];
+      ex.forEach(function (x) { steps.splice(steps.length - 1, 0, { title: x.title, date: x.date || '', state: 'next', note: x.note || '', photos: [], custom: true, id: x.id }); });
+      var stS = (CMX.stepState || {})[o.key] || {};
+      steps = steps.map(function (x) { return stS[x.title] ? Object.assign({}, x, { state: stS[x.title].state, pct: stS[x.title].pct != null ? stS[x.title].pct : x.pct }) : x; });
+      var ho = (CMX.handover || {})[o.key] || null;
+      if (ho) steps = steps.map(function (x) { return Object.assign({}, x, { state: 'done' }); });
+      var curS = steps.filter(function (x) { return x.state === 'current'; })[0];
+      var prog = ho ? 100 : (CMX.progress && CMX.progress[o.key] != null ? CMX.progress[o.key] : o.progress);
+      return Object.assign({}, o, { steps: steps, progress: prog, buyer: o.buyer || BUYER0[o.key] || '—', handoverDone: !!ho, handoverDate: ho ? ho.date : '',
+        statusText: ho ? (s.lang === 'en' ? 'Done · handed over ' : 'Selesai · serah terima ') + ho.date : (curS ? (s.lang === 'en' ? 'Stage: ' : 'Tahap ') + curS.title : o.statusText) });
+    });
     var ownRaw = OWNED.filter(function (o) { return o.key === (s.ownedKey || 'a'); })[0] || OWNED[0];
     var ownedTabs = OWNED.map(function (o) {
       var on = o.key === ownRaw.key;
@@ -3892,7 +3989,7 @@ class Component extends DCLogic {
           self.setState(ready ? { cmp: cur, picker: null, showCompare: true, detail: null, detailSlug: null, chatOpen: false } : { cmp: cur, picker: null });
         } };
     });
-    var TP0 = { wasPrice: '', kmOut: '', unitType: '', road: '', renoParts: {}, renoNote: '', kuasaFile: '', floors: '', facing: '', build: '', reno: '', pay: '', iplMode: '', iplAmount: '', iplYears: '', avail: {}, sec: {}, fac: {}, nearTol: '', nearKota: '', nearFaskes: '', nearBandara: '', walk: '', pbb: '', imb: '', isNew: '', dev: '', step: 1, name: '', phone: '', email: '', role: 'pemilik', type: 'rumah', deal: 'Dijual', title: '', address: '', city: '', price: '', lt: '', lb: '', kt: '', km: '', cert: '', desc: '', photos: [], docs: { sertifikat: 'nanti', pbg: 'nanti', pbb: 'nanti', ktp: 'nanti' }, plan: 'open', agree: false, tried: false, submitted: false, stage: 0, ref: '' };
+    var TP0 = { wasPrice: '', kmOut: '', unitType: '', road: '', renoParts: {}, renoNote: '', kuasaFile: '', floors: '', facing: '', build: '', reno: '', pay: '', iplMode: '', iplAmount: '', iplYears: '', avail: {}, sec: {}, fac: {}, near: {}, video: null, videoUrl: '', tourUrl: '', pano: [], nearTol: '', nearKota: '', nearFaskes: '', nearBandara: '', walk: '', pbb: '', imb: '', isNew: '', dev: '', step: 1, name: '', phone: '', email: '', role: 'pemilik', type: 'rumah', deal: 'Dijual', title: '', address: '', city: '', price: '', lt: '', lb: '', kt: '', km: '', cert: '', desc: '', photos: [], docs: { sertifikat: 'nanti', pbg: 'nanti', pbb: 'nanti', ktp: 'nanti' }, plan: 'open', agree: false, tried: false, submitted: false, stage: 0, ref: '' };
     var tp = Object.assign({}, TP0, s.tp || {});
     var setTp = function (patch) { self.setState({ tp: Object.assign({}, TP0, self.state.tp || {}, patch) }); };
     var digits = function (v) { return String(v || '').replace(/[^0-9]/g, ''); };
@@ -3918,9 +4015,10 @@ class Component extends DCLogic {
     }
     if (tp.step === 4 && !tp.cert) errs.cert = 'Pilih jenis sertifikat.';
     if (tp.step === 4 && tp.photos.length < 3) errs.photos = 'Unggah minimal 3 foto properti (sekarang ' + tp.photos.length + ').';
+    if (tp.step === 4 && ((tp.videoUrl && !/^https:\/\//.test(tp.videoUrl)) || (tp.tourUrl && !/^https:\/\//.test(tp.tourUrl)))) errs.media = s.lang === 'en' ? 'Video and 360° tour links must start with https://' : 'Link video dan tur 360° harus diawali https://';
     if (tp.step === 5 && !tp.agree) errs.agree = 'Centang pernyataan ini untuk mengirim pengajuan.';
     var showErr = tp.tried;
-    var errKeys = ['name', 'phone', 'email', 'title', 'address', 'city', 'price', 'lt', 'lb', 'kt', 'km', 'cert', 'photos', 'agree', 'iplMode', 'iplAmount', 'iplYears', 'floors', 'nearTol', 'nearKota', 'nearFaskes', 'nearBandara', 'wasPrice', 'kmOut', 'renoNote'];
+    var errKeys = ['name', 'phone', 'email', 'title', 'address', 'city', 'price', 'lt', 'lb', 'kt', 'km', 'cert', 'photos', 'media', 'agree', 'iplMode', 'iplAmount', 'iplYears', 'floors', 'nearTol', 'nearKota', 'nearFaskes', 'nearBandara', 'wasPrice', 'kmOut', 'renoNote'];
     var tpErr = {}, tpErrMsg = {}, tpErrB = {};
     errKeys.forEach(function (k) { var on = !!(showErr && errs[k]); tpErr[k] = on; tpErrMsg[k] = errs[k] || ''; tpErrB[k] = on ? '#B4361A' : (k === 'photos' ? '#9DAA9F' : '#D5DBD3'); });
     var tpSet = {};
@@ -3969,6 +4067,8 @@ class Component extends DCLogic {
       { label: 'Fasilitas', value: AVAIL.concat(SECS, FACS).filter(function (a) { return (tp.avail || {})[a[0]] || (tp.sec || {})[a[0]] || (tp.fac || {})[a[0]]; }).map(function (a) { return a[1]; }).join(', ') || '—' },
       { label: 'Legalitas', value: ['PBB ' + (tp.pbb || '—'), 'IMB/PBG ' + (tp.imb || '—'), tp.isNew === 'ya' ? 'Developer: ' + (tp.dev || '—') : ''].filter(Boolean).join(' · ') },
       { label: 'Foto', value: tp.photos.length + ' foto' },
+      { label: s.lang === 'en' ? 'Video & 360°' : 'Video & 360°', value: [tp.video || tp.videoUrl ? (s.lang === 'en' ? 'Video tour ready' : 'Video tour ada') : (s.lang === 'en' ? 'No video' : 'Tanpa video'), tp.tourUrl || (tp.pano || []).length ? (s.lang === 'en' ? '360° tour ready' : 'Tur 360° ada') : (s.lang === 'en' ? 'No 360° tour' : 'Tanpa tur 360°')].join(' · ') },
+      { label: s.lang === 'en' ? 'Nearby facilities' : 'Fasum terdekat', value: ['tol', 'kota', 'faskes', 'bandara'].map(function (k) { return ((tp.near || {})[k] || []).filter(function (x) { return x.n || x.d; }).map(function (x) { return (x.n || '?') + (x.d ? ' (' + x.d + ')' : ''); }).join(', '); }).filter(Boolean).join(' · ') || '—' },
       { label: 'Dokumen', value: DOCS.map(function (dd) { return dd[0].toUpperCase() + ': ' + docLabel[tp.docs[dd[0]]]; }).join(' · ') },
       { label: 'Kerja sama', value: tp.plan === 'eksklusif' ? 'Eksklusif' : 'Open listing' }
     ];
@@ -4013,13 +4113,14 @@ class Component extends DCLogic {
     if (s.kpr) {
       var K = s.kpr, kd = data.filter(function (d) { return d.id === K.id; })[0] || data[0];
       var setK = function (patch) { self.setState({ kpr: Object.assign({}, self.state.kpr, patch) }); };
+      var ENk = s.lang === 'en';
       var price = Math.max(0, +K.price || 0), dpRp = price * K.dp / 100, P = price - dpRp, n = K.tenor * 12;
       var M = P > 0 ? annuity(P, K.rate, K.tenor) : 0, total = M * n, interest = Math.max(0, total - P);
       var years = [], bal = P, r = K.rate / 1200;
       for (var yy = 1; yy <= K.tenor; yy++) {
         var ip = 0, pp = 0;
         for (var mm = 0; mm < 12; mm++) { var it = bal * r, pr = M - it; ip += it; pp += pr; bal = Math.max(0, bal - pr); }
-        years.push({ n: 'Tahun ' + yy, paid: rpShort(M * 12), principal: rpShort(pp), interest: rpShort(ip), balance: rpShort(bal) });
+        years.push({ n: 'Tahun ' + yy, monthly: rpFull(M), paid: rpShort(M * 12), principal: rpShort(pp), interest: rpShort(ip), balance: rpShort(bal) });
       }
       kp = {
         title: kd.title, location: kd.location, photo: kd.photos[0],
@@ -4034,6 +4135,22 @@ class Component extends DCLogic {
         rows: [{ label: 'Pokok pinjaman', value: rpFull(P) }, { label: 'Uang muka', value: rpFull(dpRp) }, { label: 'Total bunga', value: rpFull(interest) }, { label: 'Total pembayaran', value: rpFull(total) }, { label: 'Estimasi dana awal*', value: rpFull(dpRp + price * 0.05) }],
         income: rpFull(M / 0.3),
         years: years,
+        // Rincian cicilan per bulan (Revisi Amel 2026-11-06)
+        isYear: (K.view || 'tahun') === 'tahun', isMonth: K.view === 'bulan',
+        views: [['tahun', ENk ? 'Per year' : 'Per tahun'], ['bulan', ENk ? 'Per month' : 'Per bulan']].map(function (t) { var on = (K.view || 'tahun') === t[0]; return { label: t[1], pressed: on ? 'true' : 'false', bg: on ? '#1F4D3A' : 'transparent', fg: on ? '#FFFFFF' : '#1B2420', pick: function () { setK({ view: t[0] }); } }; }),
+        yearOpts: years.map(function (y, i) { return { v: String(i + 1), t: (ENk ? 'Year ' : 'Tahun ') + (i + 1) }; }), mYear: String(K.mYear || 1),
+        setMYear: function (ev) { setK({ mYear: +ev.target.value }); },
+        months: (function () {
+          var out = [], b2 = P, r2 = K.rate / 1200, y0 = (K.mYear || 1) - 1, MONS = ENk ? ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'] : ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+          var st = new Date(); st = new Date(st.getFullYear(), st.getMonth() + 1, 1);
+          for (var k = 0; k < Math.min(n, (y0 + 1) * 12); k++) {
+            var it2 = b2 * r2, pr2 = M - it2; b2 = Math.max(0, b2 - pr2);
+            if (k >= y0 * 12) { var dt2 = new Date(st.getFullYear(), st.getMonth() + k, 1); out.push({ n: (ENk ? 'Month ' : 'Bulan ke-') + (k + 1), when: MONS[dt2.getMonth()] + ' ' + dt2.getFullYear(), pay: rpFull(M), principal: rpFull(pr2), interest: rpFull(it2), balance: rpFull(b2) }); }
+          }
+          return out;
+        })(),
+        tMonthly: ENk ? 'Installment / month' : 'Cicilan / bulan', tHead: ENk ? 'Installment breakdown' : 'Rincian cicilan',
+        monthNote: ENk ? 'With a fixed rate, the monthly installment stays the same; the principal share grows and the interest share shrinks each month. Month 1 starts next month (illustration).' : 'Dengan bunga tetap, cicilan per bulan sama setiap bulan; porsi pokok makin besar dan porsi bunga makin kecil. Bulan ke-1 dimulai bulan depan (ilustrasi).',
         wa: 'https://wa.me/' + this.waNum() + '?text=' + encodeURIComponent('Halo, saya ingin mengajukan KPR untuk ' + kd.title + ' di ' + kd.location + '.\n\nHasil simulasi:\n• Harga: ' + rpFull(price) + '\n• DP ' + K.dp + '%: ' + rpFull(dpRp) + '\n• Tenor: ' + K.tenor + ' tahun\n• Bunga: ' + K.rate + '% per tahun\n• Cicilan: ' + rpFull(M) + ' / bulan\n\nLihat detail properti: ' + self.linkOf(kd))
       };
     }
@@ -4057,6 +4174,7 @@ class Component extends DCLogic {
     }).reverse();
     // ===== Revisi Amel 2026-11-04 =====
     var NX = {};
+    var EN2 = s.lang === 'en', tt = function (a, b) { return EN2 ? b : a; };
     var user = s.user || null;
     var firstName = user ? String(user.name || '').split(' ')[0] : '';
     var digitsOnly = function (p) { return String(p || '').replace(/[^0-9]/g, ''); };
@@ -4081,19 +4199,19 @@ class Component extends DCLogic {
     var api = String(this.props.authApi ?? '').replace(/\/+$/, '');
     var au0 = s.auth || {};
     var auSet = function (patch) { self.setState({ auth: Object.assign({}, self.state.auth || {}, patch) }); };
-    // Trigger login owner: akun yang cocok dengan kontak owner (allowlist) langsung diarahkan ke CMS.
-    var OWNER_IDS = ['083182311993', 'miracle.studio.ina@gmail.com'];
-    var isOwnerId = function (u) { return OWNER_IDS.indexOf(normPhone(u.phone || '')) > -1 || OWNER_IDS.indexOf(String(u.email || '').toLowerCase()) > -1; };
+    // Trigger login owner: server (owner_allowlist / superadmin) menandai akun owner lewat role 'owner' atau isOwner.
+    // Tidak ada daftar email/WA owner di browser.
+    var isOwnerId = function (u) { return u.role === 'owner' || u.isOwner === true; };
     var doLogin = function (u) {
       if (!u.role) u.role = (self.state.auth && self.state.auth.role) || 'pembeli';
       if (isOwnerId(u)) {
-        var o = { name: u.name || 'Owner Vinmel', via: u.via, contact: u.via === 'google' ? (u.email || 'miracle.studio.ina@gmail.com') : '0831-8231-1993' };
+        var o = { name: u.name || 'Owner Vinmel', via: u.via, contact: u.via === 'google' ? (u.email || '') : (u.phone || '') };
         self.setState({ user: u, auth: null, owner: o, showCms: true }); self.store('user', u); self.store('owner', o);
         self.toast('Akun owner terdeteksi. CMS owner dibuka.'); return;
       }
       var pmSaved = self.load('pemilik', null);
       var patch = { user: u, auth: null };
-      if (u.role === 'penjual') { if (pmSaved && pmSaved.name) patch.showOd = true; else { patch.showPemilik = true; patch.pm = null; } }
+      if (u.role === 'penjual') { if (pmSaved && pmSaved.name) patch.showOd = true; else { patch.showPemilik = true; patch.pm = null; } patch.showReg = false; }
       self.setState(patch); self.store('user', u);
       self.toast('Berhasil masuk. Halo, ' + String(u.name || '').split(' ')[0] + '!');
     };
@@ -4132,7 +4250,8 @@ class Component extends DCLogic {
       codeKey: function (e) { if (e.key === 'Enter') { e.preventDefault(); verifyOtp(); } },
       pickWa: function () { auSet({ step: 'wa', err: '' }); },
       showRole: au0.step !== 'otp', isSeller: au0.role === 'penjual',
-      roles: [['pembeli', 'Pembeli / penyewa'], ['penjual', 'Penjual (titip properti)']].map(function (r) { var on = (au0.role || 'pembeli') === r[0]; return { label: r[1], pressed: on ? 'true' : 'false', bg: on ? '#1F4D3A' : 'transparent', fg: on ? '#FFFFFF' : '#1B2420', pick: function () { auSet({ role: r[0], err: '' }); } }; }),
+      roleAria: tt('Masuk sebagai', 'Sign in as'),
+      roles: [['pembeli', tt('Pembeli / penyewa', 'Buyer / tenant'), tt('Cari, simpan, dan pantau properti', 'Find, save, and track properties')], ['penjual', tt('Penjual (titip properti)', 'Seller (list a property)'), tt('Titip dan pantau review listing', 'List and track your listing review')]].map(function (r) { var on = (au0.role || 'pembeli') === r[0]; return { label: r[1], hint: r[2], pressed: on ? 'true' : 'false', border: on ? '#1F4D3A' : '#D5DBD3', bg2: on ? '#E3EFE6' : '#FFFFFF', pick: function () { auSet({ role: r[0], step: au0.step === 'otp' ? 'otp' : au0.step, err: '' }); } }; }),
       register: function () { self.setState({ auth: null, showReg: true, reg: null }); },
       ownerCms: function () { self.setState({ auth: null, showCms: true, chatOpen: false, navOpen: false }); },
       back: function () { auSet({ step: au0.step === 'otp' ? 'wa' : 'pick', err: '', code: '' }); },
@@ -4149,7 +4268,7 @@ class Component extends DCLogic {
     var emailOk = function (v) { return !v || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v).trim()); };
     var pmStored = s.pmStored || null;
     var openPemilik = function () { self.setState({ showPemilik: true, pm: null, showAcct: false, showOd: false, showReg: false, navOpen: false }); };
-    var openReg = function () { self.setState({ showReg: true, reg: null, showAcct: false, navOpen: false, chatOpen: false }); };
+    var openReg = function () { self.setState({ showReg: true, reg: user ? { name: user.name || '', phone: user.phone || '', email: user.email || '' } : null, showAcct: false, navOpen: false, chatOpen: false, auth: null }); };
     NX.openPemilik = openPemilik; NX.openReg = openReg;
     NX.openTitipGate = function () {
       if (user && user.role === 'penjual') {
@@ -4191,6 +4310,8 @@ class Component extends DCLogic {
     };
     var RGF = ['name', 'phone', 'email', 'city'];
     NX.rg = {
+      switchNote: user && user.role !== 'penjual' ? tt('Kamu sedang masuk sebagai pembeli (' + (user.name || '') + '). Data di bawah sudah terisi; verifikasi nomor untuk menambahkan akses penjual ke akun ini.', 'You are signed in as a buyer (' + (user.name || '') + '). Your details are filled in below; verify your number to add seller access to this account.') : '',
+      hasSwitch: !!(user && user.role !== 'penjual'),
       isForm: rg0.step === 'form', isOtp: rg0.step === 'otp', preview: !api,
       f: rg0, e: rgShow, m: rgE,
       set: RGF.reduce(function (o, k) { o[k] = function (ev) { var p = {}; p[k] = ev.target.value; rgSet(p); }; return o; }, {}),
@@ -4437,7 +4558,7 @@ class Component extends DCLogic {
       name: AB.name || '[NAMA OWNER]', initial: AB.name ? String(AB.name).charAt(0).toUpperCase() : 'V',
       photo: AB.photo || '', hasPhoto: !!AB.photo, noPhoto: !AB.photo, role: AB.role || 'Owner Vinmel Agency', area: [AB.area ? 'Area layanan: ' + AB.area : '', AB.since ? 'Di properti sejak ' + AB.since : ''].filter(Boolean).join(' · '), hasArea: !!(AB.area || AB.since),
       bio: AB.bio || '[PROFIL SINGKAT OWNER: pengalaman di properti, area yang dikuasai, dan alasan mendirikan Vinmel.]',
-      stats: statsCm.map(function (x) { return { v: x[0] || '[ANGKA]', l: x[1] || '' }; }),
+      stats: statsCm.map(function (x) { return { v: x[0] || '[ANGKA]', l: x[1] || '', d: x[2] || '', hasD: !!x[2] }; }),
       testi: (testiCm.length ? testiCm : TESTI0).map(function (x) { var nm = x.name || 'Pembeli Vinmel'; return { name: nm, prop: x.prop || '', quote: '“' + String(x.quote).replace(/^“|”$/g, '') + '”', photo: x.photo || '', hasPhoto: !!x.photo, noPhoto: !x.photo, initial: String(nm).charAt(0).toUpperCase(), photoAlt: 'Foto ' + nm }; }),
       isSample: !AB.name || !testiCm.length || statsCm.some(function (x) { return /\[/.test(x[0] || '['); }),
       points: EN ? [
@@ -4616,7 +4737,9 @@ class Component extends DCLogic {
     // ---- Booking diganti UTJ (uang tanda jadi) ----
     var bkD2 = s.bk != null ? byId(s.bk) : null;
     NX.bkOpen = !!bkD2;
-    NX.bk = !bkD2 ? { steps: [] } : (function () {
+    var bkF = Object.assign({ name: user ? user.name || '' : '', phone: user ? user.phone || '' : '', invNo: '', proof: null, err: '', done: false }, s.bkF || {});
+    var bkSet = function (p) { self.setState({ bkF: Object.assign({}, bkF, p) }); };
+    NX.bk = !bkD2 ? { steps: [], t: {}, f: {} } : (function () {
       var isU = utjOk(bkD2), jual = bkD2.deal === 'Dijual';
       var steps = isU ? [
         { n: '1', t: 'Survei & nego dulu', b: 'Lihat unit langsung bersama owner Vinmel dan sepakati harga. Tidak ada booking fee sebelum deal.' },
@@ -4648,7 +4771,37 @@ class Component extends DCLogic {
           list.unshift({ inv: 'UTJ-' + String(Date.now()).slice(-6), id: bkD2.id, title: bkD2.title, name: user ? user.name : 'Calon pembeli (belum masuk)', phone: user && user.phone ? user.phone : '', date: nowLabel(), status: 'baru' });
           cmSet({ utj: list.slice(0, 30) });
         },
-        close: function () { self.setState({ bk: null }); }
+        close: function () { self.setState({ bk: null, bkF: null }); },
+        cover: bkD2.photos[0], location: bkD2.location, price: bkD2.price + (bkD2.unit ? ' ' + bkD2.unit : ''),
+        utjForm: isU && !bkF.done, utjDone: isU && !!bkF.done,
+        f: bkF, proofText: bkF.proof ? bkF.proof.name : tt('Foto atau PDF bukti transfer / invoice UTJ, maks. 5 MB', 'Photo or PDF of the transfer receipt / UTJ invoice, max 5 MB'),
+        proofImg: !!(bkF.proof && bkF.proof.isImg), proofSrc: bkF.proof ? bkF.proof.src : '',
+        err: bkF.err || '', hasErr: !!bkF.err,
+        setName: function (ev) { bkSet({ name: ev.target.value, err: '' }); },
+        setPhone: function (ev) { bkSet({ phone: ev.target.value, err: '' }); },
+        setInvNo: function (ev) { bkSet({ invNo: ev.target.value, err: '' }); },
+        setProof: function (ev) {
+          var fl = (ev.target.files || [])[0]; if (!fl) return;
+          if (fl.size > 5 * 1024 * 1024) { bkSet({ err: tt('Ukuran file maksimal 5 MB.', 'Maximum file size is 5 MB.') }); return; }
+          if (!/^image\//.test(fl.type) && fl.type !== 'application/pdf') { bkSet({ err: tt('Unggah foto (JPG/PNG) atau PDF.', 'Upload a photo (JPG/PNG) or PDF.') }); return; }
+          var u = ''; try { u = URL.createObjectURL(fl); } catch (x) {}
+          bkSet({ proof: { name: fl.name, src: u, isImg: /^image\//.test(fl.type) }, err: '' });
+        },
+        submit: function () {
+          if (String(bkF.name || '').trim().length < 3) { bkSet({ err: tt('Isi nama lengkap sesuai invoice.', 'Enter your full name as on the invoice.') }); return; }
+          if (!phoneOk(bkF.phone)) { bkSet({ err: tt('Nomor WhatsApp belum valid. Contoh: 0812 3456 7890.', 'The WhatsApp number is not valid. E.g. 0812 3456 7890.') }); return; }
+          if (!bkF.proof) { bkSet({ err: tt('Unggah bukti transfer atau invoice UTJ.', 'Upload the transfer receipt or UTJ invoice.') }); return; }
+          var inv = String(bkF.invNo || '').trim() || 'UTJ-' + String(Date.now()).slice(-6);
+          var list = (self.state.cms && self.state.cms.utj || []).slice();
+          list.unshift({ inv: inv, id: bkD2.id, title: bkD2.title, name: String(bkF.name).trim(), phone: normPhone(bkF.phone), date: nowLabel(), status: 'bukti', proof: bkF.proof });
+          cmSet({ utj: list.slice(0, 30) });
+          bkSet({ done: true, inv: inv, err: '' });
+        },
+        doneText: tt('Bukti UTJ ' + (bkF.inv || '') + ' untuk ' + bkD2.title + ' sudah masuk ke owner Vinmel dengan status "Bukti transfer masuk". Kuitansi resmi dikirim lewat WhatsApp setelah diverifikasi.', 'UTJ proof ' + (bkF.inv || '') + ' for ' + bkD2.title + ' has reached the Vinmel owner with the status "Transfer proof received". The official receipt is sent on WhatsApp once verified.'),
+        doneWa: self.waTo('Halo owner Vinmel, saya ' + (bkF.name || '') + ' sudah mengirim bukti UTJ ' + (bkF.inv || '') + ' untuk ' + bkD2.title + ' lewat website. Mohon diverifikasi.'),
+        t: { formTitle: tt('Sudah transfer UTJ? Kirim buktinya di sini', 'Already paid the UTJ? Send the proof here'), name: tt('Nama lengkap (sesuai invoice)', 'Full name (as on the invoice)'), phone: tt('Nomor WhatsApp', 'WhatsApp number'), invNo: tt('Nomor invoice UTJ (opsional)', 'UTJ invoice number (optional)'),
+          proof: tt('Unggah bukti transfer / invoice', 'Upload transfer proof / invoice'), proofAlt: tt('Pratinjau bukti transfer', 'Transfer proof preview'), submit: tt('Kirim bukti pembayaran UTJ', 'Send UTJ payment proof'), askInv: tt('Belum punya invoice? Minta lewat WhatsApp', 'No invoice yet? Ask on WhatsApp'),
+          doneTitle: tt('Bukti terkirim', 'Proof sent'), doneWa: tt('Kabari owner lewat WhatsApp', 'Let the owner know on WhatsApp'), close: tt('Tutup', 'Close') }
       };
     })();
 
@@ -4788,8 +4941,8 @@ class Component extends DCLogic {
     var tpPending = TPI.filter(function (it) { return it.stage < 5; });
     var svPending = SVI.filter(function (r) { return (svSt[r.uid] || 'baru') === 'baru'; });
     var utjPending = UTI.filter(function (u) { var x = utjOf(u); return x !== 'ok' && x !== 'batal'; });
-    var TABS = [['ringkasan', 'Ringkasan', 0], ['listing', 'Listing', 0], ['titip', 'Pengajuan titip', tpPending.length], ['survei', 'Jadwal survei', svPending.length], ['utj', 'UTJ & pembayaran', utjPending.length], ['pembeli', 'Pembeli & progres', 0], ['profil', 'Profil owner', 0], ['konten', 'Testimoni & kontak', 0]];
-    var TTL = { ringkasan: ['Ringkasan', 'Yang perlu kamu tangani hari ini.'], listing: ['Listing', 'Ubah judul, harga, status, video, dan tur 360°. Perubahan langsung tampil di situs.'], titip: ['Pengajuan titip', 'Review pengajuan pemilik properti sampai listing tayang.'], survei: ['Jadwal survei', 'Konfirmasi jadwal kunjungan calon pembeli.'], utj: ['UTJ & pembayaran', 'UTJ Rp 1.000.000, khusus rumah & apartemen dijual, setelah deal. Pembayaran manual.'], pembeli: ['Pembeli & progres', 'Kirim update pembangunan ke halaman pembeli.'], profil: ['Profil owner', 'Foto, nama, profil singkat, area layanan, media sosial, dan angka kepercayaan di beranda.'], konten: ['Testimoni & kontak', 'Testimoni pembeli di beranda dan data kontak resmi.'] };
+    var TABS = [['ringkasan', 'Ringkasan', 0], ['listing', tt('Listing di website', 'Website listings'), 0], ['titip', tt('Pengajuan titip (penjual)', 'Seller submissions'), tpPending.length], ['survei', 'Jadwal survei', svPending.length], ['utj', 'UTJ & pembayaran', utjPending.length], ['pembeli', tt('Pembeli & tahap pembangunan', 'Buyers & construction stages'), 0], ['profil', 'Profil owner', 0], ['konten', 'Testimoni & kontak', 0]];
+    var TTL = { ringkasan: ['Ringkasan', 'Yang perlu kamu tangani hari ini.'], listing: ['Listing', 'Ubah judul, harga, status, video, dan tur 360°. Perubahan langsung tampil di situs.'], titip: ['Pengajuan titip', 'Review pengajuan pemilik properti sampai listing tayang.'], survei: ['Jadwal survei', 'Konfirmasi jadwal kunjungan calon pembeli.'], utj: ['UTJ & pembayaran', 'UTJ Rp 1.000.000, khusus rumah & apartemen dijual, setelah deal. Pembayaran manual.'], pembeli: [tt('Pembeli & tahap pembangunan', 'Buyers & construction stages'), tt('Pantau progres tiap pembeli, kirim update, tambah tahap, dan tandai serah terima.', 'Track each buyer, send updates, add stages, and mark handovers.')], profil: ['Profil owner', 'Foto, nama, profil singkat, area layanan, media sosial, dan angka kepercayaan di beranda.'], konten: ['Testimoni & kontak', 'Testimoni pembeli di beranda dan data kontak resmi.'] };
     var ce = s.cmsEdit || null;
     var ceSet = function (p) { self.setState({ cmsEdit: Object.assign({}, self.state.cmsEdit, p) }); };
     var ceD = ce ? dataAll.filter(function (d) { return d.id === ce.id; })[0] : null;
@@ -4814,6 +4967,17 @@ class Component extends DCLogic {
       logout: function () { self.setState({ owner: null }); self.store('owner', null); self.toast('Keluar dari CMS owner.'); },
       tabs: TABS.map(function (t) { var on = cTab === t[0]; return { label: t[1], n: t[2], hasN: t[2] > 0, cur: on ? 'page' : 'false', bg: on ? '#FFFFFF' : 'transparent', fg: on ? '#1F4D3A' : '#FFFFFF', pick: function () { goTab(t[0]); } }; }),
       title: TTL[cTab][0], sub: TTL[cTab][1],
+      df: (function () {
+        var onL = cTab === 'listing';
+        var FL = [[tt('Penjual mengirim titip', 'Seller submits'), 'titip'], [tt('Review & survei', 'Review & visit'), 'titip'], [tt('Disetujui → Tayangkan', 'Approved → Publish'), 'titip'], [tt('Tampil di Listing website', 'Shown in website listings'), 'listing']];
+        return {
+          title: onL ? tt('Listing = properti yang sudah tayang di website', 'Listings = properties already live on the website') : tt('Pengajuan titip = properti dari penjual yang BELUM tayang', 'Submissions = seller properties NOT yet live'),
+          body: onL ? tt('Di sini kamu mengelola properti yang dilihat pembeli: ubah judul, harga, status (Tayang/Booked/Terjual/Draft), video, dan tur 360°. Properti baru masuk ke sini setelah pengajuan titip disetujui dan ditayangkan.', 'Here you manage what buyers see: edit the title, price, status (Live/Booked/Sold/Draft), video, and 360° tour. New properties arrive here once a seller submission is approved and published.')
+            : tt('Di sini kamu memeriksa properti yang dikirim penjual lewat formulir Titip Properti: cek data, foto, dan dokumen, survei, lalu setujui atau minta revisi. Setelah kamu tekan "Tayangkan", properti pindah ke menu Listing di website.', 'Here you check properties sent by sellers through the List Your Property form: data, photos, documents, and a site visit, then approve or ask for a revision. Once you press "Publish", the property moves to Website listings.'),
+          flow: FL.map(function (f, i) { var on = f[1] === cTab; return { t: f[0], bg: on ? '#1F4D3A' : '#FFFFFF', fg: on ? '#FFFFFF' : '#3A4740', arrow: i < FL.length - 1 }; }),
+          goLabel: onL ? tt('Lihat pengajuan titip', 'View submissions') : tt('Lihat listing website', 'View website listings'), go: function () { goTab(onL ? 'titip' : 'listing'); }
+        };
+      })(),
       isRing: cTab === 'ringkasan', isList: cTab === 'listing', isTitip: cTab === 'titip', isSv: cTab === 'survei', isUtj: cTab === 'utj', isBuyer: cTab === 'pembeli', isKonten: cTab === 'konten', isProfil: cTab === 'profil',
       kpis: [
         { v: String(dataAll.filter(function (d) { return (d.status || 'tayang') === 'tayang' || d.status === 'booked'; }).length), l: 'Listing tayang', go: function () { goTab('listing'); } },
@@ -4926,13 +5090,51 @@ class Component extends DCLogic {
       utjRows: UTI.map(function (u) {
         var st = utjOf(u), b = UTB[st];
         var inv = 'Halo ' + u.name + ', ini invoice UTJ ' + u.inv + ' untuk ' + u.title + '.\n\n• Nominal: Rp 1.000.000\n• Rekening resmi: [NAMA BANK] [NOMOR REKENING] a.n. [NAMA PEMILIK REKENING]\n\nSetelah transfer, mohon kirim foto bukti transfer di chat ini.';
+        var pf = u.proof || null;
         return { inv: u.inv, name: u.name, title: u.title, date: u.date, amount: 'Rp 1.000.000', st: b[0], bg: b[1], fg: b[2], isDemo: !!u.demo,
+          hasProof: !!pf, proofImg: !!(pf && pf.isImg), proofFile: !!(pf && !pf.isImg), proofSrc: pf ? pf.src : '#', proofLabel: tt('Lihat bukti', 'View proof'),
+          openProof: function () { if (pf) self.setState({ lightbox: { src: pf.src, alt: 'Bukti ' + u.inv, date: u.date } }); },
           canInvWa: st === 'baru' && !!u.phone, canInv: st === 'baru' && !u.phone, canProof: st === 'invoice', canVerify: st === 'bukti', canCancel: st !== 'ok' && st !== 'batal',
           invWa: u.phone ? waPerson(u.phone, inv) : '#',
           sendInv: function () { setUtj(u, 'invoice'); }, proof: function () { setUtj(u, 'bukti'); }, verify: function () { setUtj(u, 'ok'); }, cancel: function () { setUtj(u, 'batal'); } };
       }),
       // pembeli
       units: segOf(OWNED.map(function (o) { return [o.key, o.title + ' · ' + o.unit]; }), uRaw.key, function (k) { self.setState({ cmsUnit: k, cmsUpd: null }); }),
+      bt: { title: tt('Daftar pembeli & progres pembangunan', 'Buyers & construction progress'), sub: tt('Satu baris per unit yang dibeli. Pilih "Kelola" untuk mengirim update, atau tandai selesai saat kunci sudah diserahkan.', 'One row per purchased unit. Choose "Manage" to send an update, or mark it done once the keys are handed over.'),
+        buyer: tt('Pembeli', 'Buyer'), unit: tt('Properti & unit', 'Property & unit'), prog: tt('Progres', 'Progress'), stage: tt('Tahap sekarang', 'Current stage'), status: tt('Status', 'Status'), act: tt('Aksi', 'Actions'),
+        addTitle: tt('Tambah tahap pembangunan', 'Add a construction stage'), addSub: tt('Tahap baru disisipkan sebelum "Serah terima kunci" dan muncul di halaman pembeli serta pilihan tahap.', 'New stages are inserted before "Key handover" and appear on the buyer page and in the stage options.'),
+        sName: tt('Nama tahap', 'Stage name'), sNamePh: tt('Contoh: Pemasangan kanopi & pagar', 'E.g. Canopy & fence installation'), sDate: tt('Perkiraan waktu', 'Estimated time'), sDatePh: tt('Contoh: Jan 2027', 'E.g. Jan 2027'),
+        sNote: tt('Keterangan untuk pembeli', 'Note for the buyer'), sNotePh: tt('Contoh: kanopi baja ringan dan pagar besi depan.', 'E.g. light-steel canopy and front iron fence.'), addBtn: tt('Tambah tahap', 'Add stage'),
+        customTitle: tt('Tahap tambahan unit ini', 'Extra stages for this unit'), noCustom: tt('Belum ada tahap tambahan.', 'No extra stages yet.'), remove: tt('Hapus', 'Remove') },
+      buyers: OWNED.map(function (o) {
+        var cur = o.steps.filter(function (x) { return x.state === 'current'; })[0], conf = s.cmsHo === o.key;
+        return { buyer: o.buyer, title: o.title, unit: o.unit, cover: o.cover, pctText: o.progress + '%', pctW: o.progress + '%',
+          stage: o.handoverDone ? tt('Serah terima kunci', 'Key handover') : (cur ? cur.title : '—'),
+          st: o.handoverDone ? tt('Selesai · serah terima ', 'Done · handed over ') + o.handoverDate : tt('Berjalan', 'In progress'),
+          bg: o.handoverDone ? '#1F4D3A' : '#FBE6D4', fg: o.handoverDone ? '#FFFFFF' : '#9A3D0F', selected: o.key === uRaw.key, rowBg: o.key === uRaw.key ? '#F3F8F4' : 'transparent',
+          manageLabel: tt('Kelola', 'Manage'), manage: function () { self.setState({ cmsUnit: o.key, cmsUpd: null, cmsHo: null }); },
+          canDone: !o.handoverDone && !conf, doneLabel: tt('Tandai selesai (serah terima)', 'Mark done (handed over)'), askDone: function () { self.setState({ cmsHo: o.key }); },
+          confirming: conf, confirmText: tt('Kunci sudah diserahkan ke pembeli?', 'Keys handed over to the buyer?'), yes: tt('Ya, tandai selesai', 'Yes, mark done'), no: tt('Batal', 'Cancel'),
+          confirm: function () { var H = Object.assign({}, CM.handover || {}); H[o.key] = { date: nowLabel() }; var P3 = Object.assign({}, CM.progress || {}); P3[o.key] = 100; cmSet({ handover: H, progress: P3 }); self.setState({ cmsHo: null }); self.toast(tt('Unit ditandai selesai. Halaman pembeli menampilkan status serah terima.', 'Unit marked done. The buyer page now shows the handover status.')); },
+          cancel: function () { self.setState({ cmsHo: null }); },
+          canReopen: o.handoverDone, reopenLabel: tt('Buka kembali', 'Reopen'), reopen: function () { var H = Object.assign({}, CM.handover || {}); delete H[o.key]; cmSet({ handover: H }); } };
+      }),
+      ns: (function () {
+        var f = Object.assign({ title: '', date: '', note: '', err: '' }, s.cmsNs && s.cmsNs.key === uRaw.key ? s.cmsNs : {});
+        var nsSet = function (p) { self.setState({ cmsNs: Object.assign({}, f, { key: uRaw.key }, p) }); };
+        var ex = (CM.extraSteps || {})[uRaw.key] || [];
+        return { f: f, err: f.err, hasErr: !!f.err,
+          setTitle: function (ev) { nsSet({ title: ev.target.value, err: '' }); }, setDate: function (ev) { nsSet({ date: ev.target.value }); }, setNote: function (ev) { nsSet({ note: ev.target.value }); },
+          add: function () {
+            var t = String(f.title || '').trim();
+            if (t.length < 3) { nsSet({ err: tt('Isi nama tahap minimal 3 huruf.', 'Enter a stage name of at least 3 letters.') }); return; }
+            if (uRaw.steps.some(function (x) { return x.title.toLowerCase() === t.toLowerCase(); })) { nsSet({ err: tt('Tahap dengan nama ini sudah ada.', 'A stage with this name already exists.') }); return; }
+            var E2 = Object.assign({}, CM.extraSteps || {}); E2[uRaw.key] = ex.concat([{ id: 'st' + Date.now(), title: t, date: String(f.date || '').trim(), note: String(f.note || '').trim() }]);
+            cmSet({ extraSteps: E2 }); self.setState({ cmsNs: null, cmsUpd: null }); self.toast(tt('Tahap baru ditambahkan.', 'New stage added.'));
+          },
+          list: ex.map(function (x) { return { title: x.title, date: x.date || '—', note: x.note, remove: function () { var E2 = Object.assign({}, CM.extraSteps || {}); E2[uRaw.key] = ex.filter(function (y) { return y.id !== x.id; }); cmSet({ extraSteps: E2 }); self.setState({ cmsUpd: null }); } }; }),
+          noList: ex.length === 0 };
+      })(),
       u: { title: uRaw.title, unit: uRaw.unit, location: uRaw.location, progressText: ((CM.progress || {})[uRaw.key] != null ? CM.progress[uRaw.key] : uRaw.progress) + '%' },
       uf: {
         stepOpts: uRaw.steps.map(function (x, i) { return { v: String(i), t: (i + 1) + '. ' + x.title }; }), step: String(uf.step), pct: uf.pct, pctText: uf.pct + '%', note: uf.note,
@@ -4947,7 +5149,10 @@ class Component extends DCLogic {
           var U = Object.assign({}, CM.updates || {}), P2 = Object.assign({}, CM.progress || {});
           U[uRaw.key] = [{ id: 'up' + Date.now(), date: nowLabel(), step: +uf.step, pct: +uf.pct, note: String(uf.note).trim(), photos: uf.photos }].concat(U[uRaw.key] || []).slice(0, 30);
           P2[uRaw.key] = +uf.pct;
-          cmSet({ updates: U, progress: P2 }); self.setState({ cmsUpd: null }); self.toast('Update terbit di halaman pembeli.');
+          var SS = Object.assign({}, CM.stepState || {}), mine = {};
+          uRaw.steps.forEach(function (x, i) { if (i < +uf.step) mine[x.title] = { state: 'done' }; else if (i === +uf.step) mine[x.title] = { state: +uf.pct >= 100 ? 'done' : 'current' }; else mine[x.title] = { state: 'next' }; });
+          SS[uRaw.key] = mine;
+          cmSet({ updates: U, progress: P2, stepState: SS }); self.setState({ cmsUpd: null }); self.toast('Update terbit di halaman pembeli.');
         }
       },
       updates: uUpd.map(function (u) { var ph = (u.photos || [])[0]; return { date: u.date, pct: 'progres ' + u.pct + '%', step: (uRaw.steps[u.step] || {}).title || '', note: u.note, hasPhoto: !!ph, photo: ph ? ph.src : '',
@@ -4967,7 +5172,20 @@ class Component extends DCLogic {
       })(),
       // konten
       about: { name: AB.name || '', bio: AB.bio || '', setName: function (e) { cmSet({ about: Object.assign({}, AB, { name: e.target.value }) }); }, setBio: function (e) { cmSet({ about: Object.assign({}, AB, { bio: e.target.value }) }); } },
-      stats: statsCm.map(function (x, i) { var put = function (j, v) { var a = statsCm.map(function (y) { return y.slice(); }); a[i][j] = v; cmSet({ stats: a }); }; return { v: /\[/.test(x[0] || '') ? '' : x[0], l: x[1], setV: function (e) { put(0, e.target.value); }, setL: function (e) { put(1, e.target.value); } }; }),
+      stats: statsCm.map(function (x, i) {
+        var put = function (j, v) { var a = statsCm.map(function (y) { var c = y.slice(); while (c.length < 4) c.push(''); return c; }); a[i][j] = v; cmSet({ stats: a }); };
+        var v0 = /\[/.test(x[0] || '') ? '' : x[0];
+        return { no: tt('Angka kepercayaan ', 'Trust figure ') + (i + 1), v: v0, l: x[1] || '', d: x[2] || '', src: x[3] || '', hasD: !!x[2],
+          prevV: v0 || '[ANGKA]', prevL: x[1] || tt('label belum diisi', 'label not set'),
+          setV: function (e) { put(0, e.target.value); }, setL: function (e) { put(1, e.target.value); }, setD: function (e) { put(2, e.target.value); }, setSrc: function (e) { put(3, e.target.value); },
+          presets: [tt('properti terjual', 'properties sold'), tt('keluarga terbantu', 'families helped'), tt('tahun pengalaman', 'years of experience'), tt('unit tersewa', 'units rented'), tt('pemilik menitipkan', 'owners listed with us')].map(function (p) { return { label: p, pick: function () { put(1, p); } }; }),
+          canRemove: statsCm.length > 1, remove: function () { cmSet({ stats: statsCm.filter(function (_, j) { return j !== i; }) }); },
+          t: { v: tt('Angka', 'Number'), vPh: tt('Contoh: 120+', 'E.g. 120+'), l: tt('Label di beranda', 'Label on the home page'), lPh: tt('Contoh: properti terjual', 'E.g. properties sold'),
+            d: tt('Keterangan singkat (opsional, tampil kecil)', 'Short note (optional, shown small)'), dPh: tt('Contoh: sejak 2018 di Jabodetabek', 'E.g. since 2018 in Greater Jakarta'),
+            src: tt('Sumber data (internal, tidak tampil)', 'Data source (internal, not shown)'), srcPh: tt('Contoh: rekap transaksi 2018–2026', 'E.g. transaction records 2018–2026'), remove: tt('Hapus', 'Remove') } };
+      }),
+      canAddStat: statsCm.length < 4, addStatLabel: tt('Tambah angka kepercayaan', 'Add trust figure'),
+      addStat: function () { cmSet({ stats: statsCm.map(function (y) { return y.slice(); }).concat([['', '', '', '']]) }); },
       loadSampleTesti: function () { cmSet({ testi: NX.TESTI0.map(function (x) { return Object.assign({}, x); }) }); self.toast('Contoh testimoni dimuat. Ganti dengan testimoni asli.'); },
       testi: testiEdit.map(function (x, i) { return { name: x.name || '', prop: x.prop || '', quote: x.quote || '', photo: x.photo || '', hasPhoto: !!x.photo, noPhoto: !x.photo, photoAlt: 'Foto ' + (x.name || 'testimoni'),
         setPhoto: function (e) { var f = (e.target.files || [])[0]; if (!f || !/^image\//.test(f.type)) return; var u = ''; try { u = URL.createObjectURL(f); } catch (x2) {} if (u) setTesti(i, 'photo', u); }, setName: function (e) { setTesti(i, 'name', e.target.value); }, setProp: function (e) { setTesti(i, 'prop', e.target.value); }, setQuote: function (e) { setTesti(i, 'quote', e.target.value); }, remove: function () { cmSet({ testi: testiEdit.filter(function (_, j) { return j !== i; }) }); } }; }),
@@ -5110,7 +5328,38 @@ class Component extends DCLogic {
       },
       tpHasPhotos: tp.photos.length > 0,
       tpCover: tp.photos[0] ? tp.photos[0].src : '',
-      tpPhotoList: tp.photos.map(function (ph, i) { return { name: ph.name, src: ph.src, remove: function () { var a = tp.photos.slice(); a.splice(i, 1); setTp({ photos: a }); } }; }),
+      tpPhotoList: tp.photos.map(function (ph, i) { return { name: ph.name, src: ph.src, isCover: i === 0, canCover: i > 0, coverLabel: tt('Sampul', 'Cover'), coverBtn: tt('Jadikan sampul', 'Set as cover'),
+        makeCover: function () { var a = tp.photos.slice(); var x = a.splice(i, 1)[0]; a.unshift(x); setTp({ photos: a }); },
+        remove: function () { var a = tp.photos.slice(); a.splice(i, 1); setTp({ photos: a }); } }; }),
+      // Revisi Amel 2026-11-06: teks tambahan, fasum berulang, video tour, tur 360
+      tpT: { main: tt('Informasi utama & harga', 'Main details & price'), size: tt('Ukuran & kamar', 'Size & rooms'), desc: tt('Deskripsi', 'Description'),
+        nearHint: tt('Tambahkan beberapa tempat sekaligus. Contoh: dua gerbang tol terdekat dengan jaraknya masing-masing.', 'Add several places at once. E.g. the two nearest toll gates with their distances.'),
+        video: tt('Video tour (opsional)', 'Video tour (optional)'), videoUp: tt('Unggah file video', 'Upload a video file'), videoUrl: tt('Atau tempel link YouTube / Google Drive', 'Or paste a YouTube / Google Drive link'),
+        tour: tt('Tur 360° (opsional)', '360° tour (optional)'), tourUrl: tt('Link tur 360° (Matterport, Kuula, Google)', '360° tour link (Matterport, Kuula, Google)'), panoUp: tt('Atau unggah foto 360°', 'Or upload 360° photos'),
+        remove: tt('Hapus', 'Remove'), mediaNote: tt('Video maks. 200 MB (MP4/MOV). Foto 360° berformat panorama 2:1 (equirectangular), maks. 10 foto. Link harus diawali https://', 'Video up to 200 MB (MP4/MOV). 360° photos in 2:1 panorama (equirectangular) format, up to 10 photos. Links must start with https://') },
+      tpPhotoCount: tt(tp.photos.length + '/12 foto · foto pertama jadi sampul listing', tp.photos.length + '/12 photos · the first photo is the listing cover'),
+      tpNear: [['tol', tt('Jalan tol terdekat', 'Nearest toll roads'), '/_blob/9488e7d619bfa50d1a16fc484ccf8882', tt('Nama gerbang / ruas tol', 'Toll gate / road name'), tt('Contoh: GT Cibubur (Jagorawi)', 'E.g. Cibubur gate (Jagorawi)'), tt('Tambah jalan tol', 'Add toll road'), 'nearTol'],
+        ['kota', tt('Pusat kota / kawasan bisnis', 'City centre / business district'), '/_blob/7d7ebcdaa9ce7783027dfb7012d77d74', tt('Nama pusat kota / kawasan', 'City centre / area name'), tt('Contoh: Alun-alun Depok', 'E.g. Depok town square'), tt('Tambah pusat kota', 'Add city centre'), 'nearKota'],
+        ['faskes', tt('Fasilitas kesehatan', 'Healthcare'), '/_blob/651127973d672ad9f5e4ab153b78c31e', tt('Nama RS / klinik / puskesmas', 'Hospital / clinic name'), tt('Contoh: RS Hermina Depok', 'E.g. Hermina Hospital Depok'), tt('Tambah faskes', 'Add healthcare'), 'nearFaskes'],
+        ['bandara', tt('Bandara', 'Airport'), '/_blob/c684831b98475369d66b967d6d2698a4', tt('Nama bandara', 'Airport name'), tt('Contoh: Soekarno-Hatta (CGK)', 'E.g. Soekarno-Hatta (CGK)'), tt('Tambah bandara', 'Add airport'), 'nearBandara']].map(function (g) {
+        var NR = tp.near || {}, list = (NR[g[0]] && NR[g[0]].length ? NR[g[0]] : [{ n: '', d: tp[g[6]] || '' }]);
+        var put = function (arr) { var n = Object.assign({}, tp.near || {}); n[g[0]] = arr; var p = { near: n }; p[g[6]] = arr.length ? (arr[0].d || '') : ''; setTp(p); };
+        return { label: g[1], icon: g[2], addLabel: '+ ' + g[5], add: function () { if (list.length < 5) put(list.concat([{ n: '', d: '' }])); },
+          items: list.map(function (it, i) { return { n: it.n || '', d: it.d || '', nameLabel: g[3], namePh: g[4], distLabel: tt('Jarak / waktu tempuh', 'Distance / travel time'), distPh: tt('Contoh: 3 km / 10 menit', 'E.g. 3 km / 10 min'),
+            removeAria: tt('Hapus baris ', 'Remove row ') + (i + 1),
+            setN: function (ev) { var a = list.map(function (x) { return Object.assign({}, x); }); a[i].n = ev.target.value; put(a); },
+            setD: function (ev) { var a = list.map(function (x) { return Object.assign({}, x); }); a[i].d = ev.target.value; put(a); },
+            remove: function () { var a = list.filter(function (_, j) { return j !== i; }); put(a.length ? a : [{ n: '', d: '' }]); } }; }) };
+      }),
+      tpSet2: { videoUrl: function (ev) { setTp({ videoUrl: ev.target.value }); }, tourUrl: function (ev) { setTp({ tourUrl: ev.target.value }); } },
+      tpVideoText: tp.video ? tp.video.name + ' · ' + (tp.video.size / 1048576).toFixed(1) + ' MB' : tt('MP4 atau MOV, maks. 200 MB', 'MP4 or MOV, up to 200 MB'),
+      tpHasVideo: !!(tp.video && tp.video.src), tpVideoSrc: tp.video ? tp.video.src : '',
+      tpSetVideo: function (ev) { var f = (ev.target.files || [])[0]; if (!f) return; if (f.size > 200 * 1048576) { self.toast(tt('Video terlalu besar (maks. 200 MB).', 'Video too large (max 200 MB).')); return; } var u = ''; try { u = URL.createObjectURL(f); } catch (x) {} setTp({ video: { name: f.name, size: f.size, src: u } }); try { ev.target.value = ''; } catch (x) {} },
+      tpRemoveVideo: function () { setTp({ video: null }); },
+      tpPanoText: (tp.pano || []).length ? tt((tp.pano || []).length + ' foto 360° dipilih', (tp.pano || []).length + ' 360° photos selected') : tt('Panorama 2:1, maks. 10 foto', '2:1 panorama, up to 10 photos'),
+      tpHasPano: (tp.pano || []).length > 0,
+      tpAddPano: function (ev) { var fs = Array.prototype.slice.call(ev.target.files || []).filter(function (f) { return /^image\//.test(f.type); }); var add = fs.map(function (f) { var u = ''; try { u = URL.createObjectURL(f); } catch (x) {} return { name: f.name, src: u }; }); setTp({ pano: (tp.pano || []).concat(add).slice(0, 10) }); try { ev.target.value = ''; } catch (x) {} },
+      tpPanoList: (tp.pano || []).map(function (p, i) { return { name: p.name, src: p.src, removeAria: tt('Hapus ', 'Remove ') + p.name, remove: function () { var a = (tp.pano || []).slice(); a.splice(i, 1); setTp({ pano: a }); } }; }),
       tpDocs: tpDocs, tpPlans: tpPlans, tpSummary: tpSummary,
       tpAgreeChecked: tp.agree ? 'true' : 'false', tpAgreeBg: tp.agree ? '#1F4D3A' : '#FFFFFF',
       tpToggleAgree: function () { setTp({ agree: !tp.agree }); },

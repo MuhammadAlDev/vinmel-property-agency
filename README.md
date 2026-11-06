@@ -29,8 +29,9 @@ npm run dev
 1. Buat project di supabase.com, isi `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY` di `.env.local` / env hosting.
 2. Jalankan migrasi berurutan lalu seed. Cara CLI (project Vinmel: `vpizftkeoemvkzllcbik`):
    `npx supabase login` → `npx supabase link --project-ref vpizftkeoemvkzllcbik` → `npx supabase db push` → jalankan isi `supabase/seed.sql` di SQL editor (atau `npx supabase db push --include-seed`).
-   Cara SQL editor: tempel berurutan `20261104120000_init.sql`, `20261105120000_cms_owner_pembeli.sql`, `20261105130000_superadmin_penjual.sql`, `20261106120000_penjual_review_profil.sql`, lalu `seed.sql`. Migrasi setelah init hanya menambah; rollback ada di akhir file.
+   Cara SQL editor: tempel berurutan `20261104120000_init.sql`, `20261105120000_cms_owner_pembeli.sql`, `20261105130000_superadmin_penjual.sql`, `20261106120000_penjual_review_profil.sql`, `20261106180000_revisi2_utj_media_tahap.sql`, lalu `seed.sql`. Migrasi setelah init hanya menambah; rollback ada di akhir file.
    Migrasi 2026-11-06: `seller_profiles` (data pemilik penjual), `titip_reviews` + `titip_checklist` (review & approval, tahap 6 = Ditolak, approval ditolak database bila checklist belum lengkap), `market_area_stats` (data pasar per kota, perbarui tiap kuartal lewat SQL editor), bucket publik `konten` (foto profil owner & testimoni).
+   Migrasi Revisi 2: bukti UTJ di bucket privat `utj-bukti` (maks. 5 MB, foto/PDF, hanya owner & pengirim yang bisa baca), video/foto 360° titip di bucket privat `titip-media` (maks. 200 MB, unggah langsung dari browser lewat signed upload URL), fasum berulang (`nearby`), sumber angka kepercayaan (`stats_src`, hanya owner), tahap tambahan (`purchase_steps.is_custom`) dan serah terima (`purchases.handover_at`), batas ukuran semua bucket. Catatan: batas unggah global project Supabase (Storage > Settings) harus ≥ 200 MB agar video besar bisa masuk; paket gratis dibatasi 50 MB.
 3. Buat akun awal (superadmin owner, pembeli testing, penjual testing). Password hanya lewat env, jangan ditulis ke file:
    `OWNER_PASSWORD='<password>' npm run db:accounts`
    Email default: superadmin owner `alfiyandzulfikri@gmail.com`, pembeli testing `alfiyandzulfikri+test1@gmail.com`, penjual testing `alfiyandzulfikri+test2@gmail.com` (bisa diganti lewat `OWNER_EMAIL`, `TEST_BUYER_EMAIL`, `TEST_SELLER_EMAIL`).
@@ -49,6 +50,9 @@ Untuk lokal dengan Supabase CLI: `npx supabase start` (memakai `supabase/config.
 | `GET/PUT /api/penjual/profil` | user login | data pemilik akun penjual |
 | `POST /api/titip/:id/review` `{stage,action,note}` | owner | aksi review + riwayat (revisi/tolak wajib catatan ≥10 huruf, setujui wajib checklist lengkap) |
 | `PUT /api/titip/:id/checklist` `{checks}` | owner | checklist verifikasi titip |
+| `POST /api/titip/media` `{kind,type,size}` | user login | signed upload URL untuk video tour / foto 360° (bucket `titip-media`) |
+| `GET/POST /api/utj` (multipart `proof`) | user login | bukti transfer UTJ (status "Bukti transfer masuk") |
+| `PUT /api/pantau/:id/progres` `{extraSteps,stepState,handover}` | owner | tahap tambahan, status tahap, serah terima |
 | `POST /api/cms/foto` (multipart `photo`, `kind`) | owner (`kind=owner`: superadmin) | foto profil owner / testimoni ke bucket `konten` |
 | `POST /api/auth/otp/send` `{phone}` | publik | kirim OTP WhatsApp |
 | `POST /api/auth/otp/verify` `{phone, code, name}` | publik | verifikasi, buat sesi (cookie) |

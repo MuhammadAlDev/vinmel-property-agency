@@ -14,7 +14,7 @@ export async function GET() {
   if (a.error) return fail(a.error, ownerErrorMessage[a.error]);
   try {
     const [content, listings, titip, surveys, utj, purchases] = await Promise.all([
-      getContent(), listListings({}), listTitip({ owner: true }), listSurveys({ owner: true }), listUtj(), listPurchases({ owner: true }),
+      getContent({ internal: true }), listListings({}), listTitip({ owner: true }), listSurveys({ owner: true }), listUtj(), listPurchases({ owner: true }),
     ]);
     const owned = purchases.map(toDesignOwned);
     const updates = await listUpdates(owned.map((o) => o.key));

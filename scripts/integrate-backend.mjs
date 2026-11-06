@@ -24,6 +24,8 @@
 //   onPemilik(rec): simpan data pemilik ke backend (ganti localStorage `pemilik`)
 //   onUpload(file, kind, index): unggah foto profil owner (kind 'owner') / testimoni (kind 'testimoni', index baris) ke storage
 //   market        : { HP, YL, hp0, yl0 } data pasar per kota dari tabel market_area_stats
+// Revisi 2 (2026-11-06): cms.extraSteps / stepState / handover dari props.cms (disimpan VinmelApp ke /api/pantau/:id/progres),
+//   onUtjProof({ propId, name, phone, invNo, proof }) : Promise<{ inv }> kirim bukti transfer UTJ ke bucket privat
 // Owner TIDAK dideteksi dari daftar email/nomor di browser: hanya dari user.role === 'owner' yang dikirim server.
 import fs from 'node:fs';
 
@@ -55,9 +57,6 @@ const patches = [
   ['hook login + peran dari server',
     'var doLogin = function (u) {\n',
     "var doLogin = function (u) {\n      if (u.role === 'seller') u.role = 'penjual'; else if (u.role === 'buyer') u.role = 'pembeli';\n      if (self.props.onLogin) self.props.onLogin(u);\n"],
-  ['owner hanya dari peran server (tanpa daftar email/WA di browser)',
-    "    var OWNER_IDS = ['083182311993', 'miracle.studio.ina@gmail.com'];\n    var isOwnerId = function (u) { return OWNER_IDS.indexOf(normPhone(u.phone || '')) > -1 || OWNER_IDS.indexOf(String(u.email || '').toLowerCase()) > -1; };",
-    "    // Owner ditentukan server (profiles.role dari owner_allowlist), bukan dari daftar kontak di browser.\n    var isOwnerId = function (u) { return u.role === 'owner'; };"],
   ['kontak owner dari akun yang login',
     "contact: u.via === 'google' ? (u.email || 'miracle.studio.ina@gmail.com') : '0831-8231-1993' };",
     "contact: u.via === 'google' ? (u.email || '') : (u.phone || '') };"],
@@ -109,6 +108,20 @@ const patches = [
   ['status titipan backend di halaman status',
     "status: function () { self.setState({ showOd: false, showTitip: true }); },",
     "status: function () { if (it.db) setTp({ submitted: true, stage: it.stage, ref: it.ref, title: it.title, city: it.city || '', address: it.address || '', price: it.priceDots || '', deal: it.deal || 'Dijual', step: 1 }); self.setState({ showOd: false, showTitip: true }); },"],
+  ['progres pembeli (tahap tambahan, status tahap, serah terima) dari props.cms',
+    'var CMX = s.cms || {}, BUYER0 = {',
+    'var CMX = this.props.cms || s.cms || {}, BUYER0 = this.props.live ? {} : {'],
+  ['kirim bukti UTJ ke backend',
+    "          var inv = String(bkF.invNo || '').trim() || 'UTJ-' + String(Date.now()).slice(-6);\n",
+    "          if (self.props.onUtjProof) {\n" +
+    "            if (bkF.busy) return;\n" +
+    "            var bkMerge = function (p) { self.setState({ bkF: Object.assign({}, self.state.bkF || {}, p) }); };\n" +
+    "            bkMerge({ busy: true, err: '' });\n" +
+    "            self.props.onUtjProof({ propId: bkD2.id, name: String(bkF.name).trim(), phone: normPhone(bkF.phone), invNo: String(bkF.invNo || '').trim(), proof: bkF.proof })\n" +
+    "              .then(function (r) { bkMerge({ busy: false, done: true, inv: (r && r.inv) || '', err: '' }); }, function (e) { bkMerge({ busy: false, err: (e && e.message) || 'Bukti belum terkirim. Coba lagi.' }); });\n" +
+    "            return;\n" +
+    "          }\n" +
+    "          var inv = String(bkF.invNo || '').trim() || 'UTJ-' + String(Date.now()).slice(-6);\n"],
   ['sembunyikan simulasi status di mode live (nilai)',
     'tpDemoNext: function () {',
     'tpDemoHide: !!this.props.live, tpDemoNext: function () {'],
@@ -207,6 +220,8 @@ for (const [name, from, to] of patches) {
   if (n !== 1) { broken.push(`"${name}" ditemukan ${n}x`); continue; }
   src = src.replace(from, () => to);
 }
+// Owner hanya boleh ditentukan server (sejak Revisi 2 desain sendiri memakai u.role === 'owner'). Tolak bila daftar kontak owner muncul lagi.
+if (/OWNER_IDS|miracle\.studio\.ina@gmail\.com'\]/.test(src)) broken.push('daftar kontak owner (OWNER_IDS) muncul lagi di desain; hapus, owner dicek di server');
 if (broken.length) throw new Error('[integrate] titik sambung harus ada tepat 1x. Periksa desain baru:\n  ' + broken.join('\n  '));
 
 // Opsi kota di formulir titip: ganti <option> statis dengan daftar kab/kota dari API wilayah.

@@ -7,7 +7,8 @@ import { ok, fail, readJson } from '@/lib/http';
 
 // POST /api/auth/register { phone, code, name, email?, city, status, role: 'penjual' }
 // Daftar akun penjual: verifikasi OTP WhatsApp (kode dicek Supabase, tidak ada kode bebas), lalu akun jadi
-// penjual dan isian awal disimpan ke seller_profiles. Alamat dll. dilengkapi di halaman Data pemilik.
+// penjual dan isian awal disimpan ke seller_profiles. Bila sudah login sebagai pembeli, peran penjual
+// ditambahkan ke akun yang sama (bukan akun kedua). Alamat dll. dilengkapi di halaman Data pemilik.
 export async function POST(req) {
   if (!backendReady()) return fail(503, 'Backend login belum dikonfigurasi.');
   const b = await readJson(req);
@@ -19,8 +20,12 @@ export async function POST(req) {
   if (String(b?.city || '').trim().length < 3) return fail(400, 'Isi kota domisili.');
   if (b?.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(b.email).trim())) return fail(400, 'Format email belum benar.');
   const sb = await supabaseServer();
-  const { data, error } = await sb.auth.verifyOtp({ phone: '+' + phone, token: code, type: 'sms' });
+  // Sudah login dengan nomor lain (mis. Google): verifikasi sebagai penautan nomor ke akun yang sama.
+  const me = await getSessionUser();
+  const link = !!(me && me.role !== 'owner' && me.phone !== phone);
+  const { data, error } = await sb.auth.verifyOtp({ phone: '+' + phone, token: code, type: link ? 'phone_change' : 'sms' });
   if (error || !data.user) return fail(401, 'Kode salah atau sudah kedaluwarsa.');
+  if (link) await sb.from('profiles').update({ phone }).eq('id', data.user.id);
   const { data: prof } = await sb.from('profiles').select('full_name').eq('id', data.user.id).maybeSingle();
   if (prof && !prof.full_name) await sb.from('profiles').update({ full_name: name }).eq('id', data.user.id);
   let user = await becomeSeller(sb, await getSessionUser());
