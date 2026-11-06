@@ -13,17 +13,73 @@ Website Vinmel Agency dengan Next.js 16 + Tailwind CSS + **Supabase** (database,
 | Kondisi | Perilaku |
 | --- | --- |
 | Env Supabase kosong (mode demo) | Data dari `data/dummy/*.json`. CMS di situs = pratinjau desain (localStorage + data contoh). Alat lanjutan `/owner/lanjutan` hanya bisa dibuka saat `npm run dev` (memori server, hilang saat restart). |
-| Mode demo + `VINMEL_DEMO_AS=owner` atau `buyer` (hanya `npm run dev`) | Menyimulasikan sesi owner/pembeli supaya alur CMS → API → halaman pembeli bisa dicoba tanpa Supabase (data di memori server). Tidak berlaku di production. |
+| Mode demo + `VINMEL_DEMO_AS=owner`, `buyer`, atau `seller` (hanya `npm run dev`) | Menyimulasikan sesi owner/pembeli supaya alur CMS → API → halaman pembeli bisa dicoba tanpa Supabase (data di memori server). Tidak berlaku di production. |
 | Env Supabase terisi | Data dari database, login OTP WA + Google sungguhan, akses diatur Row Level Security. |
 
 Jangan tayangkan ke publik dalam mode demo.
 
-## Menjalankan
+## Cara menjalankan project
+
+Prasyarat: Node.js 20 atau lebih baru (diuji dengan Node 26), npm, dan Git. Untuk mode penuh: akses ke project Supabase `vpizftkeoemvkzllcbik`.
+
+### 1. Ambil kode dan instal
 ```bash
+git clone https://github.com/MuhammadAlDev/vinmel-property-agency.git
+cd vinmel-property-agency
 npm install
-cp .env.example .env.local   # isi bila sudah punya project Supabase
-npm run dev
+cp .env.example .env.local
 ```
+`.env.local` tidak ikut ke Git (lihat `.gitignore`). Jangan pernah commit file ini.
+
+### 2a. Mode demo (tanpa Supabase), untuk melihat tampilan & mencoba alur
+Biarkan `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY` kosong di `.env.local`, lalu:
+```bash
+npm run dev                          # http://localhost:3000, data dari data/dummy, login = pratinjau desain
+VINMEL_DEMO_AS=owner npm run dev     # simulasi sesi owner (CMS tersambung ke API, data di memori server)
+VINMEL_DEMO_AS=buyer npm run dev     # simulasi sesi pembeli
+VINMEL_DEMO_AS=seller npm run dev    # simulasi sesi penjual
+```
+Mode demo hanya untuk lokal: data hilang saat server restart, dan unggah video/foto 360° tidak tersedia. Di production (`npm run build && npm start`) tanpa Supabase, login dan CMS sengaja ditolak.
+
+### 2b. Mode penuh (dengan Supabase)
+1. Isi `.env.local` dari Supabase Dashboard > Project Settings > API:
+   ```
+   NEXT_PUBLIC_SUPABASE_URL=https://vpizftkeoemvkzllcbik.supabase.co
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=<anon key>
+   SUPABASE_SERVICE_ROLE_KEY=<service role key, RAHASIA, hanya server>
+   NEXT_PUBLIC_WA_NUMBER=6283182311993
+   NEXT_PUBLIC_SITE_URL=http://localhost:3000
+   ```
+2. Hubungkan CLI ke project, lalu jalankan migrasi + seed data contoh (tanpa CLI: tempel file migrasi berurutan lalu `seed.sql` di SQL editor):
+   ```bash
+   npx supabase login
+   npx supabase link --project-ref vpizftkeoemvkzllcbik
+   npx supabase db push --include-seed   # semua file supabase/migrations berurutan + supabase/seed.sql
+   ```
+3. Buat akun awal (superadmin owner, pembeli testing, penjual testing). Password hanya lewat env, tidak ditulis di file:
+   ```bash
+   OWNER_PASSWORD='<password owner>' npm run db:accounts
+   ```
+   Password akun testing diacak dan dicetak sekali di terminal (atau isi `TEST_BUYER_PASSWORD` / `TEST_SELLER_PASSWORD`).
+4. Siapkan login Google & OTP WhatsApp (langkah 4–5 di "Menyiapkan Supabase" di bawah), lalu jalankan:
+   ```bash
+   npm run dev
+   ```
+   Owner bisa masuk di `/owner/lanjutan` (email + password) atau lewat tombol "Owner Vinmel? Masuk ke CMS" (WhatsApp/Google dengan email/nomor di `owner_allowlist`).
+
+### 3. Build production
+```bash
+npm run build
+npm start                 # http://localhost:3000
+```
+Di hosting (mis. Vercel), isi env yang sama dengan `.env.local` di pengaturan project, termasuk `SUPABASE_SERVICE_ROLE_KEY` (tanpa awalan `NEXT_PUBLIC_`).
+
+### Perintah lain
+| Perintah | Fungsi |
+| --- | --- |
+| `npm run convert-design` | Konversi `design/Main.dc.html` (desain Amel) ke `components/DesignComponent.jsx` lalu sambungkan ke backend |
+| `npm run data:export` | Ekspor data dummy dari desain dan buat ulang `supabase/seed.sql` |
+| `npm run db:accounts` | Buat/perbarui akun superadmin owner + akun testing (butuh service role key) |
 
 ## Menyiapkan Supabase
 1. Buat project di supabase.com, isi `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY` di `.env.local` / env hosting.
