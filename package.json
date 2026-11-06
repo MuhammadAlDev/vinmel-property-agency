@@ -6,12 +6,17 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "convert-design": "node scripts/convert-design.mjs design/Main.dc.html public/assets components/DesignComponent.jsx public/design.css"
+    "convert-design": "node scripts/convert-design.mjs design/Main.dc.html public/assets components/DesignComponent.jsx public/design.css && node scripts/integrate-backend.mjs components/DesignComponent.jsx",
+    "data:export": "node scripts/export-dummy-data.mjs && node scripts/generate-seed.mjs",
+    "db:accounts": "node --env-file=.env.local scripts/create-accounts.mjs"
   },
   "dependencies": {
+    "@supabase/ssr": "^0.12.7",
+    "@supabase/supabase-js": "^2.119.0",
     "next": "^16.4.4",
     "react": "^19.3.1",
-    "react-dom": "^19.3.1"
+    "react-dom": "^19.3.1",
+    "server-only": "^0.0.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.3.4",
