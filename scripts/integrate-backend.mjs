@@ -122,6 +122,9 @@ const patches = [
     "            return;\n" +
     "          }\n" +
     "          var inv = String(bkF.invNo || '').trim() || 'UTJ-' + String(Date.now()).slice(-6);\n"],
+  ['kotak angka kepercayaan kosong disembunyikan (placeholder [ANGKA] tidak dihitung terisi)',
+    "var st = NX.ab.stats.filter(function (x) { return String(x.v || '').trim() || String(x.l || '').trim(); }).slice(0, 4);",
+    "var st = NX.ab.stats.filter(function (x) { var v0 = String(x.v || '').trim(); return (v0 && v0 !== '[ANGKA]') || String(x.l || '').trim(); }).slice(0, 4);"],
   ['sembunyikan simulasi status di mode live (nilai)',
     'tpDemoNext: function () {',
     'tpDemoHide: !!this.props.live, tpDemoNext: function () {'],
