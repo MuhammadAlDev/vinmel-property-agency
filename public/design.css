@@ -163,6 +163,9 @@ input:focus,select:focus,button:focus-visible,a:focus-visible{outline:3px solid 
 .vm-note{font-size:13px;line-height:1.5;color:#234A78;background:#DCE6F2;border-radius:12px;padding:10px 12px}
 .vm-warn{font-size:14px;line-height:1.55;color:#9A3D0F;background:#FBE6D4;border-radius:14px;padding:12px 14px}
 .vm-row{display:flex;align-items:center;gap:12px;padding:12px;border-radius:16px;background:#F7F8F5;border:1px solid #E3E7E1}
+.ab-card{padding:28px}.ab-bio-clamp{display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}
+@media (max-width: 560px){.ab-card{padding:20px;border-radius:22px;gap:16px}.ab-head{gap:14px}.ab-photo{flex-basis:72px !important;width:72px !important;height:72px !important;border-radius:20px !important;font-size:28px !important}.ab-name{font-size:21px !important}.ab-cta>a{flex:1 1 100% !important}}
+@media (max-width: 360px){.ab-stats{grid-template-columns:minmax(0,1fr) !important}}
 .fav-btn{position:absolute;right:12px;top:12px;width:40px;height:40px;border-radius:999px;border:0;background:#FFFFFF;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.18);transition:transform .15s ease;z-index:2}
 .fav-btn:hover{transform:scale(1.08)}
 .fav-btn[aria-pressed="true"] svg,.fav-on svg{animation:favPop .35s ease}

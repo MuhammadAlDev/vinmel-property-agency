@@ -175,6 +175,9 @@ input:focus,select:focus,button:focus-visible,a:focus-visible{outline:3px solid 
 .vm-note{font-size:13px;line-height:1.5;color:#234A78;background:#DCE6F2;border-radius:12px;padding:10px 12px}
 .vm-warn{font-size:14px;line-height:1.55;color:#9A3D0F;background:#FBE6D4;border-radius:14px;padding:12px 14px}
 .vm-row{display:flex;align-items:center;gap:12px;padding:12px;border-radius:16px;background:#F7F8F5;border:1px solid #E3E7E1}
+.ab-card{padding:28px}.ab-bio-clamp{display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}
+@media (max-width: 560px){.ab-card{padding:20px;border-radius:22px;gap:16px}.ab-head{gap:14px}.ab-photo{flex-basis:72px !important;width:72px !important;height:72px !important;border-radius:20px !important;font-size:28px !important}.ab-name{font-size:21px !important}.ab-cta>a{flex:1 1 100% !important}}
+@media (max-width: 360px){.ab-stats{grid-template-columns:minmax(0,1fr) !important}}
 .fav-btn{position:absolute;right:12px;top:12px;width:40px;height:40px;border-radius:999px;border:0;background:#FFFFFF;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.18);transition:transform .15s ease;z-index:2}
 .fav-btn:hover{transform:scale(1.08)}
 .fav-btn[aria-pressed="true"] svg,.fav-on svg{animation:favPop .35s ease}
@@ -514,18 +517,28 @@ select.vm-input{appearance:auto;padding-right:8px}
 </sc-for>
 </ul>
 </div>
-<div class="reveal-scale" style="flex: 1 1 360px; min-width: 0; background: #F3F8F4; border: 1px solid #E3E7E1; border-radius: 28px; padding: 28px; display: flex; flex-direction: column; gap: 18px">
-<div style="display: flex; align-items: center; gap: 16px">
-<sc-if value="{{ab.hasPhoto}}" hint-placeholder-val="{{ false }}"><img src="{{ab.photo}}" alt="{{ab.name}}" style="flex: 0 0 72px; width: 72px; height: 72px; border-radius: 999px; object-fit: cover; display: block"></sc-if><sc-if value="{{ab.noPhoto}}" hint-placeholder-val="{{ true }}"><span style="flex: 0 0 72px; width: 72px; height: 72px; border-radius: 999px; background: #1F4D3A; color: #FFFFFF; font-size: 28px; font-weight: 800; display: flex; align-items: center; justify-content: center">{{ab.initial}}</span></sc-if>
-<span style="display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-size: 13px; font-weight: 700; color: #4A5751; text-transform: uppercase; letter-spacing: .08em">{{ab.role}}</span><span style="font-size: 22px; font-weight: 800; letter-spacing: -0.02em">{{ab.name}}</span><sc-if value="{{ab.hasArea}}" hint-placeholder-val="{{ false }}"><span style="font-size: 14px; color: #4A5751">{{ab.area}}</span></sc-if></span>
+<div class="reveal-scale ab-card" style="flex: 1 1 380px; min-width: 0; background: #F3F8F4; border: 1px solid #E3E7E1; border-radius: 28px; display: flex; flex-direction: column; gap: 20px">
+<div class="ab-head" style="display: flex; align-items: flex-start; gap: 18px">
+<sc-if value="{{ab.hasPhoto}}" hint-placeholder-val="{{ false }}"><img src="{{ab.photo}}" alt="{{ab.photoAlt}}" class="ab-photo" style="flex: 0 0 88px; width: 88px; height: 88px; border-radius: 24px; object-fit: cover; object-position: 50% 20%; display: block; background: #E3E7E1; border: 3px solid #FFFFFF; box-shadow: 0 0 0 1px #DCE5DE"></sc-if><sc-if value="{{ab.noPhoto}}" hint-placeholder-val="{{ true }}"><span aria-hidden="true" class="ab-photo" style="flex: 0 0 88px; width: 88px; height: 88px; border-radius: 24px; background: #1F4D3A; color: #FFFFFF; font-size: 34px; font-weight: 800; display: flex; align-items: center; justify-content: center; border: 3px solid #FFFFFF; box-shadow: 0 0 0 1px #DCE5DE">{{ab.initial}}</span></sc-if>
+<span style="flex: 1 1 auto; display: flex; flex-direction: column; gap: 6px; min-width: 0; padding-top: 2px">
+<span style="font-size: 12px; font-weight: 800; color: #1F4D3A; text-transform: uppercase; letter-spacing: .08em; line-height: 1.4; overflow-wrap: anywhere">{{ab.role}}</span>
+<span class="ab-name" style="font-size: 24px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.2; color: #1B2420; overflow-wrap: anywhere">{{ab.name}}</span>
+<sc-if value="{{ab.hasMeta}}" hint-placeholder-val="{{ true }}"><span style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px"><sc-for list="{{ab.meta}}" as="mt" hint-placeholder-count="2"><span style="display: inline-flex; align-items: center; gap: 6px; max-width: 100%; padding: 4px 10px; border-radius: 999px; background: #FFFFFF; border: 1px solid #DCE5DE; font-size: 13px; font-weight: 600; color: #3A4740; line-height: 1.35"><sc-if value="{{mt.isPin}}" hint-placeholder-val="{{ true }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: 0 0 14px"><path d="M12 22s-7-6.4-7-12a7 7 0 0 1 14 0c0 5.6-7 12-7 12z"></path><circle cx="12" cy="10" r="2.5"></circle></svg></sc-if><sc-if value="{{mt.isTime}}" hint-placeholder-val="{{ false }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: 0 0 14px"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg></sc-if><span style="min-width: 0; overflow-wrap: anywhere">{{mt.t}}</span></span></sc-for></span></sc-if>
+</span>
 </div>
-<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #3A4740">{{ab.bio}}</p>
-<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px">
-<sc-for list="{{ab.stats}}" as="sx" hint-placeholder-count="3"><span style="display: flex; flex-direction: column; gap: 2px; padding: 12px; border-radius: 16px; background: #FFFFFF; border: 1px solid #E3E7E1; min-width: 0"><span style="font-size: 20px; font-weight: 800; color: #1F4D3A; overflow-wrap: anywhere">{{sx.v}}</span><span style="font-size: 13px; color: #4A5751; line-height: 1.4">{{sx.l}}</span><sc-if value="{{sx.hasD}}" hint-placeholder-val="{{ false }}"><span style="font-size: 12px; color: #4A5751; line-height: 1.4">{{sx.d}}</span></sc-if></span></sc-for>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<p class="{{ab.bioCls}}" style="margin: 0; font-size: 15px; line-height: 1.65; color: #3A4740; overflow-wrap: anywhere; white-space: pre-line">{{ab.bio}}</p>
+<sc-if value="{{ab.bioLong}}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ab.toggleMore}}" aria-expanded="{{ab.moreExpanded}}" style="align-self: flex-start; font: inherit; font-size: 14px; font-weight: 700; color: #1F4D3A; background: transparent; border: 0; padding: 0; min-height: 32px; cursor: pointer; text-decoration: underline">{{ab.moreLabel}}</button></sc-if>
 </div>
-<div style="display: flex; gap: 10px; flex-wrap: wrap">
+<sc-if value="{{ab.hasStats}}" hint-placeholder-val="{{ true }}"><div class="ab-stats" style="display: grid; grid-template-columns: {{ab.statCols}}; gap: 10px">
+<sc-for list="{{ab.stats}}" as="sx" hint-placeholder-count="3"><span style="display: flex; flex-direction: column; gap: 4px; padding: 14px; border-radius: 16px; background: #FFFFFF; border: 1px solid #E3E7E1; min-width: 0"><span style="font-size: 22px; font-weight: 800; color: #1F4D3A; line-height: 1.1; letter-spacing: -0.02em; overflow-wrap: anywhere">{{sx.v}}</span><span style="font-size: 13px; font-weight: 600; color: #3A4740; line-height: 1.35; overflow-wrap: anywhere">{{sx.l}}</span><sc-if value="{{sx.hasD}}" hint-placeholder-val="{{ false }}"><span style="font-size: 12px; color: #4A5751; line-height: 1.4; overflow-wrap: anywhere">{{sx.d}}</span></sc-if></span></sc-for>
+</div></sc-if>
+<div style="display: flex; flex-direction: column; gap: 12px; margin-top: auto">
+<div class="ab-cta" style="display: flex; gap: 10px; flex-wrap: wrap">
 <a href="{{contactWa}}" target="_blank" rel="noopener noreferrer" class="vm-btn wa-btn" style="flex: 1 1 200px; border-radius: 14px"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 11.8a8.5 8.5 0 0 1-12.6 7.4L3.5 20.5l1.3-4.3A8.5 8.5 0 1 1 20.5 11.8z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"></path></svg>{{tx.abChat}}</a>
 <a href="mailto:miracle.studio.ina@gmail.com" class="vm-btn out" style="flex: 1 1 140px; border-radius: 14px">Email</a>
+</div>
+<sc-if value="{{ab.hasSoc}}" hint-placeholder-val="{{ false }}"><span style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap"><span style="font-size: 13px; font-weight: 700; color: #4A5751">{{ab.socLabel}}</span><sc-for list="{{ab.socials}}" as="so" hint-placeholder-count="2"><a href="{{so.href}}" target="_blank" rel="noopener noreferrer" aria-label="{{so.aria}}" class="social" style="width: 40px; height: 40px; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; text-decoration: none; background: #FFFFFF; border: 1px solid #DCE5DE"><sc-if value="{{so.ig}}" hint-placeholder-val="{{ true }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"></circle></svg></sc-if><sc-if value="{{so.tt}}" hint-placeholder-val="{{ false }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3v11.5a3.5 3.5 0 1 1-3.5-3.5"></path><path d="M14 3c.4 2.9 2.4 4.7 5.5 4.9"></path></svg></sc-if><sc-if value="{{so.yt}}" hint-placeholder-val="{{ false }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="5.5" width="19" height="13" rx="4"></rect><path d="M10 9.2v5.6l4.8-2.8z" fill="currentColor"></path></svg></sc-if><sc-if value="{{so.fb}}" hint-placeholder-val="{{ false }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h-2.5A3.5 3.5 0 0 0 9 6.5V9H6.5v3.5H9V21h3.5v-8.5H15l.5-3.5h-3V7a1 1 0 0 1 1-1H15z"></path></svg></sc-if></a></sc-for></span></sc-if>
 </div>
 </div>
 </div>
@@ -4574,6 +4587,27 @@ class Component extends DCLogic {
 
     var socUrl = function (v) { v = String(v || '').trim(); return /^https:\/\//.test(v) ? v : '#kontak'; };
     NX.soc = { ig: socUrl(AB.ig), tt: socUrl(AB.tiktok), yt: socUrl(AB.yt), fb: socUrl(AB.fb) };
+
+    // Revisi Amel 2026-11-06 (3): profil singkat owner di beranda dirapikan
+    (function () {
+      var bioTxt = String(AB.bio || '').trim(), long = bioTxt.length > 280, open = !!s.abMore;
+      var meta = [];
+      if (AB.area) meta.push({ t: String(AB.area).trim(), isPin: true, isTime: false });
+      if (AB.since) meta.push({ t: tt('Di properti sejak ', 'In property since ') + String(AB.since).trim(), isPin: false, isTime: true });
+      var st = NX.ab.stats.filter(function (x) { return String(x.v || '').trim() || String(x.l || '').trim(); }).slice(0, 4);
+      var n = st.length;
+      var SOC = [['ig', 'Instagram', AB.ig], ['tt', 'TikTok', AB.tiktok], ['yt', 'YouTube', AB.yt], ['fb', 'Facebook', AB.fb]].filter(function (x) { return /^https:\/\//.test(String(x[2] || '').trim()); });
+      Object.assign(NX.ab, {
+        photoAlt: tt('Foto ', 'Photo of ') + (AB.name || 'owner Vinmel'),
+        meta: meta, hasMeta: meta.length > 0,
+        bioLong: long, bioCls: long && !open ? 'ab-bio-clamp' : '', moreExpanded: open ? 'true' : 'false',
+        moreLabel: open ? tt('Tampilkan lebih sedikit', 'Show less') : tt('Baca selengkapnya', 'Read more'),
+        toggleMore: function () { self.setState({ abMore: !self.state.abMore }); },
+        stats: st, hasStats: n > 0, statCols: 'repeat(' + (n === 4 ? 2 : Math.max(1, n)) + ', minmax(0, 1fr))',
+        socials: SOC.map(function (x) { return { href: String(x[2]).trim(), aria: 'Vinmel Agency ' + tt('di ', 'on ') + x[1], ig: x[0] === 'ig', tt: x[0] === 'tt', yt: x[0] === 'yt', fb: x[0] === 'fb' }; }),
+        hasSoc: SOC.length > 0, socLabel: tt('Ikuti owner', 'Follow the owner')
+      });
+    })();
 
     // ---- Proyek baru (#13) ----
     NX.showProj = !!s.showProj;
